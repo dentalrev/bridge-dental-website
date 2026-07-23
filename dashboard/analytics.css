@@ -44,6 +44,21 @@
   padding: 4px 10px; border-radius: 999px;
 }
 
+/* ---------- real product screenshot inside the browser frame ---------- */
+.shot--img { background: #eef1f6; overflow: hidden; }
+.shot__img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top center; display: block;
+}
+/* portrait panels (e.g. the AI chat) show whole, centered on the canvas */
+.shot--contain { background: linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%); }
+.shot--contain .shot__img { object-fit: contain; object-position: center top; padding: 22px; }
+
+/* ---------- reputation section ---------- */
+.rep-feats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 8px; }
+.rep-block { margin-top: 76px; }
+@media (max-width: 860px) { .rep-block { margin-top: 52px; } }
+
 /* ---------- metric chip row ---------- */
 .metricchips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .mchip {
