@@ -77,6 +77,10 @@
 .trust-item p { font-size: 14.5px; color: var(--ink-soft); }
 
 /* ---------- founders ---------- */
+.founders-photo {
+  display: block; width: 100%; height: auto; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md, var(--shadow-sm)); margin-bottom: 34px;
+}
 .founder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
 .founder-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-sm); }
 .founder-card img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
