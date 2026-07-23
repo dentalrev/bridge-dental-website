@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bridge Analytics | A live daily operating system for Open Dental practices</title>
+<meta name="description" content="Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place. $229 per location, per month." />
+<meta property="og:title" content="Bridge Analytics — Stop finding out at the end of the month." />
+<meta property="og:description" content="Turn your Open Dental data into a live daily operating system. Built by dentists, for Open Dental practices." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="../assets/styles.css" />
+<link rel="stylesheet" href="analytics.css" />
+</head>
+<body>
+
+<!-- ============ SECTION 1 — HERO ============ -->
+<section class="hero" data-screen-label="Analytics / Hero">
+  <header class="nav nav--on-dark">
+    <div class="wrap nav__inner">
+      <a class="nav__logo brandlock" href="index.html" aria-label="Bridge Dental — Bridge Analytics">
+        <img src="../assets/bd-logo-white.png" alt="Bridge Dental" />
+        <span class="nav__product">Analytics</span>
+      </a>
+      <nav class="nav__links" id="nav">
+        <a href="#why">Why Bridge</a>
+        <a href="#features">What's inside</a>
+        <a href="#founders">Founders</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn-rose" href="{{STRIPE_CHECKOUT_URL}}">Start Bridge Analytics</a>
+        <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap hero__inner">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow" style="color:#ff7ea0;">For Open Dental Practices</p>
+        <h1 class="h-display reveal">Stop finding out at the end of the month.</h1>
+        <p class="reveal">Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place.</p>
+        <div class="hero__cta reveal">
+          <a class="btn btn-rose btn-lg" href="{{STRIPE_CHECKOUT_URL}}">Start Bridge Analytics — $229/mo</a>
+          <a class="btn btn-ghost-light btn-lg btn-arrow" href="#features">See what's inside
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </a>
+        </div>
+        <div class="trustline reveal">
+          <span>No setup fee</span><span class="sep">·</span>
+          <span>No contract</span><span class="sep">·</span>
+          <span>Unlimited users</span><span class="sep">·</span>
+          <span>30-day guarantee</span>
+        </div>
+        <div class="chips reveal" style="margin-top:26px;">
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Open Dental focused</span>
+          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Built by dentists</span>
+        </div>
+      </div>
+      <div class="hero__media reveal">
+        <figure class="browser">
+          <div class="browser__bar">
+            <span class="browser__dots"><i></i><i></i><i></i></span>
+            <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/dashboard</span>
+          </div>
+          <div class="shot">
+            <span class="shot__tag">Screenshot</span>
+            <div class="shot__inner">
+              <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg></span>
+              <b>Live practice command center</b>
+              <span>Dashboard screenshot</span>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 — PROBLEM → REFRAME (white) ============ -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:820px; margin-inline:auto; margin-bottom:44px;">
+      <p class="eyebrow">Why Bridge Analytics</p>
+      <h2 class="h1">Your practice software stores the data. Bridge Analytics turns it into decisions.</h2>
+      <p class="lead" style="margin:18px auto 0;">Most practices don't have a data problem — they have an action problem. The numbers are buried in reports, opportunities are scattered across the patient database, and owners find out about a bad month after it's already over.</p>
+    </div>
+    <div class="metricchips reveal">
+      <span class="mchip">Net Production</span>
+      <span class="mchip">Collections</span>
+      <span class="mchip">New Patients</span>
+      <span class="mchip">Google Reviews</span>
+      <span class="mchip">Collection Rate</span>
+      <span class="mchip">Case Acceptance</span>
+      <span class="mchip">Reappointment Rate</span>
+      <span class="mchip">Same-Day Treatment</span>
+      <span class="mchip">Broken Appointments</span>
+      <span class="mchip">Scheduled Production</span>
+    </div>
+    <p class="center reveal" style="margin:40px auto 0; max-width:620px; font-family:'Poppins',sans-serif; font-weight:600; font-size:20px; color:var(--ink);">Know what happened. Understand why. Know what to do next.</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 — HONEST PACING (lavender) ============ -->
+<section class="section tint-lavender" id="features">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="eyebrow">Working-Day Pacing</p>
+      <h2 class="h1">See problems while there's still time to fix them.</h2>
+      <p class="lead" style="margin-top:18px;">Bridge Analytics measures progress against the working days your practice actually has — not the calendar. A month can look fine on day 10 and already be behind.</p>
+      <p style="margin-top:16px; color:var(--ink-soft);">You'll see ahead / on pace / behind for every goal, so the question changes from “why did we miss the number?” to “what can we do today to change it?”</p>
+    </div>
+    <div class="split__media reveal">
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/goals</span>
+        </div>
+        <div class="shot">
+          <span class="shot__tag">Screenshot</span>
+          <div class="shot__inner">
+            <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></span>
+            <b>Ahead · On pace · Behind</b>
+            <span>Goal / pace view screenshot</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 — REVENUE RECOVERY (white) ============ -->
+<section class="section">
+  <div class="wrap split split--media-first">
+    <div class="split__media reveal">
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/opportunities</span>
+        </div>
+        <div class="shot">
+          <span class="shot__tag">Screenshot</span>
+          <div class="shot__inner">
+            <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.4"/></svg></span>
+            <b>Prioritized patient lists</b>
+            <span>Opportunity list screenshot</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">Revenue Recovery</p>
+      <h2 class="h1">Find the revenue already inside your practice.</h2>
+      <p class="lead" style="margin-top:18px;">You may not need more patients — you need visibility into the ones you already have. Bridge Analytics builds prioritized patient lists, ranked by recoverable treatment value, so the front office starts with the patients that matter most.</p>
+      <ul class="recovery-list">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Active patients with no future appointment</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unscheduled treatment</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Presented-but-unaccepted treatment</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Broken appointments</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>New-patient follow-up</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unverified insurance</li>
+      </ul>
+      <div class="note reveal" style="margin-top:26px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+        Every list exports for organized offline calling.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 — DAILY RHYTHM (lavender, two-up) ============ -->
+<section class="section tint-lavender">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:720px; margin-inline:auto; margin-bottom:48px;">
+      <p class="eyebrow">The Daily Rhythm</p>
+      <h2 class="h1">Start the day with a plan. End it with clarity.</h2>
+    </div>
+    <div class="grid-2 reveal">
+      <div class="card rhythm-card">
+        <div class="tophead">
+          <span class="step-num"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></span>
+          <h3 class="h3">Morning Huddle</h3>
+        </div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scheduled production by provider and chair</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Arriving patients with unscheduled treatment</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Insurance still needing verification</li>
+        </ul>
+        <p class="kicker">Not yesterday's numbers — a plan for today.</p>
+      </div>
+      <div class="card rhythm-card">
+        <div class="tophead">
+          <span class="step-num"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/><path d="M17 3h4v4"/></svg></span>
+          <h3 class="h3">End-of-Day Debrief</h3>
+        </div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>What was produced and what was collected</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>What was missed</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A preview of tomorrow</li>
+        </ul>
+        <p class="kicker">Delivered automatically to owners and admins at closing time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 6 — SCORECARDS (white) ============ -->
+<section class="section">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="eyebrow">Team Performance</p>
+      <h2 class="h1">Coach from trends, not impressions.</h2>
+      <p class="lead" style="margin-top:18px;">Access-controlled scorecards show each provider's production, pace against their own trend, production per hour, case acceptance, same-day treatment, reappointment, and perio share.</p>
+      <p style="margin-top:16px; color:var(--ink-soft);">Compensation-sensitive data stays restricted to authorized users, and provider totals reconcile against the practice total.</p>
+    </div>
+    <div class="split__media reveal">
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/scorecards</span>
+        </div>
+        <div class="shot">
+          <span class="shot__tag">Screenshot</span>
+          <div class="shot__inner">
+            <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M12 20V4M18 20v-7"/></svg></span>
+            <b>Provider &amp; hygiene scorecards</b>
+            <span>Team performance screenshot</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 7 — AI CONSULTANT (lavender) ============ -->
+<section class="section tint-lavender">
+  <div class="wrap split split--media-first">
+    <div class="split__media reveal">
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/consultant</span>
+        </div>
+        <div class="shot">
+          <span class="shot__tag">Screenshot</span>
+          <div class="shot__inner">
+            <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 1 4 4v1a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4z"/><path d="M5 21a7 7 0 0 1 14 0"/><path d="M9 12h.01M15 12h.01"/></svg></span>
+            <b>Grounded, prioritized insights</b>
+            <span>AI consultant screenshot</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">AI, Grounded</p>
+      <h2 class="h1">An AI consultant that uses your real numbers.</h2>
+      <p class="lead" style="margin-top:18px;">Generic AI gives generic advice. Bridge Analytics surfaces prioritized daily insights and answers questions about production, collections, scheduling, patients, and trends.</p>
+      <p style="margin-top:16px; color:var(--ink-soft);">It narrates the numbers the system actually computed — never inventing figures that contradict your dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 8 — REPUTATION (white) ============ -->
+<section class="section">
+  <div class="wrap split">
+    <div class="reveal">
+      <p class="eyebrow">Bridge Reputation</p>
+      <h2 class="h1">Your Google reviews, inside your performance system.</h2>
+      <p class="lead" style="margin-top:18px;">Bridge Reputation watches your Google Business Profile so your team never misses a review. Track your rating, review count, monthly review goals, and trends alongside production and collections — and use AI to help draft thoughtful responses to every review.</p>
+      <p style="margin-top:16px; color:var(--ink-soft);">Because reputation lives in the same dashboard, the AI consultant considers it when identifying opportunities.</p>
+    </div>
+    <div class="split__media reveal">
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation</span>
+        </div>
+        <div class="shot">
+          <span class="shot__tag">Screenshot</span>
+          <div class="shot__inner">
+            <span class="shot__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18l-5.8 3.4 1.1-6.5L2.6 9.8l6.5-.9z"/></svg></span>
+            <b>Rating, review count &amp; trends</b>
+            <span>Reputation view screenshot</span>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 9 — NUMBERS YOU CAN TRUST (lavender) ============ -->
+<section class="section tint-lavender">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:740px; margin-inline:auto; margin-bottom:46px;">
+      <p class="eyebrow">Built on Trust</p>
+      <h2 class="h1">You shouldn't have to double-check the dashboard.</h2>
+    </div>
+    <div class="trust-grid reveal">
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <b>One source of truth</b>
+        <p>Centralized metric calculations, so every view agrees.</p>
+      </div>
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <b>Click-to-the-record drill-downs</b>
+        <p>Every drill-down reconciles with headline totals.</p>
+      </div>
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></span>
+        <b>Visible data freshness</b>
+        <p>See how current your data is, with on-demand refresh.</p>
+      </div>
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6A2 2 0 0 0 22 18L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
+        <b>Honest error states</b>
+        <p>A failed sync is never shown as zero activity.</p>
+      </div>
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <b>HIPAA-conscious by design</b>
+        <p>Role-restricted, audit-logged patient views.</p>
+      </div>
+      <div class="trust-item">
+        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v5H4zM4 15h16v5H4z"/><path d="M8 6.5h.01M8 17.5h.01"/></svg></span>
+        <b>Reconciled by default</b>
+        <p>Provider totals tie back to the practice total.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 10 — FOUNDERS (white) ============ -->
+<section class="section" id="founders">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:820px; margin-inline:auto; margin-bottom:46px;">
+      <p class="eyebrow">Built by Dentists</p>
+      <h2 class="h1">Built by people who run dental practices.</h2>
+      <p class="lead" style="margin:18px auto 0;">Bridge Analytics was built to solve the problem the founders kept seeing: plenty of data, too little clarity about what to do next.</p>
+    </div>
+    <div class="founder-grid reveal">
+      <div class="founder-card">
+        <img src="../assets/team/beau.jpg" alt="Dr. Beau Sparkman" />
+        <div class="fname">Dr. Beau Sparkman</div>
+        <div class="frole">Co-founder</div>
+        <p>Practicing dentist, multi-office owner, and national dental coach.</p>
+      </div>
+      <div class="founder-card">
+        <img src="../assets/team/steve.jpg" alt="Dr. Steve Dove" />
+        <div class="fname">Dr. Steve Dove</div>
+        <div class="frole">Co-founder</div>
+        <p>Practicing dentist, multi-office owner, and national dental coach.</p>
+      </div>
+      <div class="founder-card">
+        <img src="../assets/team/rob.jpg" alt="Rob, Co-founder &amp; Engineering" />
+        <div class="fname">Rob</div>
+        <div class="frole">Co-founder · Engineering</div>
+        <p>Johns Hopkins–trained software engineer with 20+ years in healthcare software, including Cardinal Health and McKesson.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 11 — EVERYTHING INCLUDED + PRICING (lavender) ============ -->
+<section class="section tint-lavender" id="pricing">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:820px; margin-inline:auto; margin-bottom:12px;">
+      <p class="eyebrow">One System, One Price</p>
+      <h2 class="h1">Everything included. Nothing bolted on.</h2>
+      <p class="lead" style="margin:18px auto 0;">Dental performance platforms in this category run $279, $350, $399 — some $499 per month, before setup charges, extra modules, or AI upgrade fees.</p>
+    </div>
+
+    <div class="reveal" style="max-width:920px; margin:36px auto 0;">
+      <ul class="incl-grid">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Live practice command center</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Working-day goal pacing</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Revenue-recovery patient lists</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Morning Huddle</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>End-of-Day Debrief</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Provider &amp; hygiene scorecards</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI practice consultant</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Google reputation monitoring + AI response drafting</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Click-to-record drill-downs</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited standard users</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Open Dental connection &amp; metric calibration</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Onboarding, training &amp; support</li>
+      </ul>
+      <div class="wontpay">
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No setup fee</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No AI upgrade fee</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No per-user charges</span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>No long-term contract</span>
+      </div>
+    </div>
+
+    <div class="pricecard reveal" style="margin-top:44px;" data-monthly-url="{{STRIPE_CHECKOUT_URL}}" data-annual-url="{{STRIPE_ANNUAL_URL}}">
+      <div class="billing">
+        <span class="on" id="lblMonthly">Monthly</span>
+        <button class="abswitch" id="billToggle" role="switch" aria-checked="false" aria-label="Toggle annual billing"></button>
+        <span id="lblAnnual">Annual</span>
+        <span class="save">2 months free</span>
+      </div>
+      <div class="amt" id="priceAmt">$229<small id="priceUnit"> / location / mo</small></div>
+      <p class="per" id="priceNote">Per location, per month. Billed monthly.</p>
+      <a class="btn btn-rose btn-lg" id="priceCta" href="{{STRIPE_CHECKOUT_URL}}">Start Bridge Analytics</a>
+      <p class="under">Checkout takes two minutes. Then we schedule your onboarding call and connect your Open Dental data.</p>
+    </div>
+
+    <div class="guarantee reveal">
+      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <div>
+        <h4>The Bridge Clarity Guarantee</h4>
+        <p>Use Bridge Analytics for 30 days. If we can't accurately display your agreed core metrics, produce usable patient opportunity lists, and give leadership a clearer daily view, contact us — we'll work to reconcile the data, and if we can't deliver what was promised, we'll refund your payment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 12 — FAQ (white, accordion) ============ -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:40px;">
+      <p class="eyebrow">Questions</p>
+      <h2 class="h1">Frequently asked questions</h2>
+    </div>
+    <div class="faq reveal">
+      <details open>
+        <summary>Does it work with my practice software?<span class="plus"></span></summary>
+        <div class="faq__a">Bridge Analytics is built specifically for Open Dental. Other systems aren't supported yet.</div>
+      </details>
+      <details>
+        <summary>What happens after I subscribe?<span class="plus"></span></summary>
+        <div class="faq__a">You'll book an onboarding call. We connect your Open Dental data, configure your goals, and verify your core metrics with you.</div>
+      </details>
+      <details>
+        <summary>Is my patient data safe?<span class="plus"></span></summary>
+        <div class="faq__a">Aggregate views contain no patient-identifying information. Patient-level lists are role-restricted and audit-logged. Support access is read-only and audited.</div>
+      </details>
+      <details>
+        <summary>Is there a contract?<span class="plus"></span></summary>
+        <div class="faq__a">No. Monthly plans cancel anytime; annual plans simply give you two months free.</div>
+      </details>
+      <details>
+        <summary>How many users can I add?<span class="plus"></span></summary>
+        <div class="faq__a">Unlimited standard users are included at no extra charge.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 13 — FINAL CTA BAND (purple gradient) ============ -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <p class="eyebrow" style="color:#ffc2d3;">Get Started</p>
+      <h2 class="h1">Find the leaks. Focus the team. Finish the month on purpose.</h2>
+      <a class="btn btn-white btn-lg" href="{{STRIPE_CHECKOUT_URL}}">Start Bridge Analytics — $229/mo</a>
+      <p class="fine">No setup fee · No contract · Unlimited users · 30-day guarantee</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__logo brandlock" style="display:flex; align-items:center; gap:14px;">
+      <img src="../assets/bd-logo-dark.png" alt="Bridge Dental" />
+      <span class="nav__product" style="color:var(--muted);">Analytics</span>
+    </div>
+    <div class="footer__bar">
+      <div class="legal">
+        <span>© 2026 Bridge Dental. All rights reserved.</span>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
+        <a href="mailto:admin@bridgedental.ai">admin@bridgedental.ai</a>
+      </div>
+      <div class="footer__social">
+        <a href="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://linkedin.com" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 8A1.5 1.5 0 1 0 6.5 5a1.5 1.5 0 0 0 0 3zM5 9.5h3V19H5zM10 9.5h2.9v1.3h.04c.4-.76 1.4-1.56 2.86-1.56 3.06 0 3.6 2 3.6 4.6V19h-3v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2V19h-3z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script>
+  // Annual / monthly billing toggle → swaps price copy + Stripe URL
+  (function () {
+    var card = document.querySelector('.pricecard');
+    if (!card) return;
+    var toggle = document.getElementById('billToggle');
+    var amt = document.getElementById('priceAmt');
+    var note = document.getElementById('priceNote');
+    var cta = document.getElementById('priceCta');
+    var lblM = document.getElementById('lblMonthly');
+    var lblA = document.getElementById('lblAnnual');
+    var monthlyUrl = card.getAttribute('data-monthly-url');
+    var annualUrl = card.getAttribute('data-annual-url');
+
+    function render(annual) {
+      toggle.setAttribute('aria-checked', String(annual));
+      lblM.classList.toggle('on', !annual);
+      lblA.classList.toggle('on', annual);
+      if (annual) {
+        amt.innerHTML = '$2,290<small> / location / yr</small>';
+        note.textContent = 'Per location, per year — two months free.';
+        cta.setAttribute('href', annualUrl);
+      } else {
+        amt.innerHTML = '$229<small> / location / mo</small>';
+        note.textContent = 'Per location, per month. Billed monthly.';
+        cta.setAttribute('href', monthlyUrl);
+      }
+    }
+    toggle.addEventListener('click', function () {
+      render(toggle.getAttribute('aria-checked') !== 'true');
+    });
+    render(false);
+  })();
+</script>
+</body>
+</html>
