@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pricing | Bridge Dental</title>
+<meta name="description" content="Bridge Dental pricing — per-location plans for automated dental insurance verification on Open Dental. Founding cohort open now." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  /* ---- pricing page (scoped) ---- */
+  .value-band {
+    display:flex; align-items:center; gap:14px; justify-content:center;
+    background:var(--lavender); color:var(--indigo); border-radius:999px;
+    padding:12px 24px; font-family:'Poppins',sans-serif; font-weight:600;
+    font-size:15.5px; max-width:max-content; margin:0 auto 44px;
+  }
+  .value-band svg { flex:none; color:var(--purple); }
+
+  .tier-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; align-items:stretch; }
+  .tier {
+    position:relative; background:#fff; border:1px solid var(--line);
+    border-radius:var(--radius-lg); padding:30px 26px; display:flex; flex-direction:column;
+    box-shadow:var(--shadow-sm);
+  }
+  .tier__name { font-family:'Poppins',sans-serif; font-weight:600; font-size:15px; color:var(--ink); letter-spacing:.01em; }
+  .tier__price { font-family:'Poppins',sans-serif; font-weight:800; font-size:40px; color:var(--ink); line-height:1; margin:14px 0 2px; display:flex; align-items:baseline; gap:1px; }
+  .tier__price .approx { color:var(--muted); font-weight:700; font-size:30px; }
+  .tier__price small { font-size:16px; font-weight:600; color:var(--muted); }
+  .tier__price.custom { font-size:30px; }
+  .tier__vol { font-size:14px; color:var(--ink); font-weight:600; font-family:'Poppins',sans-serif; }
+  .tier__overage { font-size:13px; color:var(--muted); margin-top:4px; }
+  .tier__cta { margin-top:22px; }
+  .tier__cta .btn { width:100%; justify-content:center; }
+  .tier__list { display:flex; flex-direction:column; gap:11px; margin-top:24px; padding-top:22px; border-top:1px solid var(--line-soft); }
+  .tier__list li { display:flex; gap:10px; font-size:14px; color:var(--ink-soft); align-items:flex-start; }
+  .tier__list li svg { flex:none; margin-top:3px; }
+  .tier__list .ic-on { color:#1f8a55; }
+  .tier__list .ic-roll { color:var(--muted); }
+  .tier__list .lab { color:var(--muted); font-size:12.5px; }
+
+  /* muted "at launch" tiers */
+  .tier--soon { background:#fbfbfd; }
+  .tier--soon .tier__price { color:var(--muted); }
+  .tier--soon .tier__vol { color:var(--ink-soft); }
+  .at-launch {
+    position:absolute; top:20px; right:20px; white-space:nowrap;
+    font-family:'Poppins',sans-serif; font-weight:600; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--cloud); color:var(--muted); padding:4px 10px; border-radius:999px;
+  }
+
+  /* founding hero column */
+  .tier--founding {
+    border:2px solid var(--rose);
+    box-shadow:0 0 0 5px rgba(239,58,102,.09), var(--shadow-lg);
+    transform:translateY(-6px);
+  }
+  .cohort-badge {
+    position:absolute; top:-13px; left:26px; white-space:nowrap;
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--rose); color:#fff; font-family:'Poppins',sans-serif; font-weight:600; font-size:12px;
+    padding:6px 14px; border-radius:999px; box-shadow:0 6px 16px rgba(239,58,102,.32);
+  }
+  .lock-note {
+    font-size:12.5px; color:var(--ink-soft); background:var(--rose-tint); border-radius:10px;
+    padding:11px 13px; margin-top:16px; line-height:1.45;
+  }
+  .lock-note strong { color:var(--rose-dark); }
+  .spots { display:flex; align-items:center; gap:8px; justify-content:center; margin-top:12px; font-size:13px; font-weight:600; color:var(--rose-dark); font-family:'Poppins',sans-serif; }
+  .spots .pulse { width:8px; height:8px; border-radius:50%; background:var(--rose); box-shadow:0 0 0 0 rgba(239,58,102,.5); animation:spots-pulse 1.8s infinite; }
+  @keyframes spots-pulse { 0%{box-shadow:0 0 0 0 rgba(239,58,102,.45);} 70%{box-shadow:0 0 0 7px rgba(239,58,102,0);} 100%{box-shadow:0 0 0 0 rgba(239,58,102,0);} }
+
+  /* enterprise strip */
+  .ent-strip {
+    display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:30px; align-items:center;
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:30px 36px; margin-top:20px; box-shadow:var(--shadow-sm);
+  }
+  .ent-strip .ent-name { font-family:'Poppins',sans-serif; font-weight:700; font-size:20px; color:var(--ink); }
+  .ent-strip .ent-name span { display:block; font-family:'Mulish',sans-serif; font-weight:400; font-size:14px; color:var(--ink-soft); margin-top:5px; }
+  .ent-stat .k { font-size:13px; color:var(--muted); }
+  .ent-stat .v { font-family:'Poppins',sans-serif; font-weight:700; font-size:17px; color:var(--ink); margin-top:3px; }
+  .ent-strip .btn { white-space:nowrap; }
+
+  .pricing-foot { margin-top:30px; }
+
+  /* modals */
+  dialog.modal { border:0; padding:0; border-radius:var(--radius-lg); width:min(540px, calc(100% - 36px)); box-shadow:var(--shadow-lg); background:transparent; overflow:visible; }
+  dialog.modal::backdrop { background:rgba(20,17,58,.52); backdrop-filter:blur(3px); }
+  .modal__card { background:#fff; border-radius:var(--radius-lg); padding:34px; position:relative; max-height:88vh; overflow-y:auto; }
+  .modal__close { position:absolute; top:16px; right:16px; width:34px; height:34px; border-radius:9px; border:1px solid var(--line); background:#fff; color:var(--muted); cursor:pointer; display:grid; place-items:center; transition:.15s; }
+  .modal__close:hover { color:var(--rose); border-color:var(--rose); }
+  .modal__card h2 { font-size:24px; margin-bottom:6px; }
+  .modal__card .sub { font-size:15px; margin-bottom:22px; }
+
+  @media (max-width:980px) {
+    .tier-grid { grid-template-columns:repeat(2,1fr); }
+    .tier--founding { transform:none; order:-1; }
+    .ent-strip { grid-template-columns:1fr 1fr; gap:22px; }
+    .ent-strip .btn { grid-column:1 / -1; justify-self:start; }
+  }
+  @media (max-width:560px) {
+    .tier-grid { grid-template-columns:1fr; }
+    .ent-strip { grid-template-columns:1fr; text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="eyebanner">
+  <span class="dot"></span><strong>Bridge Dental is opening Cohort 1.</strong>
+  A small founding group of Open Dental offices — founding pricing locked for life.
+</div>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="Pricing / Hero">
+  <header class="nav nav--on-dark">
+    <div class="wrap nav__inner">
+      <a class="nav__logo" href="index.html" aria-label="Bridge Dental home"><img src="assets/bd-logo-white.png" alt="Bridge Dental" /></a>
+      <nav class="nav__links" id="nav">
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn-rose" href="earlyaccess.html">Early Access</a>
+        <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="wrap hero__inner center" style="padding-bottom:90px;">
+    <h1 class="h-display reveal" style="margin-inline:auto; max-width:18ch;">Insurance verification, done before your team clocks in.</h1>
+    <p class="reveal" style="margin-inline:auto;">Built by a dentist. Runs on your Open Dental.</p>
+    <div class="hero__cta reveal" style="justify-content:center;">
+      <a class="btn btn-rose btn-lg" href="#plans">See plans</a>
+      <button class="btn btn-ghost-light btn-lg" data-open="modal-apply">Apply for Founding</button>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="value-band reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Replaces 10–20 staff-hours a week — for less than one afternoon of front-desk labor.
+    </div>
+
+    <div class="tier-grid reveal">
+      <!-- FOUNDING -->
+      <div class="tier tier--founding">
+        <span class="cohort-badge">★ Cohort 1</span>
+        <div class="tier__name">Founding</div>
+        <div class="tier__price">$199<small>/mo</small></div>
+        <div class="tier__vol">400 verifications/mo included</div>
+        <div class="tier__overage">then $1.50 per additional verification</div>
+        <div class="lock-note"><strong>Founding price locked for life.</strong> Includes 400 verifications/mo; additional at $1.50 each.</div>
+        <div class="tier__cta">
+          <button class="btn btn-rose" data-open="modal-apply">Apply</button>
+          <div class="spots"><span class="pulse"></span>10 spots left</div>
+        </div>
+        <ul class="tier__list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>PPO &amp; HMO verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Medicaid verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Analytics <span class="lab">— included as it ships</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic-roll"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Reputation <span class="lab">— rolling out</span></li>
+        </ul>
+      </div>
+
+      <!-- PRACTICE -->
+      <div class="tier tier--soon">
+        <span class="at-launch">At launch</span>
+        <div class="tier__name">Practice</div>
+        <div class="tier__price"><span class="approx">~</span>$499<small>/mo</small></div>
+        <div class="tier__vol">400 verifications/mo included</div>
+        <div class="tier__overage">then $1.50 per additional verification</div>
+        <div class="tier__cta">
+          <button class="btn btn-ghost" data-open="modal-notify" data-tier="Practice">Notify me</button>
+        </div>
+        <ul class="tier__list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>PPO &amp; HMO verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Medicaid verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic-roll"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Analytics <span class="lab">— +$50/mo add-on</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic-roll"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Reputation <span class="lab">— +$50/mo add-on</span></li>
+        </ul>
+      </div>
+
+      <!-- GROUP -->
+      <div class="tier tier--soon">
+        <span class="at-launch">At launch</span>
+        <div class="tier__name">Group</div>
+        <div class="tier__price"><span class="approx">~</span>$999<small>/mo</small></div>
+        <div class="tier__vol">1,000 verifications/mo included</div>
+        <div class="tier__overage">then $1.25 per additional verification</div>
+        <div class="tier__cta">
+          <button class="btn btn-ghost" data-open="modal-notify" data-tier="Group">Notify me</button>
+        </div>
+        <ul class="tier__list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>PPO &amp; HMO verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Medicaid verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Analytics <span class="lab">— included</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic-roll"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Reputation <span class="lab">— rolling out</span></li>
+        </ul>
+      </div>
+
+      <!-- MULTI -->
+      <div class="tier tier--soon">
+        <span class="at-launch">At launch</span>
+        <div class="tier__name">Expansion</div>
+        <div class="tier__price"><span class="approx">~</span>$1,499<small>/mo</small></div>
+        <div class="tier__vol">1,600 verifications/mo included</div>
+        <div class="tier__overage">then $1.10 per additional verification</div>
+        <div class="tier__cta">
+          <button class="btn btn-ghost" data-open="modal-notify" data-tier="Expansion">Notify me</button>
+        </div>
+        <ul class="tier__list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>PPO &amp; HMO verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Medicaid verification</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="ic-on"><path d="M20 6 9 17l-5-5"/></svg>Analytics <span class="lab">— included</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="ic-roll"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Reputation <span class="lab">— rolling out</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="ent-strip reveal">
+      <div class="ent-name">Enterprise <span>For DSOs and multi-brand groups running at scale.</span></div>
+      <div class="ent-stat"><div class="k">Included verifications</div><div class="v">3,000+ / mo</div></div>
+      <div class="ent-stat"><div class="k">Everything in Expansion, plus</div><div class="v">SLA &amp; dedicated support</div></div>
+      <button class="btn btn-ghost" data-open="modal-contact">Contact us</button>
+    </div>
+
+    <div class="note pricing-foot reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <span>Every plan includes PPO, HMO, and Medicaid verification and runs on your existing Open Dental. The <strong>~</strong> prices and <strong>At launch</strong> badges mark target pricing for plans that aren't open yet. Analytics rolls out during early access; Reputation is still in development and isn't billed until it ships.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2 class="h1">Be one of the ten.</h2>
+      <p>Founding pricing is locked for life — but Cohort 1 is a small group, and we onboard each office personally.</p>
+      <button class="btn btn-white btn-lg" data-open="modal-apply">Apply for Founding</button>
+      <p class="fine">We review every application and reply within 2 business days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__cta">
+        <h4>Get in touch</h4>
+        <p>Questions about early access, Open Dental integration, or pilot availability?</p>
+        <a class="btn btn-rose" href="contact.html">Contact us</a>
+      </div>
+      <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+      <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="earlyaccess.html">Early Access</a></div>
+      <div class="footer__col"><h4>Get started</h4><a href="earlyaccess.html">Join early access</a><a href="mailto:admin@bridgedental.ai">admin@bridgedental.ai</a></div>
+    </div>
+    <div class="footer__logo"><img src="assets/bd-logo-dark.png" alt="Bridge Dental" /></div>
+    <div class="footer__bar">
+      <div class="legal"><span>© 2025 Bridge Dental. All rights reserved.</span><a href="https://bridgedental.ai/privacy.html">Privacy Policy</a><a href="https://bridgedental.ai/terms.html">Terms of Service</a></div>
+      <div class="footer__social">
+        <a href="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://youtube.com" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.5 12 5.5 12 5.5s-6 0-7.9.6A3 3 0 0 0 2 8.2 31 31 0 0 0 1.7 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.6 7.9.6 7.9.6s6 0 7.9-.6a3 3 0 0 0 2.1-2.1c.3-1.2.3-3.8.3-3.8s0-2.6-.3-3.8zM10 15V9l5 3z"/></svg></a>
+        <a href="https://linkedin.com" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 8A1.5 1.5 0 1 0 6.5 5a1.5 1.5 0 0 0 0 3zM5 9.5h3V19H5zM10 9.5h2.9v1.3h.04c.4-.76 1.4-1.56 2.86-1.56 3.06 0 3.6 2 3.6 4.6V19h-3v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2V19h-3z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MODALS ===== -->
+<dialog class="modal" id="modal-apply">
+  <div class="modal__card">
+    <button class="modal__close" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 class="h2">Apply for Founding</h2>
+    <p class="sub">Cohort 1 is a small group of Open Dental offices. Tell us about your practice — we review every application personally.</p>
+    <form data-demo-form data-subject="Founding cohort application" data-success="Thanks — we review applications and reply within 2 business days." novalidate>
+      <div class="form-status" role="status" aria-live="polite"></div>
+      <div class="field"><label>Your name <span class="req">*</span></label><input type="text" name="name" required /></div>
+      <div class="field"><label>Practice name <span class="req">*</span></label><input type="text" name="practice" required /></div>
+      <div class="field--row">
+        <div class="field"><label>Number of locations</label>
+          <select name="locations">
+            <option>1</option>
+            <option>2–5</option>
+            <option>6–15</option>
+            <option>16+</option>
+          </select>
+        </div>
+        <div class="field"><label>Practice management software</label><input type="text" name="pms" value="Open Dental" /></div>
+      </div>
+      <div class="field"><label>Monthly new-patient volume</label><input type="text" name="newpatients" placeholder="e.g., ~60 / month" /></div>
+      <div class="field--row">
+        <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" required /></div>
+        <div class="field"><label>Phone</label><input type="tel" name="phone" /></div>
+      </div>
+      <div class="note" style="margin-bottom:18px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V6z"/><path d="M9 12h6M9 9h6"/></svg>
+        <span>Please don't include protected health information (PHI) — no patient names, DOBs, chart numbers, or insurance IDs.</span>
+      </div>
+      <button type="submit" class="btn btn-rose btn-lg" style="width:100%; justify-content:center;">Submit application</button>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="modal" id="modal-notify">
+  <div class="modal__card">
+    <button class="modal__close" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 class="h2">Get notified at launch</h2>
+    <p class="sub">We'll email you the moment the <strong data-tier-label>Practice</strong> plan opens. No spam, just the one note.</p>
+    <form data-demo-form data-subject="Launch notify request" data-success="You're on the list — we'll email you the moment that plan opens." novalidate>
+      <div class="form-status" role="status" aria-live="polite"></div>
+      <input type="hidden" name="tier" value="Practice" />
+      <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" required /></div>
+      <div class="field"><label>Practice name</label><input type="text" name="practice" /></div>
+      <button type="submit" class="btn btn-rose btn-lg" style="width:100%; justify-content:center;">Notify me at launch</button>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="modal" id="modal-contact">
+  <div class="modal__card">
+    <button class="modal__close" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h2 class="h2">Talk to us about Enterprise</h2>
+    <p class="sub">For DSOs and multi-brand groups. Tell us a bit about your organization and we'll set up a conversation.</p>
+    <form data-demo-form data-subject="Enterprise inquiry" data-success="Thanks — we'll be in touch about Enterprise within 2 business days." novalidate>
+      <div class="form-status" role="status" aria-live="polite"></div>
+      <div class="field"><label>Your name <span class="req">*</span></label><input type="text" name="name" required /></div>
+      <div class="field--row">
+        <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" required /></div>
+        <div class="field"><label>Number of locations</label><input type="text" name="locations" placeholder="e.g., 20" /></div>
+      </div>
+      <div class="field"><label>Organization</label><input type="text" name="organization" /></div>
+      <div class="field"><label>What are you looking to solve?</label><textarea name="message" placeholder="Tell us about your verification volume and goals…"></textarea></div>
+      <button type="submit" class="btn btn-rose btn-lg" style="width:100%; justify-content:center;">Send inquiry</button>
+    </form>
+  </div>
+</dialog>
+
+<script src="assets/site.js"></script>
+<script>
+  (function () {
+    document.addEventListener('click', function (e) {
+      var opener = e.target.closest('[data-open]');
+      if (opener) {
+        var dlg = document.getElementById(opener.getAttribute('data-open'));
+        if (!dlg) return;
+        var tier = opener.getAttribute('data-tier');
+        if (tier) {
+          var hidden = dlg.querySelector('input[name="tier"]');
+          if (hidden) hidden.value = tier;
+          var label = dlg.querySelector('[data-tier-label]');
+          if (label) label.textContent = tier;
+        }
+        if (typeof dlg.showModal === 'function') dlg.showModal();
+        return;
+      }
+      var closer = e.target.closest('[data-close]');
+      if (closer) { var d = closer.closest('dialog'); if (d) d.close(); }
+    });
+    // click on backdrop closes
+    document.querySelectorAll('dialog.modal').forEach(function (d) {
+      d.addEventListener('click', function (e) { if (e.target === d) d.close(); });
+    });
+  })();
+</script>
+</body>
+</html>

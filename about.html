@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About | Bridge Dental</title>
+<meta name="description" content="Bridge Dental is a dentist-built team focused on reducing repetitive insurance verification work for Open Dental offices." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .cycle { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .step { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px; position:relative; }
+  .step .n { font-family:'Poppins'; font-weight:800; font-size:13px; color:var(--muted); }
+  .step h4 { font-size:15px; margin:6px 0 0; }
+  .step.live { border-color:var(--rose); box-shadow:0 10px 26px rgba(239,58,102,.16); }
+  .step.live .n { color:var(--rose); }
+  .team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
+  .member__avatar { aspect-ratio:1; border-radius:16px; display:grid; place-items:center; font-family:'Poppins'; font-weight:700; font-size:34px; color:#fff; overflow:hidden; }
+  .member__avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+  .member b { display:block; font-family:'Poppins'; color:var(--ink); margin-top:16px; font-size:17px; }
+  .member span { font-size:14px; color:var(--muted); }
+  /* future-product preview graphic (Looking ahead) */
+  .fp__body { padding:22px 22px 24px; }
+  .fp__head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:18px; }
+  .fp__eyebrow { font-family:'Poppins',sans-serif; font-weight:600; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--rose); }
+  .fp__title { font-family:'Poppins',sans-serif; font-weight:700; font-size:20px; color:var(--ink); margin-top:5px; }
+  .fp__tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px; }
+  .fp__tile { background:var(--lavender); border-radius:12px; padding:14px; }
+  .fp__tile .n { font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; color:var(--indigo); line-height:1; }
+  .fp__tile .l { font-size:12px; color:var(--ink-soft); margin-top:6px; }
+  .fp__chart { border:1px solid var(--line); border-radius:12px; padding:16px 16px 12px; }
+  .fp__bars { display:flex; align-items:flex-end; gap:9px; height:92px; }
+  .fp__bars span { flex:1; border-radius:6px 6px 0 0; background:linear-gradient(180deg,var(--rose),#b5379e); }
+  .fp__chart-cap { font-size:11.5px; color:var(--muted); margin-top:11px; }
+  .fp__note { font-size:11px; color:var(--muted); margin-top:12px; text-align:right; font-style:italic; }
+  @media (max-width:900px){ .cycle{grid-template-columns:repeat(2,1fr);} .team-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .cycle{grid-template-columns:1fr;} .team-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="eyebanner">
+  <span class="dot"></span><strong>Bridge Dental is in early access.</strong>
+  We're onboarding a limited number of dental offices as we refine verification workflows, Open Dental integration, and payer-specific automation.
+</div>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="About / Hero">
+  <header class="nav nav--on-dark">
+    <div class="wrap nav__inner">
+      <a class="nav__logo" href="index.html" aria-label="Bridge Dental home"><img src="assets/bd-logo-white.png" alt="Bridge Dental" /></a>
+      <nav class="nav__links" id="nav">
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn-rose" href="earlyaccess.html">Early Access</a>
+        <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="wrap hero__inner center" style="padding-bottom:84px;">
+    <h1 class="h-display reveal" style="margin-inline:auto;">Building the future of dental revenue management</h1>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="section center">
+  <div class="wrap" style="max-width:760px;">
+    <h2 class="h1 reveal">Who we are</h2>
+    <p class="lead reveal" style="margin:18px auto 0;">Bridge Dental started with a simple belief: dental practices deserve better tools.</p>
+  </div>
+  <div class="wrap split" style="margin-top:48px; text-align:left;">
+    <div class="reveal">
+      <h3 class="h3" style="margin-bottom:10px;">Our story</h3>
+      <p>As practicing dentists, our founders saw firsthand how much time was lost to outdated RCM systems, manual verifications, and repetitive administrative work. They knew there had to be a smarter way — so they started building one.</p>
+    </div>
+    <div class="reveal">
+      <h3 class="h3" style="margin-bottom:10px;">Our mission</h3>
+      <p>To give dental practices modern, practical revenue tools that simplify operations, reduce stress, and support sustainable growth — starting with the verification work that slows teams down every day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE'RE BUILDING -->
+<section class="section tint-lavender">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px; margin-bottom:14px;">
+      <p class="eyebrow">What we're building</p>
+      <h2 class="h1">A modern revenue cycle for dental — starting with verification</h2>
+      <p class="lead" style="margin-top:16px;">Bridge Dental is a dentist-built platform focused on reducing the repetitive insurance work dental teams deal with every day. We're starting where it hurts most and expanding across the cycle from there.</p>
+    </div>
+    <p class="footnote reveal" style="margin:26px 0 18px;">The full revenue cycle we're building toward. Verification is live in early access today; the rest is on our roadmap.</p>
+    <div class="cycle reveal">
+      <div class="step"><div class="n">01</div><h4>Patient registration</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step live"><div class="n">02</div><h4>Insurance verification</h4><span class="badge badge--pilot" style="margin-top:10px;">Live in early access</span></div>
+      <div class="step"><div class="n">03</div><h4>Treatment plans</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step"><div class="n">04</div><h4>Claim submission</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step"><div class="n">05</div><h4>Payment posting</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step"><div class="n">06</div><h4>AR management</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step"><div class="n">07</div><h4>Patient collections</h4><span class="badge badge--soon" style="margin-top:10px;">Roadmap</span></div>
+      <div class="step" style="background:transparent; border-style:dashed; display:flex; flex-direction:column; justify-content:center;"><p style="font-size:14px; color:var(--ink-soft); margin:0;">We're blending automation, clean design, and real clinical insight — one stage at a time.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKING AHEAD -->
+<section class="section">
+  <div class="wrap split">
+    <div class="split__media reveal">
+      <figure class="browser fp">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/claims-payments</span>
+        </div>
+        <div class="fp__body">
+          <div class="fp__head">
+            <div>
+              <div class="fp__eyebrow">Revenue cycle</div>
+              <div class="fp__title">Claims &amp; Payments</div>
+            </div>
+            <span class="badge badge--soon">Coming soon</span>
+          </div>
+          <div class="fp__tiles">
+            <div class="fp__tile"><div class="n">142</div><div class="l">Claims submitted</div></div>
+            <div class="fp__tile"><div class="n">$38.4k</div><div class="l">ERA posted</div></div>
+            <div class="fp__tile"><div class="n">14 days</div><div class="l">Avg. AR</div></div>
+          </div>
+          <div class="fp__chart">
+            <div class="fp__bars"><span style="height:42%"></span><span style="height:58%"></span><span style="height:50%"></span><span style="height:72%"></span><span style="height:66%"></span><span style="height:88%"></span></div>
+            <div class="fp__chart-cap">Collections trend &middot; last 6 weeks</div>
+          </div>
+          <div class="fp__note">Concept preview &mdash; not yet available</div>
+        </div>
+      </figure>
+    </div>
+    <div class="reveal">
+      <h2 class="h1">Looking ahead</h2>
+      <h3 class="h3" style="margin:16px 0 8px; color:var(--rose);">We're just getting started</h3>
+      <p>With claims, billing, and new automation workflows on the horizon, our goal is to grow into a modern RCM experience that supports practices of every size — without overstating where we are today. Come build the future of dental operations with us.</p>
+      <a class="btn btn-rose btn-lg" href="earlyaccess.html" style="margin-top:24px;">Join Early Access</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section tint-cloud">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:48px;"><h2 class="h1">Our team</h2></div>
+    <div class="team-grid reveal">
+      <div class="member"><div class="member__avatar"><img src="assets/team/beau.jpg" alt="Dr. Beau Sparkman" /></div><b>Dr. Beau Sparkman</b><span>Founder · CEO</span></div>
+      <div class="member"><div class="member__avatar"><img src="assets/team/steve.jpg" alt="Dr. Steve Dove" /></div><b>Dr. Steve Dove</b><span>Founder · COO</span></div>
+      <div class="member"><div class="member__avatar"><img src="assets/team/rob.jpg" alt="Rob Havekost" /></div><b>Rob Havekost</b><span>Head of Engineering</span></div>
+      <div class="member"><div class="member__avatar"><img src="assets/team/tyler.jpg" alt="Tyler Fink" /></div><b>Tyler Fink</b><span>Head of Product</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__cta">
+        <h4>Get in touch</h4>
+        <p>Questions about early access, Open Dental integration, or pilot availability?</p>
+        <a class="btn btn-rose" href="contact.html">Contact us</a>
+      </div>
+      <div class="footer__col"><h4>Company</h4><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+      <div class="footer__col"><h4>Product</h4><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="earlyaccess.html">Early Access</a></div>
+      <div class="footer__col"><h4>Get started</h4><a href="earlyaccess.html">Join early access</a><a href="mailto:admin@bridgedental.ai">admin@bridgedental.ai</a></div>
+    </div>
+    <div class="footer__logo"><img src="assets/bd-logo-dark.png" alt="Bridge Dental" /></div>
+    <div class="footer__bar">
+      <div class="legal"><span>© 2025 Bridge Dental. All rights reserved.</span><a href="https://bridgedental.ai/privacy.html">Privacy Policy</a><a href="https://bridgedental.ai/terms.html">Terms of Service</a></div>
+      <div class="footer__social">
+        <a href="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9a1 1 0 0 1 1-1z"/></svg></a>
+        <a href="https://youtube.com" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.5 12 5.5 12 5.5s-6 0-7.9.6A3 3 0 0 0 2 8.2 31 31 0 0 0 1.7 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.6 7.9.6 7.9.6s6 0 7.9-.6a3 3 0 0 0 2.1-2.1c.3-1.2.3-3.8.3-3.8s0-2.6-.3-3.8zM10 15V9l5 3z"/></svg></a>
+        <a href="https://linkedin.com" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 8A1.5 1.5 0 1 0 6.5 5a1.5 1.5 0 0 0 0 3zM5 9.5h3V19H5zM10 9.5h2.9v1.3h.04c.4-.76 1.4-1.56 2.86-1.56 3.06 0 3.6 2 3.6 4.6V19h-3v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2V19h-3z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
