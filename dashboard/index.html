@@ -43,6 +43,11 @@
   padding-left: 14px; border-left: 1px solid var(--line);
 }
 .nav--on-dark .nav__product { color: rgba(255,255,255,.82); border-left-color: rgba(255,255,255,.26); }
+/* full Bridge Dental Analytics lockup in the nav/footer (replaces mark + text) */
+.nav__logo--lockup img { height: 40px; width: auto; display: block; }
+.footer__logo--lockup { margin: 44px 0 26px; }
+.footer__logo--lockup img { height: 52px; width: auto; display: block; }
+@media (max-width: 560px) { .nav__logo--lockup img { height: 34px; } }
 
 /* ---------- hero trust line ---------- */
 .trustline {
@@ -260,9 +265,8 @@
 <section class="hero" data-screen-label="Analytics / Hero">
   <header class="nav nav--on-dark">
     <div class="wrap nav__inner">
-      <a class="nav__logo brandlock" href="index.html" aria-label="Bridge Dental — Bridge Analytics">
-        <img src="../assets/bd-logo-white.png" alt="Bridge Dental" />
-        <span class="nav__product">Analytics</span>
+      <a class="nav__logo nav__logo--lockup" href="index.html" aria-label="Bridge Dental Analytics">
+        <img src="../assets/ba-analytics-white.png?v=20260724" alt="Bridge Dental Analytics" width="997" height="362" />
       </a>
       <nav class="nav__links" id="nav">
         <a href="#why">Why Bridge</a>
@@ -774,9 +778,8 @@
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="wrap">
-    <div class="footer__logo brandlock" style="display:flex; align-items:center; gap:14px;">
-      <img src="../assets/bd-logo-dark.png" alt="Bridge Dental" />
-      <span class="nav__product" style="color:var(--muted);">Analytics</span>
+    <div class="footer__logo footer__logo--lockup">
+      <img src="../assets/ba-analytics-ink.png?v=20260724" alt="Bridge Dental Analytics" width="997" height="362" />
     </div>
     <div class="footer__bar">
       <div class="legal">
