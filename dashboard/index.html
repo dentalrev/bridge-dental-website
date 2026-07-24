@@ -9,8 +9,19 @@
 <meta property="og:description" content="Turn your Open Dental data into a live daily operating system. Built by dentists, for Open Dental practices." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="../assets/styles.css" />
-<link rel="stylesheet" href="analytics.css" />
+<link rel="stylesheet" href="../assets/styles.css?v=20260724" />
+<link rel="stylesheet" href="analytics.css?v=20260724" />
+<style>
+/* Critical image sizing, inlined so it can never be version-skewed against
+   this HTML by a cached stylesheet: screenshots always render at their own
+   natural aspect ratio, constrained to their column. */
+.shot--img, .shot--auto, .shot--contain { aspect-ratio: auto; display: block; overflow: hidden; }
+.shot--img .shot__img, .shot--auto .shot__img, .shot--contain .shot__img {
+  position: static; width: 100%; max-width: 100%; height: auto; object-fit: unset; display: block;
+}
+.shot--contain { display: grid; place-items: center; padding: 26px; }
+.shot--contain .shot__img { width: auto; max-width: 66%; max-height: 460px; }
+</style>
 </head>
 <body>
 
@@ -67,7 +78,7 @@
             <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/dashboard</span>
           </div>
           <div class="shot shot--img">
-            <img class="shot__img" src="../assets/app/analytics-dashboard.jpg" alt="Bridge Analytics dashboard — month-to-date pace, forecast, AR aging and today's snapshot" width="2912" height="2448" />
+            <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-dashboard.jpg" alt="Bridge Analytics dashboard — month-to-date pace, forecast, AR aging and today's snapshot" width="2912" height="2448" />
           </div>
         </figure>
       </div>
@@ -115,7 +126,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics</span>
         </div>
         <div class="shot shot--img shot--auto">
-          <img class="shot__img" src="../assets/app/pacing-rings.jpg" alt="Month-to-date pace rings — Net Production, Collections, New Patients and Google Reviews, each marked Ahead" width="2056" height="556" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/pacing-rings.jpg" alt="Month-to-date pace rings — Net Production, Collections, New Patients and Google Reviews, each marked Ahead" width="2056" height="556" />
         </div>
       </figure>
     </div>
@@ -132,7 +143,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics/treatment-plans</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" src="../assets/app/analytics-txplans.jpg" alt="Treatment-plan tracker — open value, pipeline and follow-ups by patient" width="2912" height="2080" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-txplans.jpg" alt="Treatment-plan tracker — open value, pipeline and follow-ups by patient" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -233,7 +244,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics/providers</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" src="../assets/app/analytics-providers.jpg" alt="Provider scorecards — production vs trailing average, production per hour, case acceptance" width="2912" height="2080" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-providers.jpg" alt="Provider scorecards — production vs trailing average, production per hour, case acceptance" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -250,7 +261,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics</span>
         </div>
         <div class="shot shot--img shot--contain">
-          <img class="shot__img" src="../assets/app/ai-consultant.jpg" alt="AI Practice Consultant answering a question about this month's collections with the practice's real numbers" width="840" height="1002" />
+          <img class="shot__img" style="display:block;width:auto;max-width:66%;height:auto;margin:0 auto;" src="../assets/app/ai-consultant.jpg" alt="AI Practice Consultant answering a question about this month's collections with the practice's real numbers" width="840" height="1002" />
         </div>
       </figure>
     </div>
@@ -301,7 +312,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" src="../assets/app/reputation-dashboard.jpg" alt="Reputation dashboard — rating trend, response rate, needs-response, sentiment themes and rating distribution" width="2912" height="2080" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-dashboard.jpg" alt="Reputation dashboard — rating trend, response rate, needs-response, sentiment themes and rating distribution" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -316,7 +327,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation/responses</span>
         </div>
         <div class="shot shot--img shot--auto">
-          <img class="shot__img" src="../assets/app/reputation-needs-response.jpg" alt="Reviews awaiting a reply, each with a Draft link — an AI-written response is one click away" width="1360" height="637" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-needs-response.jpg" alt="Reviews awaiting a reply, each with a Draft link — an AI-written response is one click away" width="1360" height="637" />
         </div>
       </figure>
     </div>
@@ -348,7 +359,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation/requests</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" src="../assets/app/reputation-requests.jpg" alt="Automated review requests — queued and sent after the right appointments" width="2912" height="2080" />
+          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-requests.jpg" alt="Automated review requests — queued and sent after the right appointments" width="2912" height="2080" />
         </div>
       </figure>
     </div>
