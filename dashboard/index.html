@@ -277,6 +277,44 @@
   .nav__cta .btn { display: none; }
 }
 
+/* ---------- demo stage: halo + badge + side notes ---------- */
+#demo { scroll-margin-top: 16px; overflow-x: clip; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+.demo-stage { position: relative; }
+.demo-stage::before {
+  content: ''; position: absolute; inset: -22px; z-index: 0; border-radius: 34px;
+  background: linear-gradient(120deg, #ef3a66, #8a3f9c, #4338ca, #ef3a66);
+  background-size: 300% 300%; filter: blur(34px); opacity: .42;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .demo-stage::before { animation: demoHalo 9s ease-in-out infinite; }
+  @keyframes demoHalo { 0%,100% { background-position: 0% 50%; opacity:.38; } 50% { background-position: 100% 50%; opacity:.5; } }
+}
+.demo-stage .browser { position: relative; z-index: 1; }
+.demo-badge {
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%); z-index: 3;
+  display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .03em;
+  color: #fff; background: var(--rose); border-radius: 999px; padding: 8px 18px;
+  box-shadow: 0 8px 22px rgba(239,58,102,.38);
+}
+.demo-badge i { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .demo-badge i { animation: demoPulse 1.6s ease-in-out infinite; }
+  @keyframes demoPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.72); } }
+}
+.demo-note {
+  position: absolute; z-index: 3; max-width: 230px;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; line-height: 1.45; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--rose);
+  border-radius: 12px; padding: 11px 14px; box-shadow: var(--shadow);
+  display: none;
+}
+.demo-note--1 { top: -34px; left: 26px; transform: rotate(-2deg); }
+.demo-note--2 { top: -34px; right: 26px; transform: rotate(2deg); }
+.demo-note--3 { bottom: -30px; left: 34px; transform: rotate(1.5deg); }
+@media (min-width: 1240px) { .demo-note { display: block; } }
+
 /* ---------- section 2b: live demo (rendered by ../assets/demo.js) ----------
    Product-look styling (white cards, green/amber pace colors, dark snapshot)
    inside the site-brand section, namespaced .bad- so nothing leaks. */
@@ -680,8 +718,8 @@
         <p class="reveal">Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place.</p>
         <div class="hero__cta reveal">
           <a class="btn btn-rose btn-lg" href="https://buy.stripe.com/cNieV6exye646mB9TTdnW00">Start Bridge Analytics — $229/mo</a>
-          <a class="btn btn-ghost-light btn-lg btn-arrow" href="../contact.html">Book a walkthrough
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <a class="btn btn-ghost-light btn-lg btn-arrow" href="#demo">Test-drive the demo right now
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
           </a>
         </div>
         <div class="trustline reveal">
@@ -741,15 +779,21 @@
     <h2 class="h1">This is the product — go ahead, click around.</h2>
     <p class="lead" style="margin:18px auto 0;">A live interactive demo with sample data from a fictional practice. Walk every analytics tab — daily report, monthly trends, patient lists, treatment plans, provider scorecards — then use the sidebar to switch over to the Google reputation suite.</p>
   </div>
-  <div class="wrap reveal" style="margin-top:38px;">
-    <figure class="browser">
-      <div class="browser__bar">
-        <span class="browser__dots"><i></i><i></i><i></i></span>
-        <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai — live demo</span>
-      </div>
-      <div id="ba-demo" aria-label="Bridge Analytics interactive demo with sample data"></div>
-    </figure>
-    <p class="center" style="margin-top:16px; font-size:13.5px; color:var(--muted);">Sample data — fictional practice. Every number you see in the real product comes straight from your Open Dental data.</p>
+  <div class="wrap reveal" style="margin-top:52px;">
+    <div class="demo-stage">
+      <span class="demo-badge"><i></i>Live demo — click anything</span>
+      <span class="demo-note demo-note--1">Every tab works —<br />Daily, Monthly, Providers…</span>
+      <span class="demo-note demo-note--2">Flip “Steady month”<br />↔ “Record month”</span>
+      <span class="demo-note demo-note--3">Sidebar → the full<br />Reputation suite</span>
+      <figure class="browser">
+        <div class="browser__bar">
+          <span class="browser__dots"><i></i><i></i><i></i></span>
+          <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai — live demo</span>
+        </div>
+        <div id="ba-demo" aria-label="Bridge Analytics interactive demo with sample data"></div>
+      </figure>
+    </div>
+    <p class="center" style="margin-top:22px; font-size:13.5px; color:var(--muted);">Sample data — fictional practice. Every number you see in the real product comes straight from your Open Dental data.</p>
   </div>
 </section>
 
@@ -1188,7 +1232,7 @@
       <h2 class="h1">Find the leaks. Focus the team. Finish the month on purpose.</h2>
       <a class="btn btn-white btn-lg" href="https://buy.stripe.com/cNieV6exye646mB9TTdnW00">Start Bridge Analytics — $229/mo</a>
       <p class="fine">No setup fee · No contract · Unlimited users · 30-day guarantee</p>
-      <p class="fine" style="margin-top:10px;">Want to see it live first? <a href="../contact.html" style="color:#fff; text-decoration:underline; font-weight:600;">Book a walkthrough</a></p>
+      <p class="fine" style="margin-top:10px;">Want to try it first? <a href="#demo" style="color:#fff; text-decoration:underline; font-weight:600;">Test-drive the live demo</a></p>
     </div>
   </div>
 </section>
