@@ -3,25 +3,256 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bridge Analytics | A live daily operating system for Open Dental practices</title>
+<title>Bridge Analytics — Dental Practice Analytics & Reputation Software for Open Dental</title>
 <meta name="description" content="Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place. $229 per location, per month." />
-<meta property="og:title" content="Bridge Analytics — Stop finding out at the end of the month." />
-<meta property="og:description" content="Turn your Open Dental data into a live daily operating system. Built by dentists, for Open Dental practices." />
+<link rel="canonical" href="https://bridgedental.ai/dashboard/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Bridge Dental" />
+<meta property="og:url" content="https://bridgedental.ai/dashboard/" />
+<meta property="og:title" content="Bridge Analytics — Dental Practice Analytics & Reputation Software for Open Dental" />
+<meta property="og:description" content="Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place. $229 per location, per month." />
+<meta property="og:image" content="https://bridgedental.ai/assets/og/og-analytics.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Bridge Analytics — Dental Practice Analytics & Reputation Software for Open Dental" />
+<meta name="twitter:description" content="Bridge Analytics turns your Open Dental data into a live daily operating system — production pace, patient opportunities, team priorities, and your Google reputation, in one place. $229 per location, per month." />
+<meta name="twitter:image" content="https://bridgedental.ai/assets/og/og-analytics.jpg" />
+<meta name="theme-color" content="#0d1340" />
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png?v=20260724" />
+<link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon-512.png?v=20260724" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=20260724" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="../assets/styles.css?v=20260724" />
-<link rel="stylesheet" href="analytics.css?v=20260724" />
 <style>
-/* Critical image sizing, inlined so it can never be version-skewed against
-   this HTML by a cached stylesheet: screenshots always render at their own
-   natural aspect ratio, constrained to their column. */
-.shot--img, .shot--auto, .shot--contain { aspect-ratio: auto; display: block; overflow: hidden; }
-.shot--img .shot__img, .shot--auto .shot__img, .shot--contain .shot__img {
-  position: static; width: 100%; max-width: 100%; height: auto; object-fit: unset; display: block;
+/* Page styles inlined: this page must render correctly even if a
+   separate stylesheet request fails or serves a stale version. */
+/* =========================================================
+   Bridge Analytics — landing page additions
+   Layers on top of ../assets/styles.css (brand tokens).
+   Only NEW components live here; base brand is reused.
+   ========================================================= */
+
+/* ---------- product label beside the logo ---------- */
+.brandlock { display: flex; align-items: center; gap: 14px; }
+.nav__product {
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12.5px;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--ink);
+  padding-left: 14px; border-left: 1px solid var(--line);
 }
-.shot--contain { display: grid; place-items: center; padding: 26px; }
-.shot--contain .shot__img { width: auto; max-width: 66%; max-height: 460px; }
+.nav--on-dark .nav__product { color: rgba(255,255,255,.82); border-left-color: rgba(255,255,255,.26); }
+
+/* ---------- hero trust line ---------- */
+.trustline {
+  margin-top: 22px; font-size: 14px; color: var(--on-dark-soft);
+  display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center;
+}
+.trustline span { display: inline-flex; align-items: center; gap: 7px; }
+.trustline .sep { opacity: .5; }
+
+/* ---------- placeholder screenshot frame ---------- */
+.shot {
+  aspect-ratio: 16 / 10; position: relative;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(239,58,102,.05), transparent 60%),
+    linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%);
+  display: grid; place-items: center; text-align: center;
+}
+.shot__inner { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 32px; max-width: 82%; }
+.shot__icon {
+  width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center;
+  background: #fff; color: var(--rose); border: 1px solid var(--line); box-shadow: var(--shadow-sm);
+}
+.shot__icon svg { width: 30px; height: 30px; }
+.shot b { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--ink); font-size: 17px; }
+.shot span { font-size: 13.5px; color: var(--muted); }
+.shot__tag {
+  position: absolute; top: 14px; right: 14px; font-family: 'Poppins', sans-serif;
+  font-weight: 600; font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--muted); background: #fff; border: 1px solid var(--line);
+  padding: 4px 10px; border-radius: 999px;
+}
+
+/* ---------- real product screenshot inside the browser frame ----------
+   Rendered as a plain natural-ratio image (no fixed box, no object-fit): the
+   picture keeps its own proportions and can never be stretched, even if this
+   stylesheet is cached or only partially applied. */
+.shot--img, .shot--auto, .shot--contain {
+  aspect-ratio: auto; background: #eef1f6; display: block; overflow: hidden;
+}
+.shot--img .shot__img, .shot--auto .shot__img, .shot--contain .shot__img {
+  position: static; inset: auto;
+  width: 100%; height: auto; max-width: 100%;
+  object-fit: unset; display: block;
+}
+/* portrait panels (e.g. the AI chat) sit centered at a comfortable size */
+.shot--contain { background: linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%); display: grid; place-items: center; padding: 26px; }
+.shot--contain .shot__img { width: auto; max-width: 66%; max-height: 460px; border-radius: 10px; box-shadow: var(--shadow-sm); }
+@media (max-width: 720px) { .shot--contain .shot__img { max-width: 82%; } }
+
+/* ---------- "built inside our own practices" proof band ---------- */
+.proof-band { background: var(--ink); padding: 88px 0; }
+.proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1020px; margin: 52px auto 0; }
+.proof-item { border-top: 2px solid var(--rose); padding-top: 20px; }
+.proof-item b { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; color: #fff; display: block; margin-bottom: 8px; }
+.proof-item p { font-size: 15.5px; line-height: 1.6; color: rgba(255,255,255,.72); }
+@media (max-width: 860px) {
+  .proof-band { padding: 64px 0; }
+  .proof-grid { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
+}
+
+/* footer link is text here, not a 34px social icon square */
+.footer .footer__social a {
+  width: auto; height: auto; padding: 7px 16px; border-radius: 999px;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px;
+}
+
+/* ---------- reputation section ---------- */
+.rep-feats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 8px; }
+.rep-block { margin-top: 76px; }
+@media (max-width: 860px) { .rep-block { margin-top: 52px; } }
+
+/* Grid/flex children may not shrink below content size by default; without
+   this the nowrap browser-frame address bars force the whole column past the
+   viewport on phones (horizontal scroll) instead of ellipsizing. */
+.split > *, .hero__grid > *, .split__media, .browser { min-width: 0; }
+
+@media (max-width: 480px) {
+  /* the long CTA labels are wider than the band's padded interior */
+  .cta-band { padding: 48px 22px; }
+  .cta-band .btn, .hero__cta .btn { white-space: normal; }
+}
+
+/* ---------- metric chip row ---------- */
+.metricchips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.mchip {
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- generic two-column grid ---------- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+
+/* ---------- daily-rhythm cards ---------- */
+.rhythm-card { display: flex; flex-direction: column; gap: 14px; }
+.rhythm-card .tophead { display: flex; align-items: center; gap: 12px; }
+.rhythm-card ul { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.rhythm-card li { display: flex; gap: 11px; align-items: flex-start; font-size: 15.5px; color: var(--ink-soft); }
+.rhythm-card li svg { flex: none; color: var(--rose); margin-top: 4px; }
+.rhythm-card .kicker { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+
+/* ---------- recovery list ---------- */
+.recovery-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 34px; margin-top: 26px; }
+.recovery-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; color: var(--ink); }
+.recovery-list li svg { flex: none; color: var(--rose); margin-top: 4px; }
+
+/* ---------- trust grid ---------- */
+.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.trust-item { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.trust-item .ti-icon { width: 40px; height: 40px; border-radius: 11px; background: var(--rose-tint); color: var(--rose); display: grid; place-items: center; margin-bottom: 14px; }
+.trust-item .ti-icon svg { width: 21px; height: 21px; }
+.trust-item b { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--ink); font-size: 16px; display: block; margin-bottom: 6px; }
+.trust-item p { font-size: 14.5px; color: var(--ink-soft); }
+
+/* ---------- founders ---------- */
+.founders-photo {
+  display: block; width: 100%; height: auto; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md, var(--shadow-sm)); margin-bottom: 34px;
+}
+.founder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.founder-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-sm); }
+.founder-card img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: 18px; box-shadow: var(--shadow-sm); }
+.founder-card .fname { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--ink); font-size: 19px; }
+.founder-card .frole { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 4px 0 12px; }
+.founder-card p { font-size: 14.5px; color: var(--ink-soft); }
+
+/* ---------- included checklist (two columns) ---------- */
+.incl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px 34px; margin: 30px 0 0; }
+.incl-grid li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; color: var(--ink); }
+.incl-grid li svg { flex: none; color: #1f8a55; margin-top: 4px; }
+
+/* ---------- "what you won't pay for" strip ---------- */
+.wontpay { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-top: 30px; }
+.wontpay span {
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: var(--indigo);
+  background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.wontpay svg { color: var(--purple); flex: none; }
+
+/* ---------- pricing card (single, centered) ---------- */
+.pricecard {
+  background: #fff; border: 1px solid var(--rose); border-radius: var(--radius-lg);
+  padding: 40px; box-shadow: var(--shadow); max-width: 520px; margin-inline: auto; text-align: center;
+}
+.pricecard .amt { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 56px; color: var(--ink); line-height: 1; }
+.pricecard .amt small { font-size: 20px; font-weight: 600; color: var(--muted); }
+.pricecard .per { font-size: 15px; color: var(--ink-soft); margin-top: 8px; }
+.pricecard .annual { font-size: 15px; color: var(--ink-soft); margin-top: 6px; }
+.pricecard .annual b { color: var(--ink); font-family: 'Poppins', sans-serif; }
+.pricecard .btn { width: 100%; justify-content: center; margin-top: 26px; }
+.pricecard .under { font-size: 13.5px; color: var(--muted); margin-top: 16px; }
+
+/* billing toggle */
+.billing { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14.5px; color: var(--muted); }
+.billing .on { color: var(--ink); }
+.billing .save { font-size: 12px; color: #1f8a55; background: #e3f6ed; padding: 3px 9px; border-radius: 999px; }
+/* self-contained switch (decoupled from site.js's global .switch handler) */
+.abswitch { width: 52px; height: 28px; border-radius: 999px; background: var(--line); border: 0; position: relative; cursor: pointer; transition: .2s; flex: none; }
+.abswitch[aria-checked="true"] { background: var(--rose); }
+.abswitch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: .2s; box-shadow: var(--shadow-sm); }
+.abswitch[aria-checked="true"]::after { transform: translateX(24px); }
+
+/* ---------- guarantee callout ---------- */
+.guarantee {
+  max-width: 780px; margin: 36px auto 0; background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 30px 34px; display: flex; gap: 20px; align-items: flex-start;
+}
+.guarantee .g-icon { flex: none; width: 52px; height: 52px; border-radius: 15px; background: var(--rose-tint); color: var(--rose); display: grid; place-items: center; }
+.guarantee .g-icon svg { width: 26px; height: 26px; }
+.guarantee h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; color: var(--ink); margin-bottom: 8px; }
+.guarantee p { font-size: 15px; color: var(--ink-soft); }
+
+/* ---------- FAQ accordion ---------- */
+.faq { max-width: 780px; margin-inline: auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 22px 0; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px; font-family: 'Poppins', sans-serif;
+  font-weight: 600; font-size: 18px; color: var(--ink);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .plus { flex: none; width: 24px; height: 24px; position: relative; transition: transform .2s var(--ease); color: var(--rose); }
+.faq summary .plus::before, .faq summary .plus::after { content: ''; position: absolute; background: currentColor; border-radius: 2px; }
+.faq summary .plus::before { top: 11px; left: 4px; width: 16px; height: 2px; }
+.faq summary .plus::after { left: 11px; top: 4px; width: 2px; height: 16px; transition: transform .2s var(--ease); }
+.faq details[open] summary .plus::after { transform: rotate(90deg); }
+.faq details[open] summary { color: var(--rose); }
+.faq .faq__a { padding: 0 0 24px; font-size: 16px; color: var(--ink-soft); max-width: 64ch; }
+
+/* ---------- section eyebrow centered helper already exists ---------- */
+
+/* ---------- responsive ---------- */
+@media (max-width: 980px) {
+  .grid-2, .trust-grid, .founder-grid, .recovery-list, .incl-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .metricchips { justify-content: flex-start; }
+  .nav__product { font-size: 11px; letter-spacing: .18em; padding-left: 10px; }
+  .guarantee { flex-direction: column; gap: 14px; }
+  .pricecard { padding: 30px 22px; }
+  /* the nav CTA is redundant with the large hero CTA and crowds the logo on
+     small screens — hide it and keep the logo + burger. */
+  .nav__cta .btn { display: none; }
+}
+
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Bridge Dental", "url": "https://bridgedental.ai", "logo": "https://bridgedental.ai/assets/bd-logo-dark.png", "email": "admin@bridgedental.ai"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Bridge Analytics", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "Dental practice analytics, daily pacing, patient opportunity lists, AI insights, and Google reputation management for Open Dental practices.", "url": "https://bridgedental.ai/dashboard/", "image": "https://bridgedental.ai/assets/og/og-analytics.jpg", "offers": [{"@type": "Offer", "price": "229", "priceCurrency": "USD", "description": "Per location, per month. Billed monthly."}, {"@type": "Offer", "price": "2290", "priceCurrency": "USD", "description": "Per location, per year — two months free."}], "publisher": {"@type": "Organization", "name": "Bridge Dental", "url": "https://bridgedental.ai"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Bridge Analytics work with my practice software?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge Analytics is built specifically for Open Dental. Other systems aren't supported yet."}}, {"@type": "Question", "name": "What happens after I subscribe?", "acceptedAnswer": {"@type": "Answer", "text": "You'll book an onboarding call. We connect your Open Dental data, configure your goals, and verify your core metrics with you."}}, {"@type": "Question", "name": "Is my patient data safe?", "acceptedAnswer": {"@type": "Answer", "text": "Aggregate views contain no patient-identifying information. Patient-level lists are role-restricted and audit-logged. Support access is read-only and audited."}}, {"@type": "Question", "name": "Is there a contract?", "acceptedAnswer": {"@type": "Answer", "text": "No. Monthly plans cancel anytime; annual plans simply give you two months free."}}, {"@type": "Question", "name": "How many users can I add?", "acceptedAnswer": {"@type": "Answer", "text": "Unlimited standard users are included at no extra charge."}}]}</script>
 </head>
 <body>
 
@@ -67,8 +298,8 @@
           <span>30-day guarantee</span>
         </div>
         <div class="chips reveal" style="margin-top:26px;">
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Open Dental focused</span>
-          <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Built by dentists</span>
+          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Open Dental focused</span>
+          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Built by dentists</span>
         </div>
       </div>
       <div class="hero__media reveal">
@@ -78,7 +309,7 @@
             <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/dashboard</span>
           </div>
           <div class="shot shot--img">
-            <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-dashboard.jpg" alt="Bridge Analytics dashboard — month-to-date pace, forecast, AR aging and today's snapshot" width="2912" height="2448" />
+            <img loading="eager" fetchpriority="high" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-dashboard.jpg" alt="Bridge Analytics dashboard — month-to-date pace, forecast, AR aging and today's snapshot" width="2912" height="2448" />
           </div>
         </figure>
       </div>
@@ -126,7 +357,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics</span>
         </div>
         <div class="shot shot--img shot--auto">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/pacing-rings.jpg" alt="Month-to-date pace rings — Net Production, Collections, New Patients and Google Reviews, each marked Ahead" width="2056" height="556" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/pacing-rings.jpg" alt="Month-to-date pace rings — Net Production, Collections, New Patients and Google Reviews, each marked Ahead" width="2056" height="556" />
         </div>
       </figure>
     </div>
@@ -143,7 +374,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics/treatment-plans</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-txplans.jpg" alt="Treatment-plan tracker — open value, pipeline and follow-ups by patient" width="2912" height="2080" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-txplans.jpg" alt="Treatment-plan tracker — open value, pipeline and follow-ups by patient" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -244,7 +475,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics/providers</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-providers.jpg" alt="Provider scorecards — production vs trailing average, production per hour, case acceptance" width="2912" height="2080" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/analytics-providers.jpg" alt="Provider scorecards — production vs trailing average, production per hour, case acceptance" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -261,7 +492,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/analytics</span>
         </div>
         <div class="shot shot--img shot--contain">
-          <img class="shot__img" style="display:block;width:auto;max-width:66%;height:auto;margin:0 auto;" src="../assets/app/ai-consultant.jpg" alt="AI Practice Consultant answering a question about this month's collections with the practice's real numbers" width="840" height="1002" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:auto;max-width:66%;height:auto;margin:0 auto;" src="../assets/app/ai-consultant.jpg" alt="AI Practice Consultant answering a question about this month's collections with the practice's real numbers" width="840" height="1002" />
         </div>
       </figure>
     </div>
@@ -312,7 +543,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-dashboard.jpg" alt="Reputation dashboard — rating trend, response rate, needs-response, sentiment themes and rating distribution" width="2912" height="2080" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-dashboard.jpg" alt="Reputation dashboard — rating trend, response rate, needs-response, sentiment themes and rating distribution" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -327,7 +558,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation/responses</span>
         </div>
         <div class="shot shot--img shot--auto">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-needs-response.jpg" alt="Reviews awaiting a reply, each with a Draft link — an AI-written response is one click away" width="1360" height="637" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-needs-response.jpg" alt="Reviews awaiting a reply, each with a Draft link — an AI-written response is one click away" width="1360" height="637" />
         </div>
       </figure>
     </div>
@@ -359,7 +590,7 @@
           <span class="browser__addr"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>app.bridgedental.ai/reputation/requests</span>
         </div>
         <div class="shot shot--img">
-          <img class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-requests.jpg" alt="Automated review requests — queued and sent after the right appointments" width="2912" height="2080" />
+          <img loading="lazy" decoding="async" class="shot__img" style="display:block;width:100%;max-width:100%;height:auto;" src="../assets/app/reputation-requests.jpg" alt="Automated review requests — queued and sent after the right appointments" width="2912" height="2080" />
         </div>
       </figure>
     </div>
@@ -375,32 +606,32 @@
     </div>
     <div class="trust-grid reveal">
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <b>One source of truth</b>
         <p>Centralized metric calculations, so every view agrees.</p>
       </div>
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
         <b>Click-to-the-record drill-downs</b>
         <p>Every drill-down reconciles with headline totals.</p>
       </div>
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></span>
         <b>Visible data freshness</b>
         <p>See how current your data is, with on-demand refresh.</p>
       </div>
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6A2 2 0 0 0 22 18L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6A2 2 0 0 0 22 18L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
         <b>Honest error states</b>
         <p>A failed sync is never shown as zero activity.</p>
       </div>
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
         <b>HIPAA-conscious by design</b>
         <p>Role-restricted, audit-logged patient views.</p>
       </div>
       <div class="trust-item">
-        <span class="ti-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v5H4zM4 15h16v5H4z"/><path d="M8 6.5h.01M8 17.5h.01"/></svg></span>
+        <span class="ti-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v5H4zM4 15h16v5H4z"/><path d="M8 6.5h.01M8 17.5h.01"/></svg></span>
         <b>Reconciled by default</b>
         <p>Provider totals tie back to the practice total.</p>
       </div>
@@ -416,22 +647,22 @@
       <h2 class="h1">Built by people who run dental practices.</h2>
       <p class="lead" style="margin:18px auto 0;">Bridge Analytics was built to solve the problem the founders kept seeing: plenty of data, too little clarity about what to do next.</p>
     </div>
-    <img src="../assets/team/founders.webp" alt="The Bridge Dental founders" class="founders-photo reveal" />
+    <img loading="lazy" decoding="async" src="../assets/team/founders.webp" alt="The Bridge Dental founders" class="founders-photo reveal" />
     <div class="founder-grid reveal">
       <div class="founder-card">
-        <img src="../assets/team/beau.jpg" alt="Dr. Beau" />
+        <img loading="lazy" decoding="async" src="../assets/team/beau.jpg" alt="Dr. Beau" />
         <div class="fname">Dr. Beau</div>
         <div class="frole">Co-founder</div>
         <p>Practicing dentist, multi-office owner, and national dental coach.</p>
       </div>
       <div class="founder-card">
-        <img src="../assets/team/steve.jpg" alt="Dr. Steve" />
+        <img loading="lazy" decoding="async" src="../assets/team/steve.jpg" alt="Dr. Steve" />
         <div class="fname">Dr. Steve</div>
         <div class="frole">Co-founder</div>
         <p>Practicing dentist, multi-office owner, and national dental coach.</p>
       </div>
       <div class="founder-card">
-        <img src="../assets/team/rob.jpg" alt="Rob, Co-founder &amp; Engineering" />
+        <img loading="lazy" decoding="async" src="../assets/team/rob.jpg" alt="Rob, Co-founder &amp; Engineering" />
         <div class="fname">Rob</div>
         <div class="frole">Co-founder · Engineering</div>
         <p>Johns Hopkins–trained software engineer with 20+ years in healthcare software, including Cardinal Health and McKesson.</p>
@@ -486,7 +717,7 @@
     </div>
 
     <div class="guarantee reveal">
-      <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <span class="g-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
       <div>
         <h4>The Bridge Clarity Guarantee</h4>
         <p>Use Bridge Analytics for 30 days. If we can't accurately display your agreed core metrics, produce usable patient opportunity lists, and give leadership a clearer daily view, contact us — we'll work to reconcile the data, and if we can't deliver what was promised, we'll refund your payment.</p>
