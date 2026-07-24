@@ -44,18 +44,22 @@
   padding: 4px 10px; border-radius: 999px;
 }
 
-/* ---------- real product screenshot inside the browser frame ---------- */
-.shot--img { background: #eef1f6; overflow: hidden; }
-.shot__img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: top center; display: block;
+/* ---------- real product screenshot inside the browser frame ----------
+   Rendered as a plain natural-ratio image (no fixed box, no object-fit): the
+   picture keeps its own proportions and can never be stretched, even if this
+   stylesheet is cached or only partially applied. */
+.shot--img, .shot--auto, .shot--contain {
+  aspect-ratio: auto; background: #eef1f6; display: block; overflow: hidden;
 }
-/* portrait panels (e.g. the AI chat) show whole, centered on the canvas */
-.shot--contain { background: linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%); }
-.shot--contain .shot__img { object-fit: contain; object-position: center top; padding: 22px; }
-/* tight component crops keep their own aspect — the window hugs the content */
-.shot--auto { aspect-ratio: auto; }
-.shot--auto .shot__img { position: static; height: auto; }
+.shot--img .shot__img, .shot--auto .shot__img, .shot--contain .shot__img {
+  position: static; inset: auto;
+  width: 100%; height: auto; max-width: 100%;
+  object-fit: unset; display: block;
+}
+/* portrait panels (e.g. the AI chat) sit centered at a comfortable size */
+.shot--contain { background: linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%); display: grid; place-items: center; padding: 26px; }
+.shot--contain .shot__img { width: auto; max-width: 66%; max-height: 460px; border-radius: 10px; box-shadow: var(--shadow-sm); }
+@media (max-width: 720px) { .shot--contain .shot__img { max-width: 82%; } }
 
 /* ---------- "built inside our own practices" proof band ---------- */
 .proof-band { background: var(--ink); padding: 88px 0; }
