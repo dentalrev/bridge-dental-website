@@ -59,6 +59,17 @@
 .rep-block { margin-top: 76px; }
 @media (max-width: 860px) { .rep-block { margin-top: 52px; } }
 
+/* Grid/flex children may not shrink below content size by default; without
+   this the nowrap browser-frame address bars force the whole column past the
+   viewport on phones (horizontal scroll) instead of ellipsizing. */
+.split > *, .hero__grid > *, .split__media, .browser { min-width: 0; }
+
+@media (max-width: 480px) {
+  /* the long CTA labels are wider than the band's padded interior */
+  .cta-band { padding: 48px 22px; }
+  .cta-band .btn, .hero__cta .btn { white-space: normal; }
+}
+
 /* ---------- metric chip row ---------- */
 .metricchips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .mchip {
