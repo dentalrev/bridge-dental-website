@@ -53,6 +53,26 @@
 /* portrait panels (e.g. the AI chat) show whole, centered on the canvas */
 .shot--contain { background: linear-gradient(160deg, #f7f6fb 0%, #eae8f6 100%); }
 .shot--contain .shot__img { object-fit: contain; object-position: center top; padding: 22px; }
+/* tight component crops keep their own aspect — the window hugs the content */
+.shot--auto { aspect-ratio: auto; }
+.shot--auto .shot__img { position: static; height: auto; }
+
+/* ---------- "built inside our own practices" proof band ---------- */
+.proof-band { background: var(--ink); padding: 88px 0; }
+.proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1020px; margin: 52px auto 0; }
+.proof-item { border-top: 2px solid var(--rose); padding-top: 20px; }
+.proof-item b { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; color: #fff; display: block; margin-bottom: 8px; }
+.proof-item p { font-size: 15.5px; line-height: 1.6; color: rgba(255,255,255,.72); }
+@media (max-width: 860px) {
+  .proof-band { padding: 64px 0; }
+  .proof-grid { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
+}
+
+/* footer link is text here, not a 34px social icon square */
+.footer .footer__social a {
+  width: auto; height: auto; padding: 7px 16px; border-radius: 999px;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px;
+}
 
 /* ---------- reputation section ---------- */
 .rep-feats { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 8px; }
