@@ -32,10 +32,9 @@
     if (save) save.style.visibility = yearly ? 'visible' : 'hidden';
   });
 
-  // form submit — real submission, emails each lead to admin@bridgedental.ai
-  // (FormSubmit relay: no backend required. First-ever submission triggers a
-  //  one-time confirmation email to that address — click the link once to activate.)
-  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/admin@bridgedental.ai';
+  // form submit — posts JSON to our own /api/lead function, which relays the
+  // lead to admin@bridgedental.ai via Resend.
+  var FORM_ENDPOINT = '/api/lead';
   document.addEventListener('submit', function (e) {
     var form = e.target.closest('form[data-demo-form]');
     if (!form) return;
@@ -58,17 +57,25 @@
     var btn = form.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Sending…'; }
 
-    var data = new FormData(form);
-    data.append('_subject', form.getAttribute('data-subject') || 'New Bridge Dental submission');
-    data.append('_template', 'table');
-    data.append('_captcha', 'false');
+    var payload = {};
+    new FormData(form).forEach(function (value, key) {
+      if (typeof value !== 'string') return;
+      payload[key] = value;
+    });
+    payload.form_subject = form.getAttribute('data-subject') || 'New Bridge Dental submission';
+    payload.source_page = location.pathname;
 
     fetch(FORM_ENDPOINT, {
       method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: data
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     }).then(function (r) {
-      return r.json().catch(function () { return {}; });
+      return r.json().catch(function () { return {}; }).then(function (body) {
+        // Surface real failures through the existing error UI instead of
+        // showing a success message for a lead that never got sent.
+        if (!r.ok || body.ok === false) throw new Error('lead relay failed');
+        return body;
+      });
     }).then(function () {
       if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label; }
       if (status) {
