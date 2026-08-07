@@ -459,6 +459,16 @@
           { label: 'Parking at lunch', n: 2, range: 'last 30 days' }
         ]
       },
+      /* Do These Now — Fire Alarm + Today's Moves merged into one numbered
+         queue (2026-08-07 split-hero redesign). Severity is earned; moves
+         without an alarm carry no badge. */
+      queue: [
+        { sev: 'down', sevLabel: 'Urgent', title: '3★ review from Dana W. needs a reply', detail: 'Billing complaint, 6 days unanswered — AI draft ready to edit and post.', cta: 'Respond' },
+        { sev: 'warn', sevLabel: 'Attention', title: 'Recurring complaint: billing confusion', detail: '4 mentions in 60 days — review how estimates are explained at checkout.', cta: 'See reviews' },
+        { sev: 'warn', sevLabel: 'Attention', title: 'Ranking slipped for “emergency dentist”', detail: '#5 in the local pack, down 1 this week — add service photos and a Google post.', cta: 'Open visibility' },
+        { sev: null, sevLabel: null, title: 'Hold the review-velocity lead', detail: 'Cedar Park Dental gained 9 reviews in 30 days to your 12 — keep requests running.', cta: 'Review requests' },
+        { sev: null, sevLabel: null, title: '36 reviews to your 250 milestone', detail: 'At the current pace this lands next quarter — the content studio can help.', cta: 'Grow reviews' }
+      ],
       posts: [
         { platform: 'Facebook', text: '“Dr. Stone explained every option clearly and the front desk sorted my insurance in minutes.” — Priya S., ★★★★★. This is exactly the visit we aim for, every chair, every day.' },
         { platform: 'Google Post', text: 'Cracked a crown before a big week? We keep same-day slots for dental emergencies — call Sunrise Dental Studio and we’ll get you in.' }
@@ -1030,6 +1040,28 @@
     );
   }
 
+  /* The Overview's "Do These Now" queue — one numbered, severity-badged
+     list where every row carries its one-click next step. */
+  function actionQueueHtml(rep) {
+    var rows = rep.queue.map(function (q, i) {
+      return '<div class="bad-dtn__row">' +
+        '<span class="bad-edge__num bad-dtn__num">' + (i + 1) + '</span>' +
+        '<span class="bad-2line" style="min-width:0;flex:1">' +
+          '<strong>' + (q.sev ? '<i class="bad-dot bad-dot--' + q.sev + '" style="display:inline-block;vertical-align:1px;margin-right:6px"></i><span class="bad-dtn__sev bad-dtn__sev--' + q.sev + '">' + q.sevLabel + '</span> · ' : '') + esc(q.title) + '</strong>' +
+          '<span>' + esc(q.detail) + '</span>' +
+        '</span>' +
+        '<button type="button" class="bad-btn' + (i === 0 ? '' : ' bad-btn--ghost') + '">' + esc(q.cta) + ' →</button>' +
+      '</div>';
+    }).join('');
+    return (
+      '<div class="bad-card" style="height:100%">' +
+        '<div class="bad-card__head"><strong>☑ Do These Now</strong><span class="bad-strip__meta">' + rep.queue.length + ' open items · prioritized for you</span></div>' +
+        rows +
+        '<p class="bad-foot" style="margin-top:4px">Nothing here is a stat without a next step — every row carries its one-click action.</p>' +
+      '</div>'
+    );
+  }
+
   function tabRepOverview(rep) {
     return (
       '<div class="bad-statgrid">' +
@@ -1038,7 +1070,8 @@
         repStat('Response Rate', rep.responseRate + '%', null, rep.responded + ' of ' + rep.respondedOf + ' responded') +
         repStat('Unanswered', String(rep.unanswered), null, 'negatives & oldest first') +
       '</div>' +
-      '<div class="bad-ov">' + respondNowHtml(rep) + marketHtml(rep) + '</div>'
+      '<div class="bad-ov2">' + marketHtml(rep) + actionQueueHtml(rep) + '</div>' +
+      '<div style="margin-top:12px">' + respondNowHtml(rep) + '</div>'
     );
   }
 
@@ -1064,8 +1097,25 @@
         '<div class="bad-card__head"><strong>Competitor Momentum</strong><span class="bad-strip__meta">last 30 days</span></div>' +
         '<table class="bad-table"><thead><tr><th>Practice</th><th class="num">Rating</th><th class="num">Reviews</th><th class="num">Gained (30d)</th></tr></thead><tbody>' + compRows + '</tbody></table>' +
         '<p class="bad-foot" style="margin-top:8px">Movement comes from stored snapshots of public Google data — no invented estimates, no claims about competitors’ patients.</p>' +
+      '</div>' +
+      '<div class="bad-repgrid">' +
+        '<div class="bad-card"><div class="bad-card__head"><strong>Review Velocity</strong><span class="bad-strip__meta">per week, last 8 weeks</span></div>' +
+          barChart(rep.velocity, null, '#6366f1', 110) +
+        '</div>' +
+        '<div class="bad-card"><div class="bad-card__head"><strong>Rating Distribution</strong></div>' + ratingDistHtml(rep) + '</div>' +
       '</div>'
     );
+  }
+
+  function ratingDistHtml(rep) {
+    var maxDist = Math.max.apply(null, rep.distribution);
+    return rep.distribution.map(function (n, i) {
+      var starsN = 5 - i;
+      var color = starsN >= 4 ? '#10b981' : starsN === 3 ? '#eab308' : '#ef4444';
+      return '<div class="bad-dist"><span>' + starsN + ' star' + (starsN > 1 ? 's' : '') + '</span>' +
+        '<span class="bad-dist__track"><i style="width:' + ((n / maxDist) * 100).toFixed(1) + '%;background:' + color + '"></i></span>' +
+        '<b>' + n + '</b></div>';
+    }).join('');
   }
 
   function feedbackCards(rep) {
@@ -1092,7 +1142,7 @@
     return (
       '<div class="bad-repgrid" style="margin-top:0">' +
         '<div class="bad-card">' +
-          '<div class="bad-card__head"><strong>Patient Voice</strong><span class="bad-strip__meta">from review text</span></div>' +
+          '<div class="bad-card__head"><strong>Patient Voice</strong><span class="bad-strip__meta">click a theme to open its reviews</span></div>' +
           '<span class="bad-stat__label" style="display:block;margin-bottom:7px">What patients praise</span>' +
           '<div class="bad-themes">' + rep.voice.praise.map(function (t) { return chip(t, 'pos'); }).join('') + '</div>' +
           '<span class="bad-stat__label" style="display:block;margin:14px 0 7px">Concerns</span>' +
@@ -1105,38 +1155,6 @@
         '<div>' +
           '<div class="bad-card__head" style="margin-bottom:8px"><strong>Private Feedback</strong><span class="bad-strip__meta">from your review funnel</span></div>' +
           feedbackCards(rep) +
-        '</div>' +
-      '</div>'
-    );
-  }
-
-  function tabReports(rep) {
-    var maxDist = Math.max.apply(null, rep.distribution);
-    var dist = rep.distribution.map(function (n, i) {
-      var starsN = 5 - i;
-      var color = starsN >= 4 ? '#10b981' : starsN === 3 ? '#eab308' : '#ef4444';
-      return '<div class="bad-dist"><span>' + starsN + ' star' + (starsN > 1 ? 's' : '') + '</span>' +
-        '<span class="bad-dist__track"><i style="width:' + ((n / maxDist) * 100).toFixed(1) + '%;background:' + color + '"></i></span>' +
-        '<b>' + n + '</b></div>';
-    }).join('');
-    var histRows = rep.history.map(function (h) {
-      return '<tr><td>' + h.date + '</td><td class="num">' + h.avg.toFixed(1) + '</td><td>' + starRow(h.avg) + '</td></tr>';
-    }).join('');
-    return (
-      '<div class="bad-repgrid" style="margin-top:0">' +
-        '<div>' +
-          '<div class="bad-card"><div class="bad-card__head"><strong>Review Velocity</strong><span class="bad-strip__meta">per week, last 8 weeks</span></div>' +
-            barChart(rep.velocity, null, '#6366f1', 120) +
-          '</div>' +
-          '<div class="bad-card" style="margin-top:14px"><div class="bad-card__head"><strong>Response Backlog</strong></div>' +
-            '<p class="bad-fb__text" style="margin:0">' + rep.unanswered + ' unanswered · oldest ' + rep.drafts[0].date + ' · response rate ' + rep.responseRate + '%</p>' +
-          '</div>' +
-        '</div>' +
-        '<div>' +
-          '<div class="bad-card"><div class="bad-card__head"><strong>Rating Distribution</strong></div>' + dist + '</div>' +
-          '<div class="bad-card" style="margin-top:14px"><div class="bad-card__head"><strong>Rating History</strong></div>' +
-            '<table class="bad-table"><thead><tr><th>Date</th><th class="num">Avg</th><th>Stars</th></tr></thead><tbody>' + histRows + '</tbody></table>' +
-          '</div>' +
         '</div>' +
       '</div>'
     );
@@ -1289,13 +1307,12 @@
   }
 
   var REPUTATION_TABS = [
-    { key: 'overview', label: 'Overview', title: 'Reputation Overview', sub: 'Respond to reviews and see where you stand against nearby practices', render: tabRepOverview },
+    { key: 'overview', label: 'Overview', title: 'Reputation Overview', sub: 'Where you stand, what to do about it, and the worst review ready to answer', render: tabRepOverview },
     { key: 'inbox', label: 'Reviews', title: 'Review Inbox', sub: 'Negative and oldest unanswered reviews first — draft, edit, and respond', render: tabInbox },
-    { key: 'visibility', label: 'Local Visibility', title: 'Local Visibility', sub: 'Local-pack rankings for your tracked searches, and competitor momentum', render: tabVisibility },
     { key: 'voice', label: 'Patient Voice', title: 'Patient Voice', sub: 'What patients praise and complain about, plus private feedback', render: tabVoice },
+    { key: 'requests', label: 'Review Requests', title: 'Review Requests', sub: 'The ask-for-reviews engine — pending queue, sent history, exclusions', render: tabRequests },
     { key: 'content', label: 'Content Studio', title: 'Content Studio', sub: 'Post drafts built from your reviews, plus your share widget and funnel', render: tabContent },
-    { key: 'requests', label: 'Review Requests', title: 'Review Requests', sub: 'Manage and track patient review request campaigns', render: tabRequests },
-    { key: 'reports', label: 'Reports', title: 'Reputation Reports', sub: 'Review velocity, rating trend and distribution, response backlog', render: tabReports }
+    { key: 'visibility', label: 'Local Visibility', title: 'Local Visibility', sub: 'Local-pack rankings, competitor momentum, and rating trends', render: tabVisibility }
   ];
 
 

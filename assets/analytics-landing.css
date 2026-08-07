@@ -693,6 +693,16 @@
 .bad-edge__item { display:flex; gap:9px; align-items:flex-start; font-size:11.5px; color:#3a3f4f; padding:4px 0; }
 .bad-edge__num { flex:none; width:17px; height:17px; border-radius:50%; background:#eef; color:#4338ca; font-family:'Poppins',sans-serif; font-weight:700; font-size:10px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
 
+/* reputation overview v2 — split hero: market (left) + do-these-now (right) */
+.bad-ov2 { display:grid; grid-template-columns:minmax(0,2fr) minmax(0,3fr); gap:12px; margin-top:12px; align-items:stretch; }
+.bad-dtn__row { display:flex; align-items:center; gap:10px; border:1px solid var(--line-soft); border-radius:9px; padding:8px 11px; margin-bottom:7px; }
+.bad-dtn__row .bad-btn { margin-left:auto; flex:none; }
+.bad-dtn__num { margin-top:0; }
+.bad-dtn__sev { font-family:'Poppins',sans-serif; font-weight:600; font-size:10px; letter-spacing:.04em; text-transform:uppercase; }
+.bad-dtn__sev--down { color:#b91c1c; }
+.bad-dtn__sev--warn { color:#b45309; }
+@media (max-width: 980px) { .bad-ov2 { grid-template-columns:1fr; } }
+
 /* demo responsive */
 @media (max-width: 980px) {
   .bad-statgrid { grid-template-columns:repeat(2,1fr); }
