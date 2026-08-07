@@ -7,7 +7,12 @@
    Dental Studio") relative to today's date, so the demo never
    looks stale. Pace bands use the product's real thresholds
    (>=1.05 ahead, >=0.95 on pace, >=0.80 slightly behind) so the
-   rings, badges and forecast can never contradict each other.
+   gauges, badges and forecast can never contradict each other.
+   Dashboard layout mirrors the product's 2026-08 redesign: the
+   month-end forecast hero (one big number), a band of four linear
+   MTD gauges with a working-day pace tick (replaced the rings),
+   Needs Attention, My Checklist, AR aging, provider leaderboard,
+   and the Today's Snapshot rail with the Practice Wins chip.
    The "steady" scenario deliberately keeps amber states — the
    demo shows the honest product, not a fake-perfect one.
 
@@ -282,7 +287,7 @@
       workingDays: { elapsed: elapsed, total: total },
       monthName: monthName,
       monthYear: fmtDate(now, { month: 'long', year: 'numeric' }),
-      rings: [
+      kpis: [
         { label: 'Net Production', v: prod, fmt: 'money' },
         { label: 'Collections', v: coll, fmt: 'money' },
         { label: 'New Patients', v: np, fmt: 'count' },
@@ -304,6 +309,17 @@
         ? { icon: '🏆', name: 'Best Production Day', line: 'Your highest net production day of ' + y + '.', compare: money(21480) + ' · previous best ' + money(18930) }
         : { icon: '🎯', name: 'Goal Getter', line: fmtDate(new Date(y, m - 1, 1), { month: 'long', year: 'numeric' }) + ' closed at or above the collections goal.', compare: money(Math.round(GOALS.collections * 1.021)) + ' · goal ' + money(GOALS.collections) },
       winsTotal: t.winsTotal,
+      attention: {
+        fiveStar: rev.current,
+        needsReply: 1,
+        ar90: b90,
+        followUpsDue: followUps.due.length
+      },
+      checklist: [
+        'Call the ' + followUps.due.length + ' overdue treatment-plan follow-ups',
+        'Verify insurance for ' + (key === 'record' ? 1 : 3) + ' patients on tomorrow’s schedule',
+        'Reply to Marcus D.’s 4-star review'
+      ],
       today: today,
       days: days,
       googleAvg: t.googleAvg,
@@ -473,8 +489,7 @@
     { label: '61-90', color: '#f87171' }, { label: '90+', color: '#991b1b' }
   ];
   var RANK_COLORS = ['#d97706', '#94a3b8', '#b45309'];
-  var RING = { r: 52, size: 128, width: 13 };
-  var CIRC = 2 * Math.PI * RING.r;
+  var BAND_WORDS = { ahead: 'Ahead', on_pace: 'On pace', slightly_behind: 'Slightly behind', behind: 'Behind' };
 
   function sectionRule(label, extra) {
     return '<div class="bad-rule"><span>' + label + '</span><i></i>' + (extra || '') + '</div>';
@@ -502,27 +517,53 @@
 
   /* ================= analytics tab renderers ================= */
 
-  function ringHtml(ring, idx) {
-    var pct = Math.round((ring.v.current / ring.v.goal) * 100);
-    var sub = ring.fmt === 'money'
-      ? moneyShort(ring.v.current) + ' <em>of ' + moneyShort(ring.v.goal) + '</em>'
-      : ring.v.current + ' <em>of ' + ring.v.goal + '</em>';
+  /* Linear MTD gauge tile — mirrors the product's MtdKpiTile (value, thin
+     bar with the working-day pace tick, dot + words status). */
+  function tileHtml(s, kpi) {
+    var cls = BAND_UI[kpi.v.band].cls;
+    var fillPct = Math.min(Math.round((kpi.v.current / kpi.v.goal) * 100), 100);
+    var tickPct = Math.min(Math.round((s.workingDays.elapsed / s.workingDays.total) * 100), 100);
+    var value = kpi.fmt === 'money' ? moneyShort(kpi.v.current) : String(kpi.v.current);
+    var goal = kpi.fmt === 'money' ? moneyShort(kpi.v.goal) : String(kpi.v.goal);
+    var startW = state.animated ? fillPct : 0;
     return (
-      '<div class="bad-ringcard">' +
-        '<div class="bad-ring" data-ring="' + idx + '" data-pct="' + pct + '">' +
-          '<svg viewBox="0 0 ' + RING.size + ' ' + RING.size + '" aria-hidden="true">' +
-            '<circle class="bad-ring__track" cx="64" cy="64" r="' + RING.r + '" stroke-width="' + RING.width + '"/>' +
-            '<circle class="bad-ring__bar bad-ring__bar--' + BAND_UI[ring.v.band].cls + '" cx="64" cy="64" r="' + RING.r + '"' +
-              ' stroke-width="' + RING.width + '" stroke-dasharray="' + CIRC.toFixed(1) + '"' +
-              ' stroke-dashoffset="' + CIRC.toFixed(1) + '" transform="rotate(-90 64 64)"/>' +
-          '</svg>' +
-          '<div class="bad-ring__center">' +
-            '<strong class="bad-ring__pct" data-count="' + pct + '">0%</strong>' +
-            badge(ring.v.band) +
-            '<span class="bad-ring__sub">' + sub + '</span>' +
-          '</div>' +
+      '<div class="bad-tile">' +
+        '<span class="bad-stat__label">' + esc(kpi.label) + '</span>' +
+        '<div class="bad-tile__value">' + value + '</div>' +
+        '<div class="bad-tile__goal">of ' + goal + ' goal</div>' +
+        '<div class="bad-tile__track">' +
+          '<i class="bad-tile__fill bad-tile__fill--' + cls + '" data-fill="' + fillPct + '" style="width:' + startW + '%"></i>' +
+          '<i class="bad-tile__tick" style="left:' + tickPct + '%" title="Today’s pace"></i>' +
         '</div>' +
-        '<p class="bad-ringcard__label">' + esc(ring.label) + '</p>' +
+        '<div class="bad-tile__status bad-tile__status--' + cls + '"><i class="bad-dot bad-dot--' + cls + '"></i>' + BAND_WORDS[kpi.v.band] + '</div>' +
+      '</div>'
+    );
+  }
+
+  /* Dashboard hero — the one big number (C1 month-end forecast) with the
+     goal-gap chip, month working-day progress, and the YTD glance. */
+  function heroHtml(s) {
+    var wd = s.workingDays;
+    var gap = s.forecast.gap;
+    var shown = state.animated ? money(s.forecast.projected) : money(0);
+    return (
+      '<div class="bad-hero2">' +
+        '<div class="bad-hero2__top">' +
+          '<div>' +
+            '<span class="bad-stat__label">Month-End Forecast — ' + s.monthName + '</span>' +
+            '<div class="bad-hero2__big"><span data-countup="' + s.forecast.projected + '">' + shown + '</span>' +
+              '<span class="bad-badge bad-badge--' + BAND_UI[s.forecast.band].cls + '">' + (gap >= 0 ? '+' : '−') + money(Math.abs(gap)) + ' vs goal</span>' +
+            '</div>' +
+            '<div class="bad-hero2__goal">projected production · goal ' + money(s.forecast.goal) + '</div>' +
+          '</div>' +
+          '<span class="bad__days">' + (wd.total - wd.elapsed) + ' of ' + wd.total + ' working days remaining</span>' +
+        '</div>' +
+        '<div class="bad-hero2__bar"><div class="bad__track"><i style="width:' + ((wd.elapsed / wd.total) * 100).toFixed(1) + '%"></i></div></div>' +
+        '<div class="bad-hero2__ytd">' +
+          '<span class="bad-ytd"><b>YTD Production</b><strong>' + money(s.ytd.production) + '</strong></span>' +
+          '<span class="bad-ytd"><b>YTD Collections</b><strong>' + money(s.ytd.collections) + '</strong></span>' +
+          '<span class="bad-ytd"><b>This month last year</b><strong>' + money(s.ytd.lastYearMonth) + '</strong></span>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -582,8 +623,6 @@
   }
 
   function tabDashboard(s) {
-    var wd = s.workingDays;
-    var gap = s.forecast.gap;
     var agingSegs = s.aging.buckets.map(function (amt, i) {
       var pct = (amt / s.aging.total) * 100;
       return '<i style="width:' + pct.toFixed(2) + '%;background:' + AGING_META[i].color + '" title="' + AGING_META[i].label + 'd: ' + moneyShort(amt) + '"></i>';
@@ -599,32 +638,35 @@
         badge(p.band) +
       '</div>';
     }).join('');
+    var a = s.attention;
+    var attn =
+      '<div class="bad-attn__row"><span class="bad-attn__icon">⭐</span>' +
+        '<span><strong>' + a.fiveStar + ' five-star reviews</strong> this month — ' + a.needsReply + ' still ' + (a.needsReply === 1 ? 'needs' : 'need') + ' a reply</span>' +
+        '<span class="bad-attn__link">Reply →</span></div>' +
+      '<div class="bad-attn__row"><span class="bad-attn__icon">⏰</span>' +
+        '<span><strong>' + moneyShort(a.ar90) + '</strong> in AR past 90 days</span>' +
+        '<span class="bad-attn__link">View aging →</span></div>' +
+      '<div class="bad-attn__row"><span class="bad-attn__icon">🔔</span>' +
+        '<span><strong>' + a.followUpsDue + ' follow-ups</strong> due today</span>' +
+        '<span class="bad-attn__link">Open queue →</span></div>';
+    var check = s.checklist.map(function (item, i) {
+      var done = !!state.ui.checked[i];
+      return '<button type="button" class="bad-check__row' + (done ? ' is-done' : '') + '" data-check="' + i + '">' +
+        '<i class="bad-check__box">' + (done ? '✓' : '') + '</i><span>' + esc(item) + '</span></button>';
+    }).join('');
 
     return (
-      '<div class="bad__bar">' +
-        '<div class="bad__monthline">' +
-          '<span class="bad__monthlabel">' + s.monthName.toUpperCase() + ' — MONTH TO DATE</span>' +
-          '<span class="bad__days">' + (wd.total - wd.elapsed) + ' of ' + wd.total + ' working days remaining</span>' +
-        '</div>' +
-        '<div class="bad__track"><i style="width:' + ((wd.elapsed / wd.total) * 100).toFixed(1) + '%"></i></div>' +
-      '</div>' +
-      '<div class="bad-strip">' +
-        '<span class="bad-strip__label">Month-End Forecast</span>' +
-        '<span>Projected to land at <strong>' + money(s.forecast.projected) + '</strong> production</span>' +
-        '<span class="bad-badge bad-badge--' + BAND_UI[s.forecast.band].cls + '">' + (gap >= 0 ? '+' : '−') + money(Math.abs(gap)) + ' vs goal</span>' +
-        '<span class="bad-strip__meta">goal ' + money(s.forecast.goal) + '</span>' +
-      '</div>' +
-      '<div class="bad-strip">' +
-        '<span class="bad-strip__label">YTD Production</span><strong>' + money(s.ytd.production) + '</strong>' +
-        '<span class="bad-strip__sep"></span>' +
-        '<span class="bad-strip__label">YTD Collections</span><strong>' + money(s.ytd.collections) + '</strong>' +
-        '<span class="bad-strip__sep"></span>' +
-        '<span class="bad-strip__label">This month last year</span><strong>' + money(s.ytd.lastYearMonth) + '</strong>' +
-        '<span class="bad-strip__meta">production</span>' +
-      '</div>' +
-      '<div class="bad__grid">' +
+      heroHtml(s) +
+      '<div class="bad-tiles" style="margin-top:12px">' + s.kpis.map(function (k) { return tileHtml(s, k); }).join('') + '</div>' +
+      '<div class="bad__grid" style="margin-top:12px">' +
         '<div class="bad__main">' +
-          '<div class="bad__rings">' + s.rings.map(ringHtml).join('') + '</div>' +
+          '<div class="bad-card">' +
+            '<div class="bad-card__head"><strong>Needs Attention</strong><span class="bad-strip__meta">today</span></div>' + attn +
+          '</div>' +
+          '<div class="bad-card">' +
+            '<div class="bad-card__head"><strong>My Checklist</strong><span class="bad-strip__meta">+ Add task</span></div>' + check +
+            '<p class="bad-foot" style="margin-top:6px">Personal to each user — with AI-recommended tasks tailored to their role.</p>' +
+          '</div>' +
           '<div class="bad-card bad-aging">' +
             '<div class="bad-card__head"><strong>AR Aging Overview</strong><strong>' + moneyShort(s.aging.total) + '</strong></div>' +
             '<div class="bad-aging__bar">' + agingSegs + '</div>' +
@@ -634,117 +676,15 @@
           '<div class="bad-card">' +
             '<div class="bad-card__head"><strong>🏆 Provider Leaderboard</strong><span class="bad-strip__meta">' + s.monthName + '</span></div>' + board +
           '</div>' +
-          '<div class="bad-card">' +
-            '<div class="bad-card__head"><strong>🎉 Practice Wins</strong><span class="bad-strip__meta">' + s.winsTotal + ' this year</span></div>' +
-            '<div class="bad-wins__body">' +
-              '<span class="bad-wins__icon">' + s.win.icon + '</span>' +
-              '<div><strong class="bad-wins__name">' + esc(s.win.name) + '</strong>' +
-              '<p class="bad-wins__line">' + esc(s.win.line) + '</p>' +
-              '<p class="bad-wins__compare">' + esc(s.win.compare) + '</p></div>' +
-            '</div>' +
-          '</div>' +
         '</div>' +
-        '<aside class="bad__side"><div class="bad-snap" id="bad-snap">' + snapshotHtml(s) + '</div></aside>' +
-      '</div>'
-    );
-  }
-
-  function tabDaily(s) {
-    var todayStr = fmtDate(s.now, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-    var t = s.today;
-    var provRows = s.providers.map(function (p) {
-      return '<tr><td>' + esc(p.name) + '</td><td class="num">' + money(p.production / s.workingDays.elapsed * 1) + '</td>' +
-        '<td class="num">' + money(p.collections / s.workingDays.elapsed * 1) + '</td>' +
-        '<td class="num">' + Math.round(p.procedures / s.workingDays.elapsed) + '</td>' +
-        '<td class="num">' + money(p.production / s.workingDays.elapsed / 7) + '</td></tr>';
-    }).join('');
-    var agingRows = s.aging.buckets.map(function (amt, i) {
-      var insPart = Math.round(amt * 0.58), patPart = amt - insPart;
-      return '<tr><td><span class="bad-aging__leg"><i style="background:' + AGING_META[i].color + '"></i>' + AGING_META[i].label + ' days</span></td>' +
-        '<td class="num">' + money(insPart) + '</td><td class="num">' + money(patPart) + '</td>' +
-        '<td class="num"><strong>' + money(amt) + '</strong></td><td class="num">' + s.aging.claims[i] + '</td></tr>';
-    }).join('');
-    var funnel = [
-      { label: 'Same day', frac: 0.34, color: '#10b981' },
-      { label: 'Within 2 weeks', frac: 0.22, color: '#34d399' },
-      { label: 'Within 30 days', frac: 0.13, color: '#fbbf24' },
-      { label: 'A month or more', frac: 0.08, color: '#f59e0b' },
-      { label: 'Unscheduled', frac: 0.23, color: '#fb7185' }
-    ];
-    var presented = Math.round(s.prodMtd * 1.5);
-    var presentedPts = Math.round(s.npMtd * 5.4);
-    var funnelRows = funnel.map(function (b) {
-      var amt = Math.round(presented * b.frac);
-      var pts = Math.max(Math.round(presentedPts * b.frac), 1);
-      return '<div class="bad-funnel__row">' +
-        '<span class="bad-funnel__label">' + b.label + '</span>' +
-        '<span class="bad-funnel__bar"><i style="width:' + (b.frac * 100).toFixed(1) + '%;background:' + b.color + '"></i></span>' +
-        '<span class="bad-funnel__meta">' + moneyShort(amt) + ' · ' + pts + ' pts · ' + (b.frac * 100).toFixed(1) + '%</span>' +
-      '</div>';
-    }).join('');
-    function compRow(label, mult, shaded, note) {
-      var prodV = Math.round(s.avgDailyProd * mult.d);
-      return '<tr' + (shaded ? ' class="shaded"' : '') + '><td>' + label + (note ? ' <span class="bad-hint">' + note + '</span>' : '') + '</td>' +
-        '<td class="num">' + money(prodV * mult.span) + '</td>' +
-        '<td class="num">' + money(Math.round(s.avgDailyColl * mult.d * mult.span)) + '</td>' +
-        '<td class="num">' + s.collectionRatePct.toFixed(1) + '%</td>' +
-        '<td class="num">' + Math.max(1, Math.round(mult.np)) + '</td>' +
-        '<td class="num">' + Math.round(21 * mult.span * mult.d) + '</td>' +
-        '<td class="num">' + s.caseAccept.toFixed(1) + '%</td></tr>';
-    }
-    var wk = Math.min(Math.max(s.now.getDay() === 0 || s.now.getDay() === 6 ? 5 : s.now.getDay(), 1), 5);
-    return (
-      '<div class="bad-daily__head"><h4>' + todayStr + '</h4><span class="bad-chip bad-chip--today">TODAY</span></div>' +
-      sectionRule('Revenue') +
-      '<div class="bad-statgrid">' +
-        statCard({ label: 'Net Production', color: '#6366f1', value: money(t.net), sub: Math.round((t.collections / Math.max(t.net, 1)) * 100) + '% collected' }) +
-        statCard({ label: 'Collections', color: '#10b981', value: money(t.collections), sub: s.collectionRatePct.toFixed(1) + '% rate' }) +
-        statCard({ label: 'Adjustments', color: '#ef4444', value: money(t.adjustments), sub: 'today' }) +
-        statCard({ label: 'Collection Rate', color: '#0ea5e9', value: s.collectionRatePct.toFixed(1) + '%', sub: 'collections ÷ production' }) +
-      '</div>' +
-      sectionRule('Scheduling') +
-      '<div class="bad-statgrid">' +
-        statCard({ label: 'Appointments', color: '#8b5cf6', value: String(t.appointments), sub: t.reappt.toFixed(0) + '% reappointed' }) +
-        statCard({ label: 'Scheduled Production', color: '#f59e0b', value: money(t.scheduled), sub: 'booked for today' }) +
-        statCard({ label: 'Broken Appts', color: '#f97316', value: String(t.broken), sub: 'view patients' }) +
-        statCard({ label: 'Reappointment Rate', color: '#14b8a6', value: t.reappt.toFixed(1) + '%', sub: Math.round(t.appointments * t.reappt / 100) + ' rebooked' }) +
-      '</div>' +
-      sectionRule('Patient Activity') +
-      '<div class="bad-statgrid">' +
-        statCard({ label: 'New Patients', color: '#f59e0b', value: String(t.newPatients), sub: 'view patients' }) +
-        statCard({ label: 'Same Day Treatment', color: '#ec4899', value: money(t.sameDay), sub: 'accepted & done today' }) +
-        statCard({ label: 'Google Review Avg', color: '#eab308', value: t.googleAvg.toFixed(1) + ' ★', sub: '1 new review' }) +
-        statCard({ label: 'Case Acceptance', color: '#6366f1', value: s.caseAccept.toFixed(1) + '%', sub: 'MTD, 30-day window' }) +
-      '</div>' +
-      '<div class="bad-card" style="margin-top:14px">' +
-        '<div class="bad-card__head"><strong>Provider Production</strong><span class="bad-strip__meta">today</span></div>' +
-        '<table class="bad-table"><thead><tr><th>Provider</th><th class="num">Production</th><th class="num">Collections</th><th class="num">Procedures</th><th class="num">Avg/Appt</th></tr></thead>' +
-        '<tbody>' + provRows + '</tbody></table>' +
-      '</div>' +
-      '<div class="bad-card" style="margin-top:14px">' +
-        '<div class="bad-card__head"><strong>Total AR Aging</strong><strong>' + moneyShort(s.aging.total) + '</strong></div>' +
-        '<table class="bad-table"><thead><tr><th>Bucket</th><th class="num">Insurance</th><th class="num">Patient</th><th class="num">Total</th><th class="num">Claims</th></tr></thead>' +
-        '<tbody>' + agingRows +
-        '<tr class="total"><td>Total</td><td class="num">' + money(s.aging.insurance) + '</td><td class="num">' + money(s.aging.patient) + '</td><td class="num"><strong>' + money(s.aging.total) + '</strong></td><td class="num">' + s.aging.claims.reduce(function (a, b) { return a + b; }, 0) + '</td></tr>' +
-        '</tbody></table>' +
-      '</div>' +
-      '<div class="bad-card" style="margin-top:14px">' +
-        '<div class="bad-card__head"><strong>Case Acceptance Timing</strong><span class="bad-strip__meta">mature window (60d)</span></div>' +
-        '<p class="bad-funnel__lede"><strong>' + presentedPts + ' patients</strong> presented <strong>' + money(presented) + '</strong> of treatment</p>' +
-        funnelRows +
-        '<p class="bad-foot">Dollars bucket by procedure; patients count once, at their fastest conversion.</p>' +
-      '</div>' +
-      '<div class="bad-card" style="margin-top:14px">' +
-        '<div class="bad-card__head"><strong>Key Metrics by Period</strong><span class="bad-strip__meta">52-week baseline</span></div>' +
-        '<div class="bad-scroll"><table class="bad-table"><thead><tr><th>Period</th><th class="num">Net Production</th><th class="num">Collections</th><th class="num">Collection %</th><th class="num">New Patients</th><th class="num">Appointments</th><th class="num">Case Acceptance</th></tr></thead><tbody>' +
-        compRow('Yesterday', { d: 1.02, span: 1, np: 1 }) +
-        compRow('This week', { d: 1, span: wk, np: s.npMtd / s.workingDays.elapsed * wk }) +
-        compRow('Average week (52-wk)', { d: 0.96, span: 5, np: s.npMtd / s.workingDays.elapsed * 5 * 0.96 }, true, '52 wks') +
-        compRow('Month to date', { d: 1, span: s.workingDays.elapsed, np: s.npMtd }) +
-        compRow('This month last year', { d: 0.9, span: s.workingDays.total, np: GOALS.newPatients * 0.9 }) +
-        compRow('12-month avg', { d: 0.95, span: s.workingDays.total, np: GOALS.newPatients * 0.97 }) +
-        compRow('Year to date', { d: 0.97, span: s.workingDays.elapsed + (s.month) * 21, np: GOALS.newPatients * (s.month + 0.5) }) +
-        '</tbody></table></div>' +
+        '<aside class="bad__side">' +
+          '<div class="bad-snap" id="bad-snap">' + snapshotHtml(s) + '</div>' +
+          '<div class="bad-winschip">' +
+            '<span class="bad-winschip__icon">' + s.win.icon + '</span>' +
+            '<span class="bad-winschip__body"><strong>Practice Wins</strong><span>' + s.winsTotal + ' this year · latest: ' + esc(s.win.name) + '</span></span>' +
+            '<span class="bad-winschip__new">1 NEW</span>' +
+          '</div>' +
+        '</aside>' +
       '</div>'
     );
   }
@@ -764,7 +704,7 @@
     return (
       '<div class="bad-card" style="margin-bottom:14px">' +
         '<div class="bad-card__head" style="margin-bottom:0"><strong>' + s.year + '</strong>' +
-        '<label class="bad-switch"><input type="checkbox" data-yoy' + (yoy ? ' checked' : '') + '><i></i>Compare with previous year</label></div>' +
+        '<label class="bad-switch"><input type="checkbox" data-yoy' + (yoy ? ' checked' : '') + '><i></i>Compare with prior years</label></div>' +
       '</div>' +
       '<div class="bad-mgrid">' + cards + '</div>' +
       (yoy ? '<p class="bad-foot" style="margin-top:10px">Light blue bars = ' + (s.year - 1) + '. Colored bars = ' + s.year + '.</p>' : '')
@@ -1155,9 +1095,8 @@
 
   var ANALYTICS_TABS = [
     { key: 'dashboard', label: 'Dashboard', title: 'Analytics Dashboard', sub: 'Monitor your practice performance and key metrics', render: tabDashboard },
-    { key: 'daily', label: 'Daily Report', title: 'Daily Analytics', sub: 'Daily metrics, provider production, AR aging, and key metrics by period', render: tabDaily },
-    { key: 'monthly', label: 'Monthly', title: 'Monthly Analytics', sub: 'Track monthly performance and year-over-year growth', render: tabMonthly },
-    { key: 'patients', label: 'Patient Connection', title: 'Patient Connection', sub: 'Every patient list behind your numbers — unscheduled, broken, new, unaccepted, unverified', render: tabPatients },
+    { key: 'monthly', label: 'Monthly Trends', title: 'Monthly Trends', sub: 'Track monthly performance and year-over-year growth', render: tabMonthly },
+    { key: 'patients', label: 'Patient Follow-Ups', title: 'Patient Follow-Ups', sub: 'Every patient list behind your numbers — unscheduled, broken, new, unaccepted, unverified', render: tabPatients },
     { key: 'txplans', label: 'Treatment Plans', title: 'Treatment Plan Tracker', sub: 'Every presented treatment plan with an owner, a status, and a follow-up date', render: tabTxPlans },
     { key: 'providers', label: 'Providers', title: 'Provider Scorecards', sub: 'Per-provider production, case acceptance, and hygiene metrics', render: tabProviders },
     { key: 'reviews', label: 'Google Reviews', title: 'Google Reviews', sub: 'Recent reviews and daily rating history from your Google Business Profile', render: null }
@@ -1219,33 +1158,33 @@
         '</div>' +
       '</div>';
 
-    if (state.product === 'analytics' && tab.key === 'dashboard' && state.animated) animateRings();
+    if (state.product === 'analytics' && tab.key === 'dashboard' && state.animated) animateDash();
   }
 
   /* ================= animation ================= */
 
-  function animateRings() {
-    var rings = root.querySelectorAll('.bad-ring');
-    rings.forEach(function (el) {
-      var pct = Math.min(parseInt(el.getAttribute('data-pct'), 10), 100);
-      var bar = el.querySelector('.bad-ring__bar');
-      var num = el.querySelector('.bad-ring__pct');
-      var target = parseInt(num.getAttribute('data-count'), 10);
-      var offset = CIRC * (1 - pct / 100);
+  function animateDash() {
+    /* gauge fills sweep in */
+    root.querySelectorAll('.bad-tile__fill').forEach(function (el) {
+      var pct = Math.min(parseInt(el.getAttribute('data-fill'), 10), 100);
       if (REDUCED) {
-        bar.style.transition = 'none';
-        bar.style.strokeDashoffset = offset;
-        num.textContent = target + '%';
+        el.style.transition = 'none';
+        el.style.width = pct + '%';
         return;
       }
       requestAnimationFrame(function () {
-        requestAnimationFrame(function () { bar.style.strokeDashoffset = offset; });
+        requestAnimationFrame(function () { el.style.width = pct + '%'; });
       });
+    });
+    /* the hero forecast counts up */
+    root.querySelectorAll('[data-countup]').forEach(function (el) {
+      var target = parseInt(el.getAttribute('data-countup'), 10);
+      if (REDUCED) { el.textContent = money(target); return; }
       var t0 = null, DUR = 900;
       function step(ts) {
         if (!t0) t0 = ts;
         var p = Math.min((ts - t0) / DUR, 1);
-        num.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + '%';
+        el.textContent = money(Math.round(target * (1 - Math.pow(1 - p, 3))));
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -1266,7 +1205,7 @@
     built: null,
     rep: null,
     animated: false,
-    ui: { yoy: false, sort: 'newest', txfilter: 'all', fuq: 'due', reqtab: 'pending', draftOpen: 0, handled: {}, copied: null }
+    ui: { yoy: true, sort: 'newest', txfilter: 'all', fuq: 'due', reqtab: 'pending', draftOpen: 0, handled: {}, checked: {}, copied: null }
   };
   var NAV_RANGE = 7;
 
@@ -1319,6 +1258,10 @@
       var idx = parseInt(v, 10);
       state.ui.draftOpen = state.ui.draftOpen === idx ? -1 : idx;
       rerenderViewOnly();
+    } else if ((v = btn.getAttribute('data-check')) !== null) {
+      var ci = parseInt(v, 10);
+      state.ui.checked[ci] = !state.ui.checked[ci];
+      rerenderViewOnly();
     } else if ((v = btn.getAttribute('data-handle')) !== null) {
       state.ui.handled[parseInt(v, 10)] = true; rerenderViewOnly();
     } else if ((v = btn.getAttribute('data-copy')) !== null) {
@@ -1334,7 +1277,7 @@
     }
   });
 
-  /* first render: paint immediately, animate rings when scrolled into view */
+  /* first render: paint immediately, animate gauges when scrolled into view */
   rebuild();
   renderFrame();
   if ('IntersectionObserver' in window) {
@@ -1342,7 +1285,7 @@
       entries.forEach(function (en) {
         if (en.isIntersecting && !state.animated) {
           state.animated = true;
-          animateRings();
+          animateDash();
           io.disconnect();
         }
       });
@@ -1350,6 +1293,6 @@
     io.observe(root);
   } else {
     state.animated = true;
-    animateRings();
+    animateDash();
   }
 })();
