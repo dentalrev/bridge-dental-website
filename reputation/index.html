@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bridge Reputation — Reviews, Rank &amp; Social for Dental Practices</title>
+<meta name="description" content="Your next patient is reading your reviews right now. Bridge Reputation answers every review, tracks your rank against nearby practices, and posts for you — $229/location/mo with the entire Bridge Analytics platform included." />
+<link rel="canonical" href="https://bridgedental.ai/reputation/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Bridge Dental" />
+<meta property="og:url" content="https://bridgedental.ai/reputation/" />
+<meta property="og:title" content="Bridge Reputation — Reviews, Rank &amp; Social for Dental Practices" />
+<meta property="og:description" content="Your next patient is reading your reviews right now. Bridge Reputation answers every review, tracks your rank against nearby practices, and posts for you." />
+<meta property="og:image" content="https://bridgedental.ai/assets/og/og-analytics.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="theme-color" content="#0d1020" />
+<link rel="icon" type="image/png" sizes="48x48" href="../assets/favicon-48.png?v=20260724" />
+<link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon-512.png?v=20260724" />
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=20260724" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Poppins:wght@500;600;700&family=Mulish:wght@400;600;700&display=swap" />
+<style>
+/* =========================================================
+   Bridge Reputation — standalone pitch page.
+   One dark canvas, one accent, one purchase. Self-contained.
+   ========================================================= */
+:root {
+  --ink: #0d1020;
+  --rose: #ef3a66;
+  --rose-soft: #ff7ea0;
+  --white: #ffffff;
+  --dim: rgba(255,255,255,.58);
+  --dimmer: rgba(255,255,255,.38);
+  --hairline: rgba(255,255,255,.09);
+  --card: rgba(255,255,255,.035);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink); color: var(--white);
+  font-family: 'Mulish', sans-serif; font-size: 16.5px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+.wrap { max-width: 1020px; margin-inline: auto; padding-inline: 24px; }
+
+.serif {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif; font-weight: 400;
+  letter-spacing: -.01em; line-height: 1.12;
+}
+.eyebrow {
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--rose-soft);
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15.5px;
+  border-radius: 999px; padding: 15px 30px; text-decoration: none;
+  transition: transform .15s, opacity .15s, background .15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-rose { background: var(--rose); color: #fff; box-shadow: 0 12px 34px rgba(239,58,102,.32); }
+.btn-rose:hover { background: #f04f76; }
+.btn-quiet { color: var(--dim); border: 1px solid var(--hairline); }
+.btn-quiet:hover { color: #fff; border-color: rgba(255,255,255,.25); }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: 0; z-index: 20; background: rgba(13,16,32,.82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--hairline); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; }
+.nav img { height: 34px; width: auto; }
+.nav .btn { padding: 10px 20px; font-size: 13.5px; }
+
+/* ---------- hero ---------- */
+.hero { padding: 110px 0 84px; text-align: center; }
+.hero h1 { font-size: clamp(36px, 5.4vw, 62px); max-width: 840px; margin: 26px auto 0; }
+.hero .sub { max-width: 600px; margin: 24px auto 0; font-size: 18px; color: var(--dim); }
+.hero .sub b { color: rgba(255,255,255,.92); font-weight: 600; }
+.hero .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 38px; }
+.trust { display: flex; gap: 8px 18px; justify-content: center; flex-wrap: wrap; margin-top: 26px; font-size: 13.5px; color: var(--dimmer); }
+
+/* ---------- the three questions ---------- */
+.qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+.q {
+  background: var(--card); border: 1px solid var(--hairline); border-radius: 18px;
+  padding: 26px; text-align: left; transition: border-color .2s;
+}
+.q:hover { border-color: rgba(255,126,160,.4); }
+.q .qi { display: flex; justify-content: space-between; align-items: center; font-size: 19px; margin-bottom: 12px; }
+.q .qi svg { color: rgba(255,255,255,.22); }
+.q b { display: block; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16.5px; line-height: 1.35; margin-bottom: 8px; }
+.q p { font-size: 14px; color: var(--dim); }
+
+/* ---------- product moments ---------- */
+.moment { padding: 110px 0 0; text-align: center; }
+.moment h2 { font-size: clamp(28px, 3.8vw, 44px); max-width: 680px; margin: 22px auto 0; }
+.moment .lead { max-width: 560px; margin: 18px auto 0; color: var(--dim); }
+.ticks { display: flex; gap: 8px 22px; justify-content: center; flex-wrap: wrap; margin-top: 26px; font-size: 14.5px; }
+.ticks span { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.78); }
+.ticks svg { color: var(--rose); flex: none; }
+.frame {
+  max-width: 880px; margin: 44px auto 0; border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12); box-shadow: 0 34px 90px rgba(0,0,0,.55);
+}
+.frame img { width: 100%; height: auto; }
+
+/* ---------- runs itself ---------- */
+.auto { padding: 120px 0 0; text-align: center; }
+.auto h2 { font-size: clamp(28px, 3.8vw, 44px); }
+.auto .pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 760px; margin: 32px auto 0; }
+.auto .pills span {
+  font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; color: rgba(255,255,255,.75);
+  border: 1px solid var(--hairline); background: var(--card); border-radius: 999px; padding: 10px 20px;
+}
+.auto .after { margin-top: 28px; color: var(--dim); font-size: 16px; }
+
+/* ---------- offer ---------- */
+.offer { padding: 130px 0 40px; }
+.offer-card {
+  max-width: 560px; margin-inline: auto; background: #fff; color: #1f2433;
+  border-radius: 24px; padding: 46px 44px; text-align: center;
+  box-shadow: 0 40px 120px rgba(0,0,0,.55);
+}
+.offer-card .plan { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #8a8fa3; }
+.offer-card .price { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 62px; line-height: 1; margin-top: 18px; }
+.offer-card .price small { font-size: 19px; font-weight: 600; color: #8a8fa3; }
+.offer-card .incl { font-family: 'Fraunces', Georgia, serif; font-size: 20px; margin: 18px auto 0; max-width: 380px; line-height: 1.4; }
+.offer-card .incl em { font-style: italic; color: var(--rose); }
+.offer-card ul { list-style: none; margin: 28px 0 0; text-align: left; display: flex; flex-direction: column; gap: 11px; }
+.offer-card li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; }
+.offer-card li svg { flex: none; color: #1f8a55; margin-top: 4px; }
+.offer-card .btn { width: 100%; margin-top: 32px; padding: 17px; font-size: 16.5px; }
+.offer-card .under { font-size: 13px; color: #8a8fa3; margin-top: 16px; }
+.offer-card .under a { color: var(--rose); font-weight: 600; }
+.offer .fine { text-align: center; color: var(--dimmer); font-size: 13.5px; margin-top: 22px; }
+
+/* ---------- faq ---------- */
+.faq { max-width: 640px; margin: 110px auto 0; padding-inline: 24px; }
+.faq h2 { text-align: center; font-size: clamp(24px, 3vw, 34px); margin-bottom: 18px; }
+.faq details { border-bottom: 1px solid var(--hairline); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 20px 0; display: flex; justify-content: space-between;
+  align-items: center; gap: 18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary i { font-style: normal; color: var(--rose); transition: transform .2s; }
+.faq details[open] summary i { transform: rotate(45deg); }
+.faq .a { padding: 0 0 20px; font-size: 15px; color: var(--dim); }
+
+/* ---------- close + footer ---------- */
+.close { padding: 120px 0 0; text-align: center; }
+.close h2 { font-style: italic; font-size: clamp(28px, 3.8vw, 42px); }
+.close p { color: var(--dim); max-width: 480px; margin: 16px auto 0; }
+.close .btn { margin-top: 30px; }
+.footer { margin-top: 110px; border-top: 1px solid var(--hairline); padding: 34px 0 44px; }
+.footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer img { height: 30px; width: auto; opacity: .85; }
+.footer nav { display: flex; gap: 20px; font-size: 13px; color: var(--dimmer); }
+.footer a { text-decoration: none; }
+.footer a:hover { color: #fff; }
+
+/* ---------- reveal ---------- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+@media (max-width: 860px) {
+  .hero { padding: 72px 0 64px; }
+  .qs { grid-template-columns: 1fr; }
+  .moment, .auto { padding-top: 84px; }
+  .offer { padding-top: 96px; }
+  .offer-card { padding: 36px 26px; }
+  .btn { white-space: normal; }
+}
+</style>
+<script defer src="../assets/analytics.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap">
+    <a href="../index.html" aria-label="Bridge Dental home"><img src="../assets/bd-logo-white.png" alt="Bridge Dental" /></a>
+    <a class="btn btn-rose" href="#buy">Get Bridge Reputation</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow reveal">Bridge Reputation · For Dental Practices</p>
+    <h1 class="serif reveal">Your next patient is reading your reviews right now.</h1>
+    <p class="sub reveal">Before they ever call, they'll check your stars, read the newest complaint, and notice whether anyone answered it. Bridge Reputation makes sure what they find wins the patient — <b>without adding a job to anyone's day.</b></p>
+    <div class="ctas reveal">
+      <a class="btn btn-rose" href="#buy">Get Bridge Reputation — $229/mo</a>
+      <a class="btn btn-quiet" href="#track">See what it does ↓</a>
+    </div>
+    <div class="trust reveal">
+      <span>No contract</span><span>·</span>
+      <span>No setup fee</span><span>·</span>
+      <span>Unlimited users</span><span>·</span>
+      <span>All of Bridge Analytics included</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE THREE QUESTIONS ============ -->
+<section>
+  <div class="wrap">
+    <div class="qs reveal">
+      <div class="q">
+        <span class="qi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        <b>Whose job is this at your office today?</b>
+        <p>Review replies, social posts, watching the competition — they belong to everyone, so they belong to no one. Bridge does the heavy lifting and hands your team the last ten seconds.</p>
+      </div>
+      <div class="q">
+        <span class="qi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        <b>Is the practice down the street pulling ahead?</b>
+        <p>From your front desk, you can't tell. Bridge scores every nearby practice on the same public signals and shows you the race — rating, review pace, local rank.</p>
+      </div>
+      <div class="q">
+        <span class="qi"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9.5 9.5h5"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        <b>What does staying quiet cost?</b>
+        <p>Nothing that shows up on a report. Just patients who read an unanswered complaint, drew a quiet conclusion, and called the practice that answered theirs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOMENT 1 — TRACK ============ -->
+<section class="moment" id="track">
+  <div class="wrap">
+    <p class="eyebrow reveal">Track</p>
+    <h2 class="serif reveal">Know exactly where you stand.</h2>
+    <p class="lead reveal">One screen answers the question owners quietly carry around: <b style="color:rgba(255,255,255,.9)">how are we actually doing out there?</b></p>
+    <div class="ticks reveal">
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A Bridge Score from 0–100 that explains itself</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Google, Facebook &amp; Yelp on one scoreboard</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Your rank against the practices around you</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A reply drafted for every review, in your voice</span>
+    </div>
+    <div class="frame reveal"><img loading="lazy" decoding="async" src="../assets/app/reputation-track.jpg?v=20260904b" alt="Bridge Reputation Track — Bridge Score with receipts, the Google/Yelp/Facebook/Instagram/TikTok scoreboard, and market standings" width="3000" height="2226" /></div>
+  </div>
+</section>
+
+<!-- ============ MOMENT 2 — CREATE ============ -->
+<section class="moment">
+  <div class="wrap">
+    <p class="eyebrow reveal">Create</p>
+    <h2 class="serif reveal">Look as good as you actually are.</h2>
+    <p class="lead reveal">Great practices go quiet online because posting is a chore. The Studio makes it one question and one tap.</p>
+    <div class="ticks reveal">
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>“What should we post today?” — answered for you</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A pre-filled calendar that publishes itself</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Facebook, Instagram &amp; Google — one approval</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Always in your brand — colors, voice, logo</span>
+    </div>
+    <div class="frame reveal"><img loading="lazy" decoding="async" src="../assets/app/brand-studio.jpg?v=20260904b" alt="Brand Studio — one centered question, a create bar, and three suggested posts" width="3000" height="2088" /></div>
+  </div>
+</section>
+
+<!-- ============ RUNS ITSELF ============ -->
+<section class="auto">
+  <div class="wrap">
+    <h2 class="serif reveal">It works while you're with patients.</h2>
+    <div class="pills reveal">
+      <span>Review request the moment the appointment ends</span>
+      <span>A reply drafted for every review</span>
+      <span>Posts publish on schedule</span>
+      <span>Competitors watched daily</span>
+      <span>Unhappy patients caught privately, before Google</span>
+    </div>
+    <p class="after reveal">Your team's part shrinks to a ten-second approval. That's the whole job.</p>
+  </div>
+</section>
+
+<!-- ============ THE OFFER ============ -->
+<section class="offer" id="buy">
+  <div class="wrap">
+    <div class="offer-card reveal">
+      <p class="plan">Bridge Reputation</p>
+      <div class="price">$229<small> /location/mo</small></div>
+      <p class="incl">…and the <em>entire Bridge Analytics platform</em> is included.</p>
+      <ul>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything on this page — reviews, rank, requests, Studio, calendar</li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plus full practice analytics: forecasts, patient follow-ups, provider scorecards, morning huddles</li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited users · no setup fee · no contract · cancel anytime</li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Onboarding call included — we connect Google and Open Dental with you</li>
+      </ul>
+      <a class="btn btn-rose" href="https://buy.stripe.com/cNieV6exye646mB9TTdnW00">Get Bridge Reputation</a>
+      <p class="under">Checkout takes two minutes. Prefer annual? <a href="https://buy.stripe.com/5kQdR22OQaTSh1f8PPdnW01">$2,290/yr — two months free.</a></p>
+    </div>
+    <p class="fine">Prefer to poke around first? <a href="../dashboard/?product=reputation#demo" style="color:rgba(255,255,255,.7);">Click through the live demo</a> — sample data, every tab works.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq">
+  <h2 class="serif reveal">Fair questions</h2>
+  <div class="reveal">
+    <details open>
+      <summary>Who actually writes the review replies?<i>+</i></summary>
+      <div class="a">Bridge drafts every reply in your practice's voice the moment a review syncs. A person on your team reads it, tweaks a word if they want, and posts — a HIPAA guardrail checks every edit, so a reply can never confirm someone is a patient or mention treatment.</div>
+    </details>
+    <details>
+      <summary>Do posts really publish themselves?<i>+</i></summary>
+      <div class="a">Yes. A guided wizard connects your Facebook, Instagram and Google Business accounts — no developer needed. Bridge pre-fills a calendar of on-brand posts; you approve, and they go out on schedule. Nothing ever publishes without your standing approval, and comments from every channel land in one inbox.</div>
+    </details>
+    <details>
+      <summary>Where do the competitor numbers come from?<i>+</i></summary>
+      <div class="a">Public Google data only — ratings, review counts, review pace, local-pack positions — snapshotted over time. When there isn't enough history for an honest number, you see a dash, never a made-up zero. No invented estimates, no claims about anyone's patients.</div>
+    </details>
+    <details>
+      <summary>Does it work with my practice software?<i>+</i></summary>
+      <div class="a">Bridge is built for Open Dental practices. Reputation connects to your Google Business Profile and social accounts, and times review requests off your Open Dental schedule — they go out the moment the appointment ends, while the visit is still fresh.</div>
+    </details>
+    <details>
+      <summary>What's the catch on the price?<i>+</i></summary>
+      <div class="a">There isn't one. $229 per location per month is the whole platform — Reputation and Bridge Analytics together, unlimited users, no setup fee, no contract. It's priced by owner-founders with a lean team and modern AI, not by a software company's sales quota.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ CLOSE ============ -->
+<section class="close">
+  <div class="wrap">
+    <h2 class="serif reveal">Run the practice patients brag about.</h2>
+    <p class="reveal">The next patient who reads your reviews should find a practice that clearly cares. Two minutes from now, that can be handled — permanently.</p>
+    <a class="btn btn-rose reveal" href="#buy">Get Bridge Reputation — $229/mo</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <img src="../assets/bd-logo-white.png" alt="Bridge Dental" />
+    <nav>
+      <a href="../dashboard/">Bridge Analytics</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+      <a href="mailto:admin@bridgedental.ai">admin@bridgedental.ai</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal — tiny, self-contained.
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
