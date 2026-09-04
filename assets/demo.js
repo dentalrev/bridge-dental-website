@@ -422,20 +422,14 @@
       ],
       unanswered: 3,
       market: {
-        rank: 2, total: 6,
+        rank: 1, total: 4,
         standings: [
-          { name: 'Meridian Smiles', rating: 4.9, reviews: 342, gained30: 6 },
-          { name: 'Sunrise Dental Studio', rating: 4.8, reviews: 214, gained30: 12, you: true },
-          { name: 'Cedar Park Dental', rating: 4.7, reviews: 188, gained30: 9 },
-          { name: 'Springfield Family Dental', rating: 4.6, reviews: 421, gained30: 3 },
-          { name: 'Brightleaf Dental', rating: 4.4, reviews: 97, gained30: 4 },
-          { name: 'Downtown Dental Co.', rating: null, reviews: 156, gained30: null }
+          { name: 'Sunrise Dental Studio', rating: 4.9, reviews: 1214, gained30: 26, you: true },
+          { name: 'Cedar Park Dental', rating: 4.8, reviews: 587, gained30: 13 },
+          { name: 'Meridian Smiles', rating: 4.8, reviews: 252, gained30: 0 },
+          { name: 'Brightleaf Dental', rating: 4.4, reviews: 97, gained30: 4 }
         ],
-        edge: [
-          'Meridian Smiles is 0.1★ ahead — at your current five-star mix, passing them is within reach this quarter.',
-          'Cedar Park Dental gained 9 reviews in 30 days to your 12 — keep review requests running to hold the velocity lead.',
-          'Milestone: 250 lifetime reviews — 36 to go at the current pace.'
-        ]
+        race: 'Review race, last 28 days: you +26 · fastest mover Cedar Park Dental +13'
       },
       ranks: [
         { term: 'dentist near me', pos: 3, move: 1 },
@@ -446,29 +440,37 @@
       ],
       /* Bridge Score — the composite 0-100 with receipts (never a black box). */
       score: {
-        value: 82, band: 'Strong',
+        value: 91, band: 'Excellent',
         parts: [
-          { label: 'Star rating', v: 88 },
-          { label: 'Review flow', v: 84 },
-          { label: 'Response health', v: 71, low: true },
-          { label: 'Local visibility', v: 78 }
+          { label: 'Star rating', v: 98 },
+          { label: 'Review volume', v: 100 },
+          { label: 'Responsiveness', v: 63, low: true },
+          { label: 'Listing health', v: null }
         ],
-        note: '46 of 50 recent reviews answered — replying to the 3 waiting lifts Response health first.'
+        foot1: 'Answers 58% of reviews · ~4 days to reply · last 90 days',
+        foot2: '#1 of 4 nearby practices',
+        dots: [62, 75, 88]
       },
-      /* Scoreboard — one tile per review surface; null = not connected, shown as “—”. */
+      /* Scoreboard — one tile per surface; unknown renders “—”, never zero. */
       platforms: [
-        { name: 'Google', dot: '#4285f4', rating: 4.8, total: 214, new30: 12, trend: '+0.2', action: 'Reply (3)', primary: true, meta: 'synced 2h ago' },
-        { name: 'Facebook', dot: '#6366f1', rating: 4.9, total: 87, new30: 4, trend: '+0.1', action: 'View', primary: false, meta: 'synced 2h ago' },
-        { name: 'Yelp', dot: '#ef4444', rating: null, total: null, new30: null, trend: null, action: 'Connect', primary: true, meta: 'not connected' }
+        { name: 'Google', dot: '#4285f4', trend: '+0.1 (30d)', rating: 4.9, meta: '1,214 reviews · <b>+26 in 30d</b> · synced 1m ago', link: 'Reply to 3 waiting reviews →', dim: false },
+        { name: 'Yelp', dot: '#ef4444', trend: '', rating: 4.2, meta: '9 reviews · synced 16 hours ago', link: 'Ask for reviews →', dim: true },
+        { name: 'Facebook', dot: '#6366f1', trend: '', rating: null, meta: 'No review count yet · Not connected', link: 'Connect Facebook →', dim: false },
+        { name: 'Instagram', dot: '#c05cf0', trend: '', rating: null, meta: 'Posts publish via Brand Studio', link: 'Open Brand Studio →', dim: true },
+        { name: 'TikTok', dot: '#22262f', trend: '', rating: null, meta: 'Posts publish via Brand Studio', link: 'Open Brand Studio →', dim: true }
       ],
       /* Brand Studio — the calm Create landing. */
       studio: {
         suggestions: [
-          { icon: '🗓', label: '“Meet Dr. Stone” is ready', hint: 'A ten-second look and it goes out on schedule', hi: true },
-          { icon: '❝', label: 'Post a five-star review', hint: 'Written from this week’s reviews' },
-          { icon: '📈', label: 'Make one like Cedar Park’s', hint: 'Team photos are earning 3× their usual engagement' }
+          { icon: 'calcheck', label: '“Why patients choose us” is ready', hint: 'A ten-second look and it goes out on schedule', hi: true },
+          { icon: 'quote', label: 'Post a five-star review', hint: 'Written from this week’s reviews' },
+          { icon: 'trend', label: 'Make one like The Smile Co.', hint: 'Personal + family moments out-perform polished ads.' }
         ],
-        pills: ['🗓 Calendar', '📷 Capture', '🖼 Add photos / videos', '⬇ Import', '🎨 Brand Kit'],
+        pills: [
+          { icon: 'cal', label: 'Calendar' }, { icon: 'cam', label: 'Capture' },
+          { icon: 'img', label: 'Add photos / videos' }, { icon: 'dl', label: 'Import' },
+          { icon: 'palette', label: 'Brand Kit' }
+        ],
         weekLine: '3 posts scheduled this week · next goes out Thursday 9:00 AM'
       },
       calendar: [
@@ -965,89 +967,119 @@
     return '<span class="bad-move bad-move--flat">±0</span>';
   }
 
-  function marketHtml(rep) {
-    var m = rep.market;
-    var rows = m.standings.map(function (s) {
-      return '<div class="bad-mkt__row' + (s.you ? ' is-you' : '') + '">' +
-        '<span class="bad-mkt__name">' + esc(s.name) + (s.you ? ' <span class="bad-board__tag">You</span>' : '') + '</span>' +
-        '<span class="bad-mkt__num">' + (s.rating === null ? '—' : s.rating.toFixed(1) + ' ★') + '</span>' +
-        '<span class="bad-mkt__num">' + s.reviews + '</span>' +
-        '<span class="bad-mkt__num">' + (s.gained30 === null ? '—' : '+' + s.gained30) + '</span>' +
-      '</div>';
-    }).join('');
-    var edge = m.edge.map(function (e, i) {
-      return '<div class="bad-edge__item"><span class="bad-edge__num">' + (i + 1) + '</span><span>' + esc(e) + '</span></div>';
-    }).join('');
-    return (
-      '<div class="bad-card" style="height:100%">' +
-        '<div class="bad-card__head"><strong>🏆 Your Market</strong><span class="bad-strip__meta">6 tracked practices</span></div>' +
-        '<div class="bad-mkt__rank">#' + m.rank + ' <em>of ' + m.total + ' tracked</em></div>' +
-        '<div class="bad-mkt__row bad-mkt__row--head"><span class="bad-mkt__name">Practice</span><span class="bad-mkt__num">Rating</span><span class="bad-mkt__num">Reviews</span><span class="bad-mkt__num">+30d</span></div>' +
-        rows +
-        '<span class="bad-stat__label" style="display:block;margin:12px 0 7px">This week’s edge</span>' +
-        edge +
-        '<p class="bad-foot" style="margin-top:9px">Rank and movement come from stored snapshots — “—” means not enough history, never zero.</p>' +
-      '</div>'
-    );
+  /* Compact lucide-style stroke icons for the reputation chrome. */
+  function ico(paths, size, extra) {
+    return '<svg width="' + (size || 14) + '" height="' + (size || 14) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"' + (extra || '') + '>' + paths + '</svg>';
   }
+  var ICO = {
+    spark: ico('<path d="M9.9 4.2 11 2l1.1 2.2a6 6 0 0 0 2.7 2.7L17 8l-2.2 1.1a6 6 0 0 0-2.7 2.7L11 14l-1.1-2.2a6 6 0 0 0-2.7-2.7L5 8l2.2-1.1a6 6 0 0 0 2.7-2.7z"/><path d="M18 14l.6 1.4L20 16l-1.4.6L18 18l-.6-1.4L16 16l1.4-.6z"/>', 13),
+    target: ico('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>', 13),
+    sliders: ico('<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>', 15),
+    search: ico('<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>', 12),
+    bell: ico('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>', 15),
+    help: ico('<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.4-3 4"/><path d="M12 17.5h.01"/>', 15),
+    star: ico('<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/>', 14, ' style="color:#f5b53f"'),
+    sync: ico('<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>', 12),
+    award: ico('<circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/>', 13),
+    gauge: ico('<path d="m12 14 4-4"/><path d="M3.3 12a9 9 0 1 1 17.4 0"/>', 13),
+    wand: ico('<path d="m15 4 5 5L9 20l-5 1 1-5z"/><path d="m14 7 3 3"/><path d="M5 6V4M4 5h2M19 15v-2M18 14h2"/>', 15),
+    arrowr: ico('<path d="M5 12h14M13 6l6 6-6 6"/>', 13),
+    up: ico('<path d="M7 17 17 7M8 7h9v9"/>', 12),
+    cal: ico('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>', 14),
+    calcheck: ico('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>', 15),
+    quote: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7v5c0 3.3-2.7 6-6 6v-2c2.2 0 4-1.8 4-4H5V7h6zM21 7v5c0 3.3-2.7 6-6 6v-2c2.2 0 4-1.8 4-4h-4V7h6z"/></svg>',
+    trend: ico('<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>', 15),
+    cam: ico('<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>', 14),
+    img: ico('<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>', 14),
+    dl: ico('<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/>', 14),
+    palette: ico('<circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1a1.6 1.6 0 0 1 1.7-1.7h2c3 0 5.5-2.5 5.5-5.6C22 6 17.5 2 12 2z"/>', 14),
+    pen: ico('<path d="m15 4 5 5L9 20l-5 1 1-5z"/>', 12),
+    chart: ico('<path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/>', 13)
+  };
 
-  /* Bridge Score hero — big 0-100 with its receipts, on the one gradient tile. */
+  /* Track Overview — Bridge Score tile on the soft pink gradient. */
   function scoreHeroHtml(rep) {
-    var rows = rep.score.parts.map(function (pt) {
-      return '<div class="bad-score__row' + (pt.low ? ' is-low' : '') + '">' +
+    var s = rep.score;
+    var rows = s.parts.map(function (pt) {
+      var dash = pt.v === null;
+      return '<div class="bad-score__row' + (pt.low ? ' is-low' : '') + (dash ? ' is-dash' : '') + '">' +
         '<span>' + esc(pt.label) + '</span>' +
-        '<span class="bad-score__track"><i style="width:' + pt.v + '%"></i></span>' +
-        '<b>' + pt.v + '</b>' +
+        '<span class="bad-score__track">' + (dash ? '' : '<i style="width:' + pt.v + '%"></i>') + '</span>' +
+        '<b>' + (dash ? '—' : pt.v) + '</b>' +
       '</div>';
     }).join('');
+    var dots = s.dots.map(function (d) { return '<span class="d" style="left:' + d + '%"></span>'; }).join('');
     return (
       '<div class="bad-score">' +
-        '<div class="bad-score__left">' +
-          '<span class="bad-score__label">Bridge Score</span>' +
-          '<div class="bad-score__big">' + rep.score.value + '<em>/100</em></div>' +
-          '<span class="bad-score__band"><i class="bad-dot bad-dot--up"></i>' + esc(rep.score.band) + '</span>' +
+        '<div class="bad-score__head"><span class="bad-score__label">' + ICO.gauge + ' Bridge Score</span>' +
+          '<span class="bad-score__exc"><i></i>' + esc(s.band) + '</span></div>' +
+        '<div class="bad-score__body">' +
+          '<div class="bad-score__big">' + s.value + '<em>of 100</em></div>' +
+          '<div>' + rows + '</div>' +
         '</div>' +
-        '<div class="bad-score__parts">' + rows +
-          '<p class="bad-score__note">' + esc(rep.score.note) + '</p>' +
-        '</div>' +
+        '<p class="bad-score__foot1">' + esc(s.foot1) + '</p>' +
+        '<p class="bad-score__foot2"><b>' + esc(s.foot2) + '</b> · same public signals for everyone</p>' +
+        '<div class="bad-dotstrip"><span class="ln"></span>' + dots +
+          '<span class="d you" style="right:0"></span><span class="lbl">you</span></div>' +
+        '<p class="bad-score__cap">Each dot is a nearby practice on the same 0–100 score — further right is stronger.</p>' +
       '</div>'
     );
   }
 
-  /* Scoreboard tiles — one per review surface; unknown renders “—”, never zero. */
+  /* Track Overview — the five-surface dotted scoreboard. */
   function platformsHtml(rep) {
     return '<div class="bad-plat">' + rep.platforms.map(function (pf) {
-      return '<div class="bad-card bad-plat__tile">' +
-        '<div class="bad-plat__head"><span class="bad-plat__name"><i class="bad-plat__dot" style="background:' + pf.dot + '"></i><strong>' + esc(pf.name) + '</strong></span>' +
-          '<span class="bad-hint">' + esc(pf.meta) + '</span></div>' +
-        '<div class="bad-plat__big">' + (pf.rating === null ? '—' : pf.rating.toFixed(1) + ' ' + starRow(pf.rating)) + '</div>' +
-        '<div class="bad-plat__meta">' +
-          (pf.total === null ? 'connect to see your reviews here' :
-            pf.total + ' reviews · <b>+' + pf.new30 + '</b> in 30d · <span class="bad-trend">↗ ' + pf.trend + '</span>') +
-        '</div>' +
-        '<button type="button" class="bad-btn' + (pf.primary ? '' : ' bad-btn--ghost') + '" style="margin-top:9px">' + esc(pf.action) + '</button>' +
+      return '<div class="bad-plat__tile">' +
+        '<div class="bad-plat__head"><span class="bad-plat__name"><i class="bad-plat__dot" style="background:' + pf.dot + '"></i>' + esc(pf.name) + '</span>' +
+          (pf.trend ? '<span class="bad-plat__trend">' + esc(pf.trend) + '</span>' : '') + '</div>' +
+        '<div class="bad-plat__big' + (pf.rating === null ? ' is-dash' : '') + '">' +
+          (pf.rating === null ? '—' : pf.rating.toFixed(1) + ' ' + starRow(pf.rating)) + '</div>' +
+        '<div class="bad-plat__meta">' + pf.meta + '</div>' +
+        '<span class="bad-plat__link' + (pf.dim ? ' bad-plat__link--dim' : '') + '">' + esc(pf.link) + '</span>' +
       '</div>';
     }).join('') + '</div>';
   }
 
   function tabRepOverview(rep) {
+    var m = rep.market;
+    var rows = m.standings.slice(0, 3).map(function (st, i) {
+      var g = st.gained30 === 0 ? '<span class="num flat">±0</span>' : '<span class="num pos">+' + st.gained30 + '</span>';
+      return '<div class="rp-mrow' + (st.you ? ' is-you' : '') + '"><span>' + (i + 1) + '.</span>' +
+        '<span>' + esc(st.name) + (st.you ? '<span class="tag">you</span>' : '') + '</span>' +
+        '<span class="num">' + st.rating.toFixed(1) + '★</span>' +
+        '<span class="num">' + st.reviews.toLocaleString('en-US') + '</span>' + g + '</div>';
+    }).join('');
     return (
-      '<p class="bad-foot" style="margin-bottom:10px">⭐ <strong>Sunrise Dental Studio</strong> · reviews synced 2h ago · <span class="bad-hint">🏆 2 market wins this year</span></p>' +
       scoreHeroHtml(rep) +
-      '<div style="margin-top:12px">' + platformsHtml(rep) + '</div>' +
-      '<div class="bad-mgrid" style="margin-top:12px; align-items:start">' +
-        '<div class="bad-mchart" style="border-top-color:#6366f1">' +
-          '<div class="bad-card__head"><strong>Review Mix</strong><span class="bad-strip__meta">per week, 8 wks</span></div>' +
-          barChart(rep.velocity, null, '#6366f1', 96) +
+      '<div style="margin-top:14px">' + platformsHtml(rep) + '</div>' +
+      '<div class="rp-brow">' +
+        '<div class="rp-bc">' +
+          '<div class="rp-bc__head"><span class="lb">' + ICO.award + ' Your Market</span><span class="r">last 28 days</span></div>' +
+          '<div class="rp-mkt__rank">#' + m.rank + '<small>of ' + m.total + ' tracked practices, by Google rating</small></div>' +
+          '<p class="rp-mkt__lead">You lead your market.</p>' +
+          '<span class="rp-mkt__how">' + ICO.trend + ' How to protect #1 →</span>' +
+          '<div style="margin-top:8px">' + rows + '</div>' +
+          '<p class="rp-mkt__race">' + esc(m.race) + '</p>' +
         '</div>' +
-        marketHtml(rep) +
-        '<div class="bad-card">' +
-          '<div class="bad-card__head"><strong>✨ Studio Today</strong><span class="bad-strip__meta">the one thing</span></div>' +
-          '<p class="bad-fb__text" style="margin-top:0"><strong>“Meet Dr. Stone”</strong> is drafted for Tuesday — a ten-second look and it goes out on schedule.</p>' +
-          '<button type="button" class="bad-btn">Review &amp; approve →</button>' +
+        '<div class="rp-bc">' +
+          '<div class="rp-bc__head"><span class="lb">' + ICO.chart + ' New Reviews</span><span class="r">' + ICO.up + '</span></div>' +
+          '<p class="rp-nr__lede">296 in the last 12 months · 97% five-star</p>' +
+          '<div class="rp-nr__chart"><span class="rp-nr__lbl">8 this month</span>' +
+            '<svg viewBox="0 0 400 130" width="100%" style="display:block" aria-hidden="true">' +
+              '<defs><linearGradient id="rpnr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef3a66" stop-opacity=".16"/><stop offset="1" stop-color="#ef3a66" stop-opacity="0"/></linearGradient></defs>' +
+              '<path d="M0 34 L36 54 L72 44 L108 66 L144 50 L180 38 L216 58 L252 46 L288 52 L324 42 L360 62 L396 80 L396 130 L0 130 Z" fill="url(#rpnr)"/>' +
+              '<path d="M0 34 L36 54 L72 44 L108 66 L144 50 L180 38 L216 58 L252 46 L288 52 L324 42 L360 62 L396 80" fill="none" stroke="#ef3a66" stroke-width="2.5" stroke-linejoin="round"/>' +
+              '<circle cx="396" cy="80" r="4" fill="#ef3a66"/>' +
+            '</svg></div>' +
+          '<div class="rp-nr__axis"><span>Oct</span><span>Sep</span></div>' +
         '</div>' +
-      '</div>' +
-      '<p class="bad-foot" style="margin-top:10px">Go deeper: Local Visibility · Profile Health · Review Requests</p>'
+        '<div class="rp-bc">' +
+          '<div class="rp-bc__head"><span class="lb">' + ICO.spark + ' Today in Brand Studio</span></div>' +
+          '<p class="rp-st__title">Approve Tuesday’s post</p>' +
+          '<p class="rp-st__sub">2 posts this week are ready for a quick look before they go out.</p>' +
+          '<button type="button" class="rp-st__btn">Review &amp; approve ' + ICO.arrowr + '</button>' +
+        '</div>' +
+      '</div>'
     );
   }
 
@@ -1094,31 +1126,40 @@
     }).join('');
   }
 
-  /* ── Create: Brand Studio landing — one calm centered screen. ── */
+  /* ── Create: Brand Studio landing — the real dark calm screen. ── */
   function tabStudio(rep) {
     var sugs = rep.studio.suggestions.map(function (s) {
       return '<button type="button" class="bad-sug__card' + (s.hi ? ' is-hi' : '') + '">' +
-        '<span class="bad-sug__top"><span>' + s.icon + '</span><span class="bad-sug__arrow">↗</span></span>' +
+        '<span class="bad-sug__top">' + ICO[s.icon] + '<span class="bad-sug__arrow">' + ICO.up + '</span></span>' +
         '<strong>' + esc(s.label) + '</strong>' +
         '<span class="bad-sug__hint">' + esc(s.hint) + '</span>' +
       '</button>';
+    }).join('');
+    var pills = rep.studio.pills.map(function (pl) {
+      return '<span>' + ICO[pl.icon] + esc(pl.label) + '</span>';
     }).join('');
     return (
       '<div class="bad-studio">' +
         '<h4 class="bad-studio__q">What should we post today?</h4>' +
         '<button type="button" class="bad-askbar">' +
-          '<span class="bad-askbar__wand">✨</span>' +
+          '<span class="bad-askbar__wand">' + ICO.wand + '</span>' +
           '<span class="bad-askbar__ph">A whitening special… a team shout-out… anything</span>' +
-          '<span class="bad-askbar__go">Create →</span>' +
+          '<span class="bad-askbar__go">Create ' + ICO.arrowr + '</span>' +
         '</button>' +
         '<div class="bad-sug__wrap">' +
           '<span class="bad-stat__label">Suggested for you</span>' +
           '<div class="bad-sug">' + sugs + '</div>' +
         '</div>' +
-        '<div class="bad-studio__pills">' + rep.studio.pills.map(function (pl) {
-          return '<span>' + esc(pl) + '</span>';
-        }).join('') + '</div>' +
+        '<div class="bad-studio__pills">' + pills + '</div>' +
         '<p class="bad-studio__week">' + esc(rep.studio.weekLine) + '</p>' +
+      '</div>' +
+      '<div class="rp-drafts">' +
+        '<div class="lb">Drafts</div>' +
+        '<p class="sub">Posts you started. Nothing here is on the calendar or going anywhere until you approve it.</p>' +
+        '<div class="rp-drow"><span class="thumb"></span>' +
+          '<span class="t"><b>Casey and Jordan never cease to amaze. Congratulations on five years!</b><span>edited 33 minutes ago</span></span>' +
+          '<button type="button" class="resume">' + ICO.pen + ' Resume</button>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -1306,35 +1347,72 @@
 
   function renderFrame() {
     var tab = currentTab();
-    var tabsHtml = currentTabs().map(function (t) {
-      return '<button type="button" data-tab="' + t.key + '"' + (t.key === tab.key ? ' class="is-on" aria-current="page"' : '') + '>' + t.label + '</button>';
-    }).join('');
     var prodBtn = function (key, icon, label) {
       return '<button type="button" data-product="' + key + '"' + (state.product === key ? ' class="is-on"' : '') +
         ' aria-label="' + label + '" title="' + label + '"><span>' + icon + '</span><b>' + label + '</b></button>';
     };
-    var scenarioToggle = state.product === 'analytics'
-      ? '<div class="bad__toggle" role="group" aria-label="Demo scenario">' +
+    var sidenav =
+      '<aside class="bad-sidenav">' +
+        '<span class="bad-sidenav__logo">B</span>' +
+        prodBtn('analytics', '📊', 'Analytics') +
+        prodBtn('reputation', '⭐', 'Reputation') +
+      '</aside>';
+
+    /* ── Reputation: the real product chrome — Create/Track bar, calm
+       titles, pill tabs; Track pages light, Create pages dark. ── */
+    if (state.product === 'reputation') {
+      var pills = currentTabs().map(function (t) {
+        return '<button type="button" data-tab="' + t.key + '"' + (t.key === tab.key ? ' class="is-on"' : '') + '>' + t.label +
+          (t.key === 'inbox' ? ' <span class="rp-badge">3</span>' : '') + '</button>';
+      }).join('');
+      var seg = '<div class="rp-seg" role="group" aria-label="Reputation workspace">' +
+        '<button type="button" data-repmode="create"' + (state.repMode === 'create' ? ' class="is-on"' : '') + '>' + ICO.spark + 'Create</button>' +
+        '<button type="button" data-repmode="track"' + (state.repMode === 'track' ? ' class="is-on"' : '') + '>' + ICO.target + 'Track</button>' +
+      '</div>';
+      var bar = '<div class="rp-bar">' + seg + '<span class="rp-bar__grow"></span>' +
+        '<span class="rp-bar__ic">' + ICO.sliders + '</span>' +
+        '<span class="rp-search">' + ICO.search + 'Search...<span class="kbd">⌘K</span></span>' +
+        '<span class="rp-bar__ic">' + ICO.bell + '</span><span class="rp-bar__ic">' + ICO.help + '</span>' +
+        '<span class="rp-ava">AS</span><span class="rp-uname">Avery Stone</span>' +
+      '</div>';
+      var head;
+      if (state.repMode === 'track') {
+        var sub = tab.key === 'overview'
+          ? '<div class="rp-sub">' + ICO.star + '<b>Sunrise Dental Studio</b> · reviews synced 1 min ago · ' + ICO.sync + ' sync</div>'
+          : '';
+        var chips = tab.key === 'overview'
+          ? '<div class="rp-chips"><span class="rp-chip-wins">' + ICO.award + '9 wins</span><span class="rp-chip-plain">LOCAL TOP 3 <b>5/5</b></span></div>'
+          : '';
+        head = '<div class="rp-head"><div><span class="rp-eyebrow">Reputation</span><h4 class="rp-title">' + tab.title + '</h4>' + sub + '</div>' +
+          '<div><div class="rp-tabs">' + pills + '</div>' + chips + '</div></div>';
+      } else {
+        head = '<div class="rp-head"><div><span class="rp-eyebrow">Brand Studio</span>' +
+          (tab.key !== 'studio' ? '<h4 class="rp-title">' + tab.title + '</h4>' : '') +
+          '</div><div class="rp-tabs">' + pills + '</div></div>';
+      }
+      root.innerHTML =
+        '<div class="bad bad-frame">' + sidenav +
+          '<div class="bad-bodycol">' + bar +
+            '<div class="rp-body' + (state.repMode === 'create' ? ' rp-body--dark' : '') + '">' + head + renderView() + '</div>' +
+          '</div>' +
+        '</div>';
+      return;
+    }
+
+    /* ── Analytics: unchanged frame ── */
+    var tabsHtml = currentTabs().map(function (t) {
+      return '<button type="button" data-tab="' + t.key + '"' + (t.key === tab.key ? ' class="is-on" aria-current="page"' : '') + '>' + t.label + '</button>';
+    }).join('');
+    var scenarioToggle =
+      '<div class="bad__toggle" role="group" aria-label="Demo scenario">' +
         Object.keys(TUNING).map(function (k) {
           return '<button type="button" data-scenario="' + k + '"' +
             (k === state.scenario ? ' class="is-on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + TUNING[k].label + '</button>';
         }).join('') +
-      '</div>'
-      /* Reputation flips between its two workspaces, like the product. */
-      : '<div class="bad__toggle" role="group" aria-label="Reputation workspace">' +
-        [['track', '📊 Track'], ['create', '✨ Create']].map(function (m) {
-          return '<button type="button" data-repmode="' + m[0] + '"' +
-            (m[0] === state.repMode ? ' class="is-on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + m[1] + '</button>';
-        }).join('') +
       '</div>';
 
     root.innerHTML =
-      '<div class="bad bad-frame">' +
-        '<aside class="bad-sidenav">' +
-          '<span class="bad-sidenav__logo">B</span>' +
-          prodBtn('analytics', '📊', 'Analytics') +
-          prodBtn('reputation', '⭐', 'Reputation') +
-        '</aside>' +
+      '<div class="bad bad-frame">' + sidenav +
         '<div class="bad-bodycol">' +
           '<div class="bad-apphead">' +
             '<div><strong>' + tab.title + '</strong><span>' + tab.sub + '</span></div>' + scenarioToggle +
@@ -1344,7 +1422,7 @@
         '</div>' +
       '</div>';
 
-    if (state.product === 'analytics' && tab.key === 'dashboard' && state.animated) animateDash();
+    if (tab.key === 'dashboard' && state.animated) animateDash();
   }
 
   /* ================= animation ================= */
@@ -1408,7 +1486,8 @@
   }
   function rerenderViewOnly() {
     var vp = root.querySelector('.bad-viewport');
-    if (vp) vp.innerHTML = renderView();
+    if (vp) { vp.innerHTML = renderView(); return; }
+    renderFrame();
   }
 
   root.addEventListener('click', function (e) {
