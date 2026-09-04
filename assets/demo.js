@@ -401,30 +401,93 @@
           { name: 'Elena V.', date: fmtMD(addD(-14)), reason: 'Patient preference', by: 'Casey R.' }
         ]
       },
+      /* Auto-draft every review: each unanswered review arrives with an AI
+         draft already written (2026-08-07 product update). Worst-first. */
       drafts: [
+        {
+          name: 'Dana W.', rating: 3, date: fmtMD(addD(-6)), status: 'needs',
+          text: 'Good care but the billing took a couple calls to sort out.',
+          draft: 'Thank you for the honest feedback, Dana — and we’re sorry the billing took more than one call. We’ve reviewed how estimates are explained at checkout so it’s clear the first time. We’re glad the care itself felt good, and we’d love to make the whole visit that smooth.'
+        },
         {
           name: 'Marcus D.', rating: 4, date: fmtMD(addD(-3)), status: 'draft',
           text: 'Great cleaning and thorough exam. Only reason for 4 stars is the wait was a little long.',
           draft: 'Thank you, Marcus! We’re glad the cleaning and exam felt thorough. You’re right about the wait that day — we’ve adjusted our morning schedule so gentle dental care at Sunrise Dental Studio starts on time. See you at your next visit!'
         },
         {
-          name: 'Dana W.', rating: 3, date: fmtMD(addD(-6)), status: 'needs',
-          text: 'Good care but the billing took a couple calls to sort out.',
-          draft: ''
+          name: 'Leo P.', rating: 5, date: fmtMD(addD(-1)), status: 'draft',
+          text: 'Fantastic experience from start to finish. Thank you!',
+          draft: 'Thank you, Leo! Reviews like this make the whole team’s day. We’ll see you at your next visit to Sunrise Dental Studio!'
         }
       ],
-      feedback: [
-        {
-          rating: 2, when: fmtMD(addD(-2)) + ', 3:15 PM', handled: false,
-          text: 'I waited 40 minutes past my appointment time and nobody told me why. The cleaning itself was fine.',
-          contact: { name: 'Jordan M.', phone: '(555) 201-0188', email: 'jordan.m@example.com' }
-        },
-        {
-          rating: 3, when: fmtMD(addD(-11)) + ', 9:05 AM', handled: true,
-          text: 'Front desk seemed rushed when I asked about my copay.',
-          contact: null
-        }
+      unanswered: 3,
+      market: {
+        rank: 2, total: 6,
+        standings: [
+          { name: 'Meridian Smiles', rating: 4.9, reviews: 342, gained30: 6 },
+          { name: 'Sunrise Dental Studio', rating: 4.8, reviews: 214, gained30: 12, you: true },
+          { name: 'Cedar Park Dental', rating: 4.7, reviews: 188, gained30: 9 },
+          { name: 'Springfield Family Dental', rating: 4.6, reviews: 421, gained30: 3 },
+          { name: 'Brightleaf Dental', rating: 4.4, reviews: 97, gained30: 4 },
+          { name: 'Downtown Dental Co.', rating: null, reviews: 156, gained30: null }
+        ],
+        edge: [
+          'Meridian Smiles is 0.1★ ahead — at your current five-star mix, passing them is within reach this quarter.',
+          'Cedar Park Dental gained 9 reviews in 30 days to your 12 — keep review requests running to hold the velocity lead.',
+          'Milestone: 250 lifetime reviews — 36 to go at the current pace.'
+        ]
+      },
+      ranks: [
+        { term: 'dentist near me', pos: 3, move: 1 },
+        { term: 'dentist springfield', pos: 2, move: 0 },
+        { term: 'emergency dentist', pos: 5, move: -1 },
+        { term: 'invisalign springfield', pos: 8, move: 2 },
+        { term: 'pediatric dentist', pos: null, move: null }
       ],
+      /* Bridge Score — the composite 0-100 with receipts (never a black box). */
+      score: {
+        value: 82, band: 'Strong',
+        parts: [
+          { label: 'Star rating', v: 88 },
+          { label: 'Review flow', v: 84 },
+          { label: 'Response health', v: 71, low: true },
+          { label: 'Local visibility', v: 78 }
+        ],
+        note: '46 of 50 recent reviews answered — replying to the 3 waiting lifts Response health first.'
+      },
+      /* Scoreboard — one tile per review surface; null = not connected, shown as “—”. */
+      platforms: [
+        { name: 'Google', dot: '#4285f4', rating: 4.8, total: 214, new30: 12, trend: '+0.2', action: 'Reply (3)', primary: true, meta: 'synced 2h ago' },
+        { name: 'Facebook', dot: '#6366f1', rating: 4.9, total: 87, new30: 4, trend: '+0.1', action: 'View', primary: false, meta: 'synced 2h ago' },
+        { name: 'Yelp', dot: '#ef4444', rating: null, total: null, new30: null, trend: null, action: 'Connect', primary: true, meta: 'not connected' }
+      ],
+      /* Brand Studio — the calm Create landing. */
+      studio: {
+        suggestions: [
+          { icon: '🗓', label: '“Meet Dr. Stone” is ready', hint: 'A ten-second look and it goes out on schedule', hi: true },
+          { icon: '❝', label: 'Post a five-star review', hint: 'Written from this week’s reviews' },
+          { icon: '📈', label: 'Make one like Cedar Park’s', hint: 'Team photos are earning 3× their usual engagement' }
+        ],
+        pills: ['🗓 Calendar', '📷 Capture', '🖼 Add photos / videos', '⬇ Import', '🎨 Brand Kit'],
+        weekLine: '3 posts scheduled this week · next goes out Thursday 9:00 AM'
+      },
+      calendar: [
+        { day: 'Mon', title: 'Patient praise — Leo P., ★★★★★', channels: ['FB', 'IG'], status: 'published', perf: '18 likes · 2 comments' },
+        { day: 'Tue', title: 'Meet Dr. Stone', channels: ['FB', 'IG', 'GBP'], status: 'draft', perf: null },
+        { day: 'Wed', title: 'Same-day crowns explainer', channels: ['FB', 'GBP'], status: 'scheduled', perf: null },
+        { day: 'Thu', title: 'Team shout-out — Casey, 5 years', channels: ['FB', 'IG'], status: 'scheduled', perf: null },
+        { day: 'Fri', title: 'Whitening special reminder', channels: ['IG', 'TikTok'], status: 'scheduled', perf: null }
+      ],
+      brand: {
+        colors: ['#0d1340', '#ef3a66', '#f5f0e8', '#1f8a55'],
+        fonts: 'Poppins · Mulish',
+        voice: ['Warm', 'Plainspoken', 'Confident'],
+        never: ['Clinical jargon', 'Discount-speak'],
+        connections: [
+          { name: 'Facebook', on: true }, { name: 'Instagram', on: true }, { name: 'Google Business', on: true },
+          { name: 'TikTok', on: false }, { name: 'LinkedIn', on: false }
+        ]
+      },
       seoKeywords: ['gentle dental care', 'Sunrise Dental Studio']
     };
   }
@@ -463,23 +526,6 @@
     return '<svg class="bad-spark" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' +
       '<polyline points="' + coords.join(' ') + '" fill="none" stroke="#64748b" stroke-width="1.5"/>' +
       '<circle cx="' + coords[coords.length - 1].split(',')[0] + '" cy="' + coords[coords.length - 1].split(',')[1] + '" r="2" fill="#64748b"/></svg>';
-  }
-
-  /* Deterministic decorative QR-style block (not a real QR code). */
-  function qrSvg() {
-    var out = '<svg viewBox="0 0 21 21" class="bad-qr__img" aria-label="QR code placeholder">';
-    var seed = 7;
-    for (var r = 0; r < 21; r++) {
-      for (var c = 0; c < 21; c++) {
-        var corner = (r < 7 && c < 7) || (r < 7 && c > 13) || (r > 13 && c < 7);
-        seed = (seed * 31 + r * 17 + c * 13) % 97;
-        var fill = corner
-          ? ((r % 6 === 0 || c % 6 === 0 || (r > 1 && r < 5 && c > 1 && c < 5) || (r > 1 && r < 5 && c > 15 && c < 19) || (r > 15 && r < 19 && c > 1 && c < 5)) && r < 21)
-          : seed % 5 < 2;
-        if (fill) out += '<rect x="' + c + '" y="' + r + '" width="1" height="1"/>';
-      }
-    }
-    return out + '</svg>';
   }
 
   /* ================= shared UI pieces ================= */
@@ -912,39 +958,225 @@
     '</div>';
   }
 
-  function tabRepDashboard(rep) {
-    var needs = rep.needsResponse.map(function (r) {
-      return '<div class="bad-needrow">' + starRow(r.rating) + '<strong>' + esc(r.name) + '</strong>' +
-        '<span class="bad-needrow__draft">Draft →</span><p>' + esc(r.text) + '</p></div>';
+  function moveGlyph(m) {
+    if (m === null) return '<span class="bad-move bad-move--flat">—</span>';
+    if (m > 0) return '<span class="bad-move bad-move--up">▲ +' + m + '</span>';
+    if (m < 0) return '<span class="bad-move bad-move--down">▼ ' + m + '</span>';
+    return '<span class="bad-move bad-move--flat">±0</span>';
+  }
+
+  function marketHtml(rep) {
+    var m = rep.market;
+    var rows = m.standings.map(function (s) {
+      return '<div class="bad-mkt__row' + (s.you ? ' is-you' : '') + '">' +
+        '<span class="bad-mkt__name">' + esc(s.name) + (s.you ? ' <span class="bad-board__tag">You</span>' : '') + '</span>' +
+        '<span class="bad-mkt__num">' + (s.rating === null ? '—' : s.rating.toFixed(1) + ' ★') + '</span>' +
+        '<span class="bad-mkt__num">' + s.reviews + '</span>' +
+        '<span class="bad-mkt__num">' + (s.gained30 === null ? '—' : '+' + s.gained30) + '</span>' +
+      '</div>';
     }).join('');
-    var themes = rep.themes.map(function (t) {
-      return '<span class="bad-theme bad-theme--' + t.tone + '">' + esc(t.label) + ' <b>(' + t.n + ')</b></span>';
+    var edge = m.edge.map(function (e, i) {
+      return '<div class="bad-edge__item"><span class="bad-edge__num">' + (i + 1) + '</span><span>' + esc(e) + '</span></div>';
     }).join('');
+    return (
+      '<div class="bad-card" style="height:100%">' +
+        '<div class="bad-card__head"><strong>🏆 Your Market</strong><span class="bad-strip__meta">6 tracked practices</span></div>' +
+        '<div class="bad-mkt__rank">#' + m.rank + ' <em>of ' + m.total + ' tracked</em></div>' +
+        '<div class="bad-mkt__row bad-mkt__row--head"><span class="bad-mkt__name">Practice</span><span class="bad-mkt__num">Rating</span><span class="bad-mkt__num">Reviews</span><span class="bad-mkt__num">+30d</span></div>' +
+        rows +
+        '<span class="bad-stat__label" style="display:block;margin:12px 0 7px">This week’s edge</span>' +
+        edge +
+        '<p class="bad-foot" style="margin-top:9px">Rank and movement come from stored snapshots — “—” means not enough history, never zero.</p>' +
+      '</div>'
+    );
+  }
+
+  /* Bridge Score hero — big 0-100 with its receipts, on the one gradient tile. */
+  function scoreHeroHtml(rep) {
+    var rows = rep.score.parts.map(function (pt) {
+      return '<div class="bad-score__row' + (pt.low ? ' is-low' : '') + '">' +
+        '<span>' + esc(pt.label) + '</span>' +
+        '<span class="bad-score__track"><i style="width:' + pt.v + '%"></i></span>' +
+        '<b>' + pt.v + '</b>' +
+      '</div>';
+    }).join('');
+    return (
+      '<div class="bad-score">' +
+        '<div class="bad-score__left">' +
+          '<span class="bad-score__label">Bridge Score</span>' +
+          '<div class="bad-score__big">' + rep.score.value + '<em>/100</em></div>' +
+          '<span class="bad-score__band"><i class="bad-dot bad-dot--up"></i>' + esc(rep.score.band) + '</span>' +
+        '</div>' +
+        '<div class="bad-score__parts">' + rows +
+          '<p class="bad-score__note">' + esc(rep.score.note) + '</p>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  /* Scoreboard tiles — one per review surface; unknown renders “—”, never zero. */
+  function platformsHtml(rep) {
+    return '<div class="bad-plat">' + rep.platforms.map(function (pf) {
+      return '<div class="bad-card bad-plat__tile">' +
+        '<div class="bad-plat__head"><span class="bad-plat__name"><i class="bad-plat__dot" style="background:' + pf.dot + '"></i><strong>' + esc(pf.name) + '</strong></span>' +
+          '<span class="bad-hint">' + esc(pf.meta) + '</span></div>' +
+        '<div class="bad-plat__big">' + (pf.rating === null ? '—' : pf.rating.toFixed(1) + ' ' + starRow(pf.rating)) + '</div>' +
+        '<div class="bad-plat__meta">' +
+          (pf.total === null ? 'connect to see your reviews here' :
+            pf.total + ' reviews · <b>+' + pf.new30 + '</b> in 30d · <span class="bad-trend">↗ ' + pf.trend + '</span>') +
+        '</div>' +
+        '<button type="button" class="bad-btn' + (pf.primary ? '' : ' bad-btn--ghost') + '" style="margin-top:9px">' + esc(pf.action) + '</button>' +
+      '</div>';
+    }).join('') + '</div>';
+  }
+
+  function tabRepOverview(rep) {
+    return (
+      '<p class="bad-foot" style="margin-bottom:10px">⭐ <strong>Sunrise Dental Studio</strong> · reviews synced 2h ago · <span class="bad-hint">🏆 2 market wins this year</span></p>' +
+      scoreHeroHtml(rep) +
+      '<div style="margin-top:12px">' + platformsHtml(rep) + '</div>' +
+      '<div class="bad-mgrid" style="margin-top:12px; align-items:start">' +
+        '<div class="bad-mchart" style="border-top-color:#6366f1">' +
+          '<div class="bad-card__head"><strong>Review Mix</strong><span class="bad-strip__meta">per week, 8 wks</span></div>' +
+          barChart(rep.velocity, null, '#6366f1', 96) +
+        '</div>' +
+        marketHtml(rep) +
+        '<div class="bad-card">' +
+          '<div class="bad-card__head"><strong>✨ Studio Today</strong><span class="bad-strip__meta">the one thing</span></div>' +
+          '<p class="bad-fb__text" style="margin-top:0"><strong>“Meet Dr. Stone”</strong> is drafted for Tuesday — a ten-second look and it goes out on schedule.</p>' +
+          '<button type="button" class="bad-btn">Review &amp; approve →</button>' +
+        '</div>' +
+      '</div>' +
+      '<p class="bad-foot" style="margin-top:10px">Go deeper: Local Visibility · Profile Health · Review Requests</p>'
+    );
+  }
+
+  function tabVisibility(rep) {
+    var rankRows = rep.ranks.map(function (r) {
+      return '<tr><td><strong>' + esc(r.term) + '</strong></td>' +
+        '<td class="num">' + (r.pos === null ? '—' : '#' + r.pos) + '</td>' +
+        '<td class="num">' + moveGlyph(r.move) + '</td></tr>';
+    }).join('');
+    var compRows = rep.market.standings.map(function (s) {
+      return '<tr' + (s.you ? ' class="shaded"' : '') + '><td><strong>' + esc(s.name) + '</strong>' + (s.you ? ' <span class="bad-board__tag">You</span>' : '') + '</td>' +
+        '<td class="num">' + (s.rating === null ? '—' : s.rating.toFixed(1)) + '</td>' +
+        '<td class="num">' + s.reviews + '</td>' +
+        '<td class="num">' + (s.gained30 === null ? '—' : '+' + s.gained30) + '</td></tr>';
+    }).join('');
+    return (
+      '<div class="bad-card">' +
+        '<div class="bad-card__head"><strong>Local Pack Rankings</strong><span class="bad-strip__meta">your tracked searches · checked daily</span></div>' +
+        '<table class="bad-table"><thead><tr><th>Search</th><th class="num">Position</th><th class="num">7-day change</th></tr></thead><tbody>' + rankRows + '</tbody></table>' +
+        '<p class="bad-foot" style="margin-top:8px">“—” means not enough ranking history yet — never shown as zero.</p>' +
+      '</div>' +
+      '<div class="bad-card" style="margin-top:14px">' +
+        '<div class="bad-card__head"><strong>Competitor Momentum</strong><span class="bad-strip__meta">last 30 days</span></div>' +
+        '<table class="bad-table"><thead><tr><th>Practice</th><th class="num">Rating</th><th class="num">Reviews</th><th class="num">Gained (30d)</th></tr></thead><tbody>' + compRows + '</tbody></table>' +
+        '<p class="bad-foot" style="margin-top:8px">Movement comes from stored snapshots of public Google data — no invented estimates, no claims about competitors’ patients.</p>' +
+      '</div>' +
+      '<div class="bad-repgrid">' +
+        '<div class="bad-card"><div class="bad-card__head"><strong>Review Velocity</strong><span class="bad-strip__meta">per week, last 8 weeks</span></div>' +
+          barChart(rep.velocity, null, '#6366f1', 110) +
+        '</div>' +
+        '<div class="bad-card"><div class="bad-card__head"><strong>Rating Distribution</strong></div>' + ratingDistHtml(rep) + '</div>' +
+      '</div>'
+    );
+  }
+
+  function ratingDistHtml(rep) {
     var maxDist = Math.max.apply(null, rep.distribution);
-    var dist = rep.distribution.map(function (n, i) {
+    return rep.distribution.map(function (n, i) {
       var starsN = 5 - i;
       var color = starsN >= 4 ? '#10b981' : starsN === 3 ? '#eab308' : '#ef4444';
       return '<div class="bad-dist"><span>' + starsN + ' star' + (starsN > 1 ? 's' : '') + '</span>' +
         '<span class="bad-dist__track"><i style="width:' + ((n / maxDist) * 100).toFixed(1) + '%;background:' + color + '"></i></span>' +
         '<b>' + n + '</b></div>';
     }).join('');
+  }
+
+  /* ── Create: Brand Studio landing — one calm centered screen. ── */
+  function tabStudio(rep) {
+    var sugs = rep.studio.suggestions.map(function (s) {
+      return '<button type="button" class="bad-sug__card' + (s.hi ? ' is-hi' : '') + '">' +
+        '<span class="bad-sug__top"><span>' + s.icon + '</span><span class="bad-sug__arrow">↗</span></span>' +
+        '<strong>' + esc(s.label) + '</strong>' +
+        '<span class="bad-sug__hint">' + esc(s.hint) + '</span>' +
+      '</button>';
+    }).join('');
     return (
-      '<div class="bad-statgrid">' +
-        repStat('Rating', rep.rating.toFixed(1) + ' ' + starRow(rep.rating), '↗ ' + rep.trendMonth + ' this month', rep.totalReviews + ' total reviews') +
-        repStat('Reviews This Month', String(rep.reviewsThisMonth), '↗ +' + (rep.reviewsThisMonth - rep.reviewsLastMonth), rep.reviewsLastMonth + ' last month') +
-        repStat('Response Rate', rep.responseRate + '%', null, rep.responded + ' of ' + rep.respondedOf + ' responded') +
-        repStat('Pending Requests', String(rep.pendingRequests), null, 'Sending in ~24h') +
-      '</div>' +
-      '<div class="bad-repgrid">' +
-        '<div>' +
-          '<div class="bad-card"><div class="bad-card__head"><strong>Needs Response</strong><span class="bad-needrow__draft">View all →</span></div>' + needs + '</div>' +
-          '<div class="bad-card" style="margin-top:14px"><div class="bad-card__head"><strong>Review Velocity</strong><span class="bad-strip__meta">Reviews per week, last 8 weeks</span></div>' +
-            barChart(rep.velocity, null, '#6366f1', 120) +
-          '</div>' +
+      '<div class="bad-studio">' +
+        '<h4 class="bad-studio__q">What should we post today?</h4>' +
+        '<button type="button" class="bad-askbar">' +
+          '<span class="bad-askbar__wand">✨</span>' +
+          '<span class="bad-askbar__ph">A whitening special… a team shout-out… anything</span>' +
+          '<span class="bad-askbar__go">Create →</span>' +
+        '</button>' +
+        '<div class="bad-sug__wrap">' +
+          '<span class="bad-stat__label">Suggested for you</span>' +
+          '<div class="bad-sug">' + sugs + '</div>' +
         '</div>' +
-        '<div>' +
-          '<div class="bad-card"><div class="bad-card__head"><strong>Top Themes</strong><span class="bad-strip__meta">from recent reviews</span></div><div class="bad-themes">' + themes + '</div></div>' +
-          '<div class="bad-card" style="margin-top:14px"><div class="bad-card__head"><strong>Rating Distribution</strong></div>' + dist + '</div>' +
+        '<div class="bad-studio__pills">' + rep.studio.pills.map(function (pl) {
+          return '<span>' + esc(pl) + '</span>';
+        }).join('') + '</div>' +
+        '<p class="bad-studio__week">' + esc(rep.studio.weekLine) + '</p>' +
+      '</div>'
+    );
+  }
+
+  /* ── Create: Content Calendar — pre-filled week; approve, adjust, done. ── */
+  function tabCalendar(rep) {
+    var STATUS = {
+      published: '<span class="bad-status bad-status--emerald">Published</span>',
+      scheduled: '<span class="bad-status bad-status--blue">Scheduled</span>',
+      draft: '<span class="bad-status bad-status--amberline">Awaiting OK</span>'
+    };
+    var days = rep.calendar.map(function (d) {
+      return '<div class="bad-calday' + (d.status === 'draft' ? ' is-attn' : '') + '">' +
+        '<div class="bad-calday__head"><strong>' + d.day + '</strong>' + STATUS[d.status] + '</div>' +
+        '<p class="bad-calday__title">' + esc(d.title) + '</p>' +
+        '<div class="bad-calday__ch">' + d.channels.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>' +
+        (d.status === 'draft'
+          ? '<button type="button" class="bad-btn" style="margin-top:8px">Approve →</button>'
+          : d.perf
+            ? '<p class="bad-hint" style="margin-top:8px">' + esc(d.perf) + '</p>'
+            : '<p class="bad-hint" style="margin-top:8px">publishes automatically</p>') +
+      '</div>';
+    }).join('');
+    return (
+      '<div class="bad-card" style="margin-bottom:12px; padding-bottom:6px">' +
+        '<div class="bad-card__head" style="margin-bottom:4px"><strong>This week</strong><span class="bad-strip__meta">posts publish themselves to your connected channels</span></div>' +
+        '<p class="bad-foot" style="margin-bottom:10px">Bridge pre-fills the calendar in your brand — you approve, adjust, or just let it run. One draft is waiting on you.</p>' +
+      '</div>' +
+      '<div class="bad-cal">' + days + '</div>' +
+      '<p class="bad-foot" style="margin-top:10px">Last week: 3 posts · 61 likes · 9 comments — and the comment inbox pulls replies from every channel into one place.</p>'
+    );
+  }
+
+  /* ── Create: Brand Kit — identity stored once, used everywhere. ── */
+  function tabBrandKit(rep) {
+    var conns = rep.brand.connections.map(function (c) {
+      return '<div class="bad-conn__row"><span>' + esc(c.name) + '</span>' +
+        (c.on ? '<span class="bad-status bad-status--green">Connected</span>' : '<button type="button" class="bad-btn bad-btn--ghost">Connect</button>') +
+      '</div>';
+    }).join('');
+    var chip = function (t, tone) { return '<span class="bad-theme bad-theme--' + tone + '">' + esc(t) + '</span>'; };
+    return (
+      '<div class="bad-repgrid" style="margin-top:0">' +
+        '<div class="bad-card">' +
+          '<div class="bad-card__head"><strong>Your Brand</strong><span class="bad-strip__meta">stored once, used in every post</span></div>' +
+          '<span class="bad-stat__label" style="display:block;margin-bottom:7px">Colors</span>' +
+          '<div class="bad-swatches">' + rep.brand.colors.map(function (cc) { return '<i style="background:' + cc + '"></i>'; }).join('') + '</div>' +
+          '<span class="bad-stat__label" style="display:block;margin:14px 0 7px">Fonts</span>' +
+          '<p class="bad-fb__text" style="margin:0">' + esc(rep.brand.fonts) + '</p>' +
+          '<span class="bad-stat__label" style="display:block;margin:14px 0 7px">Voice — always</span>' +
+          '<div class="bad-themes">' + rep.brand.voice.map(function (v) { return chip(v, 'pos'); }).join('') + '</div>' +
+          '<span class="bad-stat__label" style="display:block;margin:14px 0 7px">Never</span>' +
+          '<div class="bad-themes">' + rep.brand.never.map(function (v) { return chip(v, 'neg'); }).join('') + '</div>' +
+        '</div>' +
+        '<div class="bad-card">' +
+          '<div class="bad-card__head"><strong>Connections</strong><span class="bad-strip__meta">where your posts go</span></div>' +
+          conns +
+          '<p class="bad-foot" style="margin-top:10px">A guided wizard connects each platform with a live test — no developer required.</p>' +
         '</div>' +
       '</div>'
     );
@@ -980,18 +1212,23 @@
         '<table class="bad-table" style="margin-top:10px"><thead><tr><th>Patient Name</th><th>Excluded Date</th><th>Reason</th><th>Excluded By</th><th>Actions</th></tr></thead><tbody>' + erows + '</tbody></table>';
     }
     return (
-      '<p class="bad-foot" style="margin-bottom:12px">Review requests send automatically after appointments — you manage the queue, the history, and who’s excluded.</p>' +
+      '<div class="bad-strip" style="margin-bottom:12px">' +
+        '<span class="bad-strip__label">Automatic</span>' +
+        '<span>Requests go out the moment the appointment <strong>ends</strong> — while the visit is still fresh.</span>' +
+        '<button type="button" class="bad-btn bad-btn--ghost" style="margin-left:auto">📱 Text a patient</button>' +
+      '</div>' +
       '<div class="bad-chipbar">' + tb('pending', '🕐 Pending') + tb('sent', '✈ Sent') + tb('excluded', '🚫 Excluded') + '</div>' +
       '<div class="bad-card" style="margin-top:12px">' + body + '</div>'
     );
   }
 
-  function tabDrafts(rep) {
-    var cards = rep.drafts.map(function (d, i) {
+  function tabInbox(rep) {
+    var queue = rep.drafts.slice().sort(function (a, b) { return a.rating - b.rating; });
+    var cards = queue.map(function (d, i) {
       var open = state.ui.draftOpen === i;
-      var badgeHtml = d.status === 'draft'
-        ? '<span class="bad-status bad-status--grey">Draft Generated</span>'
-        : '<span class="bad-status bad-status--amberline">Needs Response</span>';
+      var badgeHtml = d.status === 'needs'
+        ? '<span class="bad-status bad-status--amberline">Needs Response</span>'
+        : '<span class="bad-status bad-status--grey">Draft Ready</span>';
       var expanded = !open ? '' :
         '<div class="bad-draft__body">' +
           '<div class="bad-draft__orig">' +
@@ -999,14 +1236,13 @@
             '<div><strong>' + esc(d.name) + '</strong> ' + starRow(d.rating) + ' <span class="bad-hint">' + d.date + '</span>' +
             '<p>' + esc(d.text) + '</p></div>' +
           '</div>' +
-          '<span class="bad-stat__label" style="display:block;margin:12px 0 6px">Response Draft</span>' +
-          '<textarea class="bad-textarea" rows="4" placeholder="Click &quot;Generate Draft&quot; to create an AI response, or type your own...">' + esc(d.draft) + '</textarea>' +
-          (d.draft
-            ? '<div class="bad-draft__seo"><span class="bad-stat__label" style="display:block;margin-bottom:4px">SEO keyword preview</span>' +
-              d.draft.replace(/gentle dental care/g, '<mark>gentle dental care</mark>').replace(/Sunrise Dental Studio/g, '<mark>Sunrise Dental Studio</mark>') + '</div>'
-            : '') +
+          '<span class="bad-stat__label" style="display:block;margin:12px 0 6px">AI draft — every review arrives with one</span>' +
+          '<textarea class="bad-textarea" rows="4">' + esc(d.draft) + '</textarea>' +
+          '<div class="bad-draft__seo"><span class="bad-stat__label" style="display:block;margin-bottom:4px">Guided edit</span>' +
+            'Edits are checked against a HIPAA guardrail before posting — no treatment details, no confirming the reviewer is a patient.</div>' +
           '<div class="bad-draft__actions">' +
-            '<button type="button" class="bad-btn' + (d.draft ? ' bad-btn--ghost' : '') + '">✨ ' + (d.draft ? 'Regenerate' : 'Generate Draft') + '</button>' +
+            '<button type="button" class="bad-btn">Post reply</button>' +
+            '<button type="button" class="bad-btn bad-btn--ghost">✨ Regenerate</button>' +
             '<button type="button" class="bad-btn bad-btn--ghost">Copy to Clipboard</button>' +
             '<button type="button" class="bad-btn bad-btn--ghost">Open in Google ↗</button>' +
             '<button type="button" class="bad-btn bad-btn--ghost">✓ Mark as Responded</button>' +
@@ -1021,77 +1257,10 @@
       '</div>';
     }).join('');
     return (
-      '<div class="bad-daily__head"><h4>Response Drafts</h4><span class="bad-strip__meta">' + rep.drafts.length + ' reviews awaiting response · newest first</span></div>' + cards +
-      '<p class="bad-foot" style="margin-top:10px">Generate → edit → copy → paste on Google → mark responded. A human approves every reply.</p>'
+      '<div class="bad-daily__head"><h4>Review Inbox</h4><span class="bad-strip__meta">' + queue.length + ' unanswered · negatives and oldest first</span></div>' + cards +
+      '<p class="bad-foot" style="margin-top:10px">Every review arrives with an AI draft. Edit → post (or copy) → mark responded. A human approves every reply.</p>'
     );
   }
-
-  function tabFeedback(rep) {
-    var unhandled = rep.feedback.filter(function (f) { return !f.handled && !state.ui.handled[rep.feedback.indexOf(f)]; }).length;
-    var cards = rep.feedback.map(function (f, i) {
-      var handled = f.handled || state.ui.handled[i];
-      var starsGlyph = '★'.repeat(f.rating) + '☆'.repeat(5 - f.rating);
-      return '<div class="bad-card bad-fb' + (handled ? ' is-handled' : '') + '">' +
-        '<div class="bad-fb__meta"><span class="bad-fb__stars">' + starsGlyph + '</span><span class="bad-hint">' + f.when + '</span>' +
-          (handled ? '<span class="bad-status bad-status--grey">Handled</span>' : '<span class="bad-status bad-status--red">Needs attention</span>') +
-          (!handled ? '<button type="button" class="bad-btn bad-btn--ghost" data-handle="' + i + '">✓ Mark handled</button>' : '') +
-        '</div>' +
-        '<p class="bad-fb__text">' + esc(f.text) + '</p>' +
-        '<p class="bad-hint">' + (f.contact
-          ? '👤 ' + esc(f.contact.name) + ' · 📞 ' + esc(f.contact.phone) + ' · ✉ ' + esc(f.contact.email)
-          : 'Submitted anonymously.') + '</p>' +
-      '</div>';
-    }).join('');
-    return (
-      '<p class="bad-foot" style="margin-bottom:12px">' + unhandled + ' unhandled ' + (unhandled === 1 ? 'entry' : 'entries') +
-      ' — when a patient leaves a low rating on your hosted review page, their feedback lands here instead of on Google.</p>' + cards
-    );
-  }
-
-  function tabShare(rep) {
-    function copyBox(id, label, content) {
-      var copied = state.ui.copied === id;
-      return '<span class="bad-stat__label" style="display:block;margin:12px 0 5px">' + label + '</span>' +
-        '<div class="bad-codebox"><code>' + esc(content) + '</code>' +
-        '<button type="button" class="bad-btn bad-btn--ghost" data-copy="' + id + '">' + (copied ? '✓ Copied' : 'Copy') + '</button></div>';
-    }
-    return (
-      '<div class="bad-card">' +
-        '<div class="bad-card__head"><strong>Share &amp; Collect Reviews</strong></div>' +
-        '<p class="bad-foot" style="margin-bottom:14px">Show your Google reviews on your website and collect new ones with a hosted review page and printable QR code.</p>' +
-
-        '<div class="bad-share__sec"><div><strong>Website review widget</strong>' +
-        '<span class="bad-stat__sub">Embed your Google reviews on your practice website with one snippet.</span></div>' +
-        '<label class="bad-switch bad-switch--bare"><input type="checkbox" checked disabled><i></i></label></div>' +
-        '<div class="bad-share__panel">' +
-          '<div class="bad-share__selects">' +
-            '<label>Layout<span class="bad-select">Carousel ▾</span></label>' +
-            '<label>Minimum rating shown<span class="bad-select">4 stars &amp; up ▾</span></label>' +
-            '<label>Theme<span class="bad-select">Light ▾</span></label>' +
-          '</div>' +
-          copyBox('embed', 'Embed snippet (paste into your website)', '<script src="https://app.bridgedental.ai/widget.js" data-practice="demo"></script>') +
-        '</div>' +
-
-        '<div class="bad-share__sec"><div><strong>Hosted review page</strong>' +
-        '<span class="bad-stat__sub">A “How was your visit?” page — happy patients go to Google, unhappy ones send you private feedback first (the Google link is always visible).</span></div>' +
-        '<label class="bad-switch bad-switch--bare"><input type="checkbox" checked disabled><i></i></label></div>' +
-        '<div class="bad-share__panel">' +
-          copyBox('link', 'Review page link', 'https://reviews.bridgedental.ai/sunrise-dental-studio') +
-          '<div class="bad-qr"><div class="bad-qr__box">' + qrSvg() + '</div>' +
-            '<div><span class="bad-stat__label" style="display:block;margin-bottom:6px">QR code (print for the front desk)</span>' +
-            '<button type="button" class="bad-btn bad-btn--ghost">Download PNG</button> ' +
-            '<button type="button" class="bad-btn bad-btn--ghost">Download SVG</button></div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="bad-share__sec"><div><strong>Email review requests</strong>' +
-        '<span class="bad-stat__sub">When a patient has no phone number on file, send the review request by email instead of skipping them.</span></div>' +
-        '<label class="bad-switch bad-switch--bare"><input type="checkbox" checked disabled><i></i></label></div>' +
-      '</div>'
-    );
-  }
-
-  /* ================= frame ================= */
 
   var ANALYTICS_TABS = [
     { key: 'dashboard', label: 'Dashboard', title: 'Analytics Dashboard', sub: 'Monitor your practice performance and key metrics', render: tabDashboard },
@@ -1101,18 +1270,28 @@
     { key: 'providers', label: 'Providers', title: 'Provider Scorecards', sub: 'Per-provider production, case acceptance, and hygiene metrics', render: tabProviders },
     { key: 'reviews', label: 'Google Reviews', title: 'Google Reviews', sub: 'Recent reviews and daily rating history from your Google Business Profile', render: null }
   ];
-  var REPUTATION_TABS = [
-    { key: 'dashboard', label: 'Dashboard', title: 'Reputation Dashboard', sub: 'Overview of your online reputation and review metrics', render: tabRepDashboard },
-    { key: 'reviews', label: 'Reviews', title: 'Reviews', sub: 'Recent reviews and daily rating history from your Google Business Profile', render: null },
-    { key: 'requests', label: 'Review Requests', title: 'Review Requests', sub: 'Manage and track patient review request campaigns', render: tabRequests },
-    { key: 'drafts', label: 'Response Drafts', title: 'Response Drafts', sub: 'AI-powered response drafts for your reviews', render: tabDrafts },
-    { key: 'feedback', label: 'Private Feedback', title: 'Private Feedback', sub: 'Feedback patients sent privately from your review page', render: tabFeedback },
-    { key: 'share', label: 'Share & Collect', title: 'Share & Collect Reviews', sub: 'Your review widget, hosted review page, and printable QR code', render: tabShare }
+  var REP_TRACK_TABS = [
+    { key: 'overview', label: 'Overview', title: "How's your reputation?", sub: 'Your Bridge Score, your scoreboard, and where you stand nearby', render: tabRepOverview },
+    { key: 'inbox', label: 'Reviews', title: 'Every review, answered.', sub: 'Negative and oldest unanswered first — draft, edit, and respond', render: tabInbox },
+    { key: 'visibility', label: 'Local Visibility', title: 'How patients find you.', sub: 'Local-pack rankings, competitor momentum, and rating trends', render: tabVisibility },
+    { key: 'requests', label: 'Review Requests', title: 'Ask for the next review.', sub: 'Automated asks the moment the appointment ends', render: tabRequests }
+  ];
+  var REP_CREATE_TABS = [
+    { key: 'studio', label: 'Studio', title: 'Brand Studio', sub: 'Branded content creation — today’s one thing, front and center', render: tabStudio },
+    { key: 'calendar', label: 'Calendar', title: 'Content Calendar', sub: 'Your pre-filled posting calendar — approve, adjust, done', render: tabCalendar },
+    { key: 'brand', label: 'Brand Kit', title: 'Brand Kit', sub: 'Logo, colors, fonts, and voice — stored once, used everywhere', render: tabBrandKit }
   ];
 
-  function currentTabs() { return state.product === 'analytics' ? ANALYTICS_TABS : REPUTATION_TABS; }
+  function currentTabs() {
+    if (state.product === 'analytics') return ANALYTICS_TABS;
+    return state.repMode === 'track' ? REP_TRACK_TABS : REP_CREATE_TABS;
+  }
+  function tabStateKey() {
+    if (state.product === 'analytics') return 'analytics';
+    return state.repMode === 'track' ? 'repTrack' : 'repCreate';
+  }
   function currentTab() {
-    var key = state.tabs[state.product];
+    var key = state.tabs[tabStateKey()];
     var tabs = currentTabs();
     for (var i = 0; i < tabs.length; i++) if (tabs[i].key === key) return tabs[i];
     return tabs[0];
@@ -1134,11 +1313,18 @@
       return '<button type="button" data-product="' + key + '"' + (state.product === key ? ' class="is-on"' : '') +
         ' aria-label="' + label + '" title="' + label + '"><span>' + icon + '</span><b>' + label + '</b></button>';
     };
-    var scenarioToggle = state.product !== 'analytics' ? '' :
-      '<div class="bad__toggle" role="group" aria-label="Demo scenario">' +
+    var scenarioToggle = state.product === 'analytics'
+      ? '<div class="bad__toggle" role="group" aria-label="Demo scenario">' +
         Object.keys(TUNING).map(function (k) {
           return '<button type="button" data-scenario="' + k + '"' +
             (k === state.scenario ? ' class="is-on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + TUNING[k].label + '</button>';
+        }).join('') +
+      '</div>'
+      /* Reputation flips between its two workspaces, like the product. */
+      : '<div class="bad__toggle" role="group" aria-label="Reputation workspace">' +
+        [['track', '📊 Track'], ['create', '✨ Create']].map(function (m) {
+          return '<button type="button" data-repmode="' + m[0] + '"' +
+            (m[0] === state.repMode ? ' class="is-on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + m[1] + '</button>';
         }).join('') +
       '</div>';
 
@@ -1198,14 +1384,16 @@
   })();
 
   var state = {
-    product: 'analytics',
-    tabs: { analytics: 'dashboard', reputation: 'dashboard' },
+    product: params.get('product') === 'reputation' ? 'reputation' : 'analytics',
+    /* The app opens Reputation on the Create workspace (Studio). */
+    repMode: 'create',
+    tabs: { analytics: 'dashboard', repTrack: 'overview', repCreate: 'studio' },
     scenario: params.get('scenario') === 'record' ? 'record' : 'steady',
     selectedDate: toIso(new Date()),
     built: null,
     rep: null,
     animated: false,
-    ui: { yoy: true, sort: 'newest', txfilter: 'all', fuq: 'due', reqtab: 'pending', draftOpen: 0, handled: {}, checked: {}, copied: null }
+    ui: { yoy: true, sort: 'newest', txfilter: 'all', fuq: 'due', reqtab: 'pending', draftOpen: 0, respondSel: 0, handled: {}, checked: {}, copied: null }
   };
   var NAV_RANGE = 7;
 
@@ -1230,7 +1418,9 @@
     if ((v = btn.getAttribute('data-product')) !== null) {
       if (v !== state.product) { state.product = v; renderFrame(); }
     } else if ((v = btn.getAttribute('data-tab')) !== null) {
-      if (v !== state.tabs[state.product]) { state.tabs[state.product] = v; renderFrame(); }
+      if (v !== state.tabs[tabStateKey()]) { state.tabs[tabStateKey()] = v; renderFrame(); }
+    } else if ((v = btn.getAttribute('data-repmode')) !== null) {
+      if (v !== state.repMode) { state.repMode = v; renderFrame(); }
     } else if ((v = btn.getAttribute('data-scenario')) !== null) {
       if (v !== state.scenario) {
         state.scenario = v;
@@ -1258,6 +1448,9 @@
       var idx = parseInt(v, 10);
       state.ui.draftOpen = state.ui.draftOpen === idx ? -1 : idx;
       rerenderViewOnly();
+    } else if ((v = btn.getAttribute('data-qsel')) !== null) {
+      state.ui.respondSel = parseInt(v, 10);
+      rerenderViewOnly();
     } else if ((v = btn.getAttribute('data-check')) !== null) {
       var ci = parseInt(v, 10);
       state.ui.checked[ci] = !state.ui.checked[ci];
@@ -1274,6 +1467,20 @@
     if (e.target.hasAttribute && e.target.hasAttribute('data-yoy')) {
       state.ui.yoy = e.target.checked;
       rerenderViewOnly();
+    }
+  });
+
+  /* Marketing sections can deep-link into a demo product:
+     <a href="#demo" data-demo-product="reputation" data-demo-mode="track"> */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-demo-product]');
+    if (!a) return;
+    var prod = a.getAttribute('data-demo-product');
+    if (prod === 'analytics' || prod === 'reputation') {
+      state.product = prod;
+      var mode = a.getAttribute('data-demo-mode');
+      if (mode === 'track' || mode === 'create') state.repMode = mode;
+      renderFrame();
     }
   });
 
